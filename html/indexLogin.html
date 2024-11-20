@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/1acf2d22a5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../css/style_Mainpage.css"> <!-- css style - co the sua lai -->
+    <link rel="stylesheet" href="../css/style_giohang.css">
+    <title>Thế giới di động</title>
+    
+</head>
+
+<body onload="filterProducts()">
+    <header>
+        <!--Nav-bar gom: logo, xem gia tai tp, search-bar, gio hang, tra cứu đơn hàng, tài khoản, liên hệ-->
+        <nav>
+            <ul class="navbar-list">
+                <!--link hompage-->
+                <li>
+                    <a href="indexLogin.html">
+                        <img src="../img/thegioididong.png">
+                    </a>
+                </li>
+                <li>
+                    <!--<input type="text" placeholder="Bạn tìm gì..."> 
+			<i class="fa-solid fa-magnifying-glass"></i>  -->
+                    <input type="text" placeholder="Nhập tên sản phẩm...">
+                    <a href="" class="srch">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </a>
+                </li>
+                <li>
+                    <a>Tìm kiếm nâng cao</a>
+                </li>
+                <li>
+                    <a href="#" onclick = "GoToCart()">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        Giỏ hàng
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        Lịch sử mua hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="index.html">Đăng xuất</a>
+                </li>
+                <li>
+                    <span class="user-afterLog"><i class="fa-solid fa-circle-user"></i></span><span
+                        id="printUsername"></span>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <!--phan loai theo hang san pham-->
+            <div class="brand-list">
+                <a href="indexLogin.html?brand=Acer"><img src="../img/acer.png" alt="acer"></a>
+                <a href="indexLogin.html?brand=Lenovo"><img src="../img/lenovo.png" alt="lenovo"></a>
+            </div>
+            <!--List cac san pham-->
+            <section class="product-one"> <!--section product list-->
+				<h2>Các sản phẩm nổi bật</h2>
+				<div id="product-list" class="product-row"> </div>	<!-- Sản Phẩm-->		
+				<div id="product-info" class="modal" style="display: none;"><!--Chi Tiết Sản Phẩm-->
+					<div id="info">
+						<button type="button" id="close" onclick="closeProductInfo()">x</button>
+						<div class="left">
+							<img id="productImg">
+						</div>
+						<div class="right">
+							<h2 id="productName"></h2>
+							<h4 id="productPrice"></h4>
+							<h4 id="productRam"></h4>
+							<h4 id="productSSD"></h4>
+							<h4 id="productCard"></h4>
+							<h4 id="productLocation"></h4>
+							<h6 id="productDescription"></h6>
+							<button class="addtoCart" id="color-Cart">Thêm vào giỏ hàng</button>
+						</div>
+					</div>
+				</div>
+			</section>
+            <!--phan trang-->
+            <div id="pagination">
+				<button>&lt;</button>
+				<button class="active">1</button>
+				<button>2</button>
+				<button>3</button>
+				<button>&gt;</button>
+			</div>
+        </div>
+
+        <!-- Giỏ hàng -->
+
+        <div class ="Modal" id = "Modal_2">
+            <div class = "Modal__overlay_cart"></div>
+            <div class= "Modal__body_cart">
+                <div class="cart_header">
+                    <p> Giỏ hàng của bạn</p>
+                    <a href = "#" id = "exit_cart" onclick="Close_Cart()"> X </a>
+                </div>
+
+
+                <div class = "Gio-hang" id="gio-hang">
+                        
+                </div>
+                
+                <div class= "cart_footer"> 
+                    <div class = "cart_page">
+                        <div class = "cart_page_numbers" id = "cart_page_1"> 1 </div>
+                        <div class = "cart_page_numbers" id = "cart_page_2"> 2 </div>
+                        <div class = "cart_page_numbers" id = "cart_page_3"> 3 </div>
+                    </div>
+                    <button>Xác nhận mua</button>
+                </div>
+                
+            </div>
+        </div>
+    
+
+
+    </main>
+    <footer>
+        <h2>Thế giới di động</h2>
+        <p>Tổng đài liên hệ: 0778052785</p>
+        <p>Email: thegioididong@gmail.com</p>
+        <p>Cảm ơn đã ghé thăm trang web của chúng tôi !</p>
+    </footer>;
+</body>
+<script src="../js/index.js" ></script>
+<script src = "../js/GioHang.js"></script>
+
+
+</html>

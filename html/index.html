@@ -1,0 +1,182 @@
+<!DOCTYPE html >
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://kit.fontawesome.com/1acf2d22a5.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="../css/style_Mainpage.css"> <!-- css style - co the sua lai -->
+	<link rel="stylesheet" href="../css/footer.css"> <!-- css style - co the sua lai -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+	<title>Thế giới di động</title>
+	
+</head>
+<body id="blockLogin" onload="filterProducts()">
+	<header>
+		<nav>
+			<ul class="navbar-list">
+				<!--link hompage-->
+				<li>
+					<a href="index.html">
+						<img src="../img/thegioididong.png">
+					</a>
+				</li>
+				<li>
+					<input type="text" placeholder="Nhập tên sản phẩm...">
+					<a href="search1.html"><i class="fa-solid fa-magnifying-glass"></i></a>
+				</li>
+				<li>
+					<a href="advSrch.html">Tìm kiếm nâng cao</a>
+				</li>
+				<li>
+					<a onclick="remind()">
+						<i class="fa-solid fa-cart-shopping"></i>
+						Giỏ hàng
+					</a>
+				</li>
+				<li>
+					<a onclick="remind()">
+						<i class="fa-solid fa-clock-rotate-left"></i>
+						Lịch sử mua hàng
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<button id="loginButton">
+							<i class="fa-solid fa-circle-user"></i>Đăng nhập
+						</button></a>
+				</li>
+				<div id="authModal" style="display:none;">
+					<div class="modal-content" id="modalContent">
+						<!-- Form đăng nhập -->
+						<div id="loginForm">
+							<form onsubmit="login()">
+								<label for="username">Tên đăng nhập:</label>
+								<input type="text" id="username" name="username" required
+									placeholder="Vui Lòng Nhập Tài Khoản"><br>
+								<label for="password">Mật khẩu:</label>
+								<input type="password" id="password" name="password" required
+									placeholder="Vui Lòng Nhập Mật Khẩu"><br />
+								<button type="submit" id="mySubmit">Đăng nhập</button>
+								<button type="button" id="change" onclick="showRegisterForm()">Chuyển sang Đăng
+									ký</button>
+							</form>
+						</div>
+
+						<!-- Form đăng ký (ẩn ban đầu) -->
+						<div id="registerForm" style="display:none;">
+							<form onsubmit="signup()">
+								<label for="newFullName">Họ và Tên:</label>
+								<input type="text" id="newFullName" name="newFullName" required
+									placeholder="Vui Lòng Nhập Họ Và Tên"><br />
+								<label for="newUsername">Tên đăng nhập:</label>
+								<input type="text" id="newUsername" name="newUsername" required
+									placeholder="Vui Lòng Nhập Tài Khoản"><br>
+								<label for="newPhoneNumber">Số Điện Thoại:</label>
+								<input type="text" id="newPhoneNumber" name="newPhoneNumber" required
+									placeholder="Vui Lòng Nhập Số Điện Thoại"><br>
+								<label for="newPassword">Mật khẩu:</label>
+								<input type="password" id="newPassword" name="newPassword" required
+									placeholder="Vui Lòng Nhập Mật Khẩu"><br />
+								<label for="newRepeatPassword">Nhập lại mật Khẩu:</label>
+								<input type="password" id="newRepeatPassword" name="newRepeatPassword" required
+									placeholder="Vui Lòng Nhập Lại Mật Khẩu"><br />
+								<button type="submit">Đăng ký</button>
+								<button type="button" id="change" onclick="showLoginForm()">Quay lại đăng nhập</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<div class="container">
+			<!--phan loai theo hang san pham-->
+			<div class="brand-list">
+				<a href="index.html?brand=Acer">
+					<img src="../img/acer.png" alt="acer">
+				</a>
+				<a href="index.html?brand=Lenovo">
+					<img src="../img/lenovo.png" alt="lenovo">
+				</a>
+			</div>
+			<!--List cac san pham-->
+			<section class="product-one"> <!--section product list-->
+				<h2>Các sản phẩm nổi bật</h2>
+				<div id="product-list" class="product-row">	<!-- Sản Phẩm-->		
+				<div id="product-info" class="modal" style="display: none;"><!--Chi Tiết Sản Phẩm-->
+					<div id="info">
+						<button type="button" id="close" onclick="closeProductInfo()">x</button>
+						<div class="left">
+							<img id="productImg">
+						</div>
+						<div class="right">
+							<h2 id="productName"></h2>
+							<h4 id="productPrice"></h4>
+							<h4 id="productRam"></h4>
+							<h4 id="productSSD"></h4>
+							<h4 id="productCard"></h4>
+							<h4 id="productLocation"></h4>
+							<h6 id="productDescription"></h6>
+							<button class="addtoCart" id="color-Cart" onclick="remind()">Thêm Vào Giỏ</button>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!--phan trang-->
+			<div id="pagination">
+				<button>&lt;</button>
+				<button class="active">1</button>
+				<button>2</button>
+				<button>3</button>
+				<button>&gt;</button>
+			</div>
+		</div>
+	</main>
+	<div class="footer-clean">
+		<hr>
+        <footer>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-sm-4 col-md-3 item">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">Di động</a></li>
+                            <li><a href="#">Trả góp</a></li>
+                            <li><a href="#">Tư vấn</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4 col-md-3 item">
+                        <h3>Về chúng tôi</h3>
+                        <ul>
+                            <li><a href="#">Giới thiệu về công ty</a></li>
+                            <li><a href="#">Tuyển dụng</a></li>
+                            <li><a href="#">Góp ý</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4 col-md-3 item">
+                        <h3>Thông tin liên hệ</h3>
+                        <ul>
+                            <li><a href="#">sales@thoigioididong.con</a></li>
+                            <li><a href="#">1900 8686</a></li>
+                            <li><a href="#">Benefits</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a>
+                        <p class="copyright">Thới giới di động © 2024</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+	
+	<script src="../js/login.js"></script>
+	<script src="../js/index.js"></script>
+</body>
+
+</html>

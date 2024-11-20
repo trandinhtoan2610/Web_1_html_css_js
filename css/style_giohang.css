@@ -1,0 +1,103 @@
+.Modal__overlay_cart{
+	position: absolute;
+	background-color: rgba(0,0,0,0.4);
+	width: 100%;
+	height: 100%;
+}
+
+.Modal__body_cart{
+	position: relative;
+	width: 95%;
+	height: 95%;
+	background-color: white;
+	margin : auto;
+	z-index: 3;
+	border: 1px solid white;
+	box-shadow: 2px 2px 10px black;
+	border-radius: 5px;
+}
+
+.cart_header{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 40px;
+	position: relative;
+	
+}
+
+.cart_header p {
+	font-size: 40px;
+	color: red;
+	position: relative;
+}
+
+.cart_header a {
+	position: absolute;
+	right: 0.2%;
+	text-decoration: none;
+	font-size: 18px;
+
+}
+
+
+
+
+.hinhAnh-itemGH img {
+	width:120px;
+}
+
+.item-gio-hang{
+	display: flex;
+	text-align: center;
+	align-items: center;
+	font-size: 20px;
+	margin-bottom: 30px;
+}
+
+.item-gio-hang:first-child{
+	margin-bottom: 20px;
+}
+
+.item-gio-hang div {
+	width: 20%;
+}
+
+
+.DanhMuc{
+	font-weight: bold;
+}
+
+.hanh_dong i:hover {
+	cursor: pointer;
+	color: tomato;
+}
+
+#exit_cart:hover {
+	color: red;
+}
+
+.cart_footer {
+	width: 100%;
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	bottom: 0px;
+
+}
+
+
+.cart_page {
+	display: flex;
+}
+
+.cart_page_numbers{
+	text-align: center;
+	padding: 7.5px 14px 7.5px 14px;
+	font-size: 21px;
+	margin : 10px;
+	background-color: tomato;
+	border-radius: 5px;
+}
