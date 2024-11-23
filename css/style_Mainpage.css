@@ -8,7 +8,9 @@
 }
 
 
-
+#registerForm form p{
+	color: black;
+}
 body{
     height: 100vh;
     display: flex;
@@ -147,7 +149,20 @@ nav ul li:nth-child(6) i {
 	max-width: 400px;
 	position: relative;
 }
-
+#cssRegisterForm div{
+	display: none;
+	font-size: 14px;
+	padding-left: 10px;
+	margin-top: -10px;
+	width: max-content;
+}
+#cssLoginForm div{
+	display: none;
+	font-size: 14px;
+	padding-left: 10px;
+	margin-top: -10px;
+	width: max-content;
+}
 label {
 	font-size: 16px;
 	color: #333;
@@ -161,6 +176,7 @@ input[type="text"], input[type="password"], input[type="email"]{
 	border: 1px solid #ddd;
 	border-radius: 5px;
 	font-size: 14px;
+	margin-top: -10px;
 }
 
 button {
@@ -183,6 +199,15 @@ button {
 }
 
 /* Nút chuyển đổi */
+#changing{
+	background-color: #007bff;
+	color: #fff;
+	width: 100%;
+	margin-top: 10px;
+}
+#changing:hover{
+	background-color: #0056b3;
+}
 #change {
 	background-color: #007bff;
 	color: #fff;
@@ -198,12 +223,6 @@ button[type="submit"]{
 #change:hover {
 	background-color: #0056b3;
 }
-
-/* Ẩn form đăng ký ban đầu */
-#registerForm {
-	display: none;
-}
-
 
 .user-afterLog {
 	font-size: 18px;
