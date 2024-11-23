@@ -645,3 +645,24 @@ document.addEventListener("DOMContentLoaded", () => {
     renderProduct(currentPage);  // Hiển thị sản phẩm cho trang đầu tiên
     renderPagination();  // Hiển thị phân trang
 });
+
+function searchProductsByName(searchQuery) {
+    // Lấy danh sách sản phẩm từ localStorage
+    const products = JSON.parse(localStorage.getItem("products")) || [];
+    
+    // Lọc sản phẩm dựa trên từ khóa tìm kiếm
+    return products.filter(product => 
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+}
+
+function searchProducts() {
+    // Lấy giá trị tìm kiếm từ input
+    const searchQuery = document.getElementById("search-input").value.trim();
+
+    // Lọc danh sách sản phẩm
+    const filteredProducts = searchProductsByName(searchQuery);
+    const productList = document.getElementById("product-list");
+    // Hiển thị sản phẩm lọc được
+    displayProducts(filteredProducts, productList);
+}
