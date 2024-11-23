@@ -24,8 +24,8 @@
                     </a>
                 </li>
                 <li>
-                    <!--<input type="text" placeholder="Bạn tìm gì..."> 
-			<i class="fa-solid fa-magnifying-glass"></i>  -->
+                    <input type="text" placeholder="Bạn tìm gì..."> 
+			<i class="fa-solid fa-magnifying-glass"></i> 
                     <input type="text" placeholder="Nhập tên sản phẩm...">
                     <a href="" class="srch">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -35,7 +35,7 @@
                     <a>Tìm kiếm nâng cao</a>
                 </li>
                 <li>
-                    <a href="#" onclick = "GoToCart()">
+                    <a href="#" onclick = "DivGioHang()">
                         <i class="fa-solid fa-cart-shopping"></i>
                         Giỏ hàng
                     </a>
@@ -57,17 +57,18 @@
         </nav>
     </header>
     <main>
-        <div class="container">
-            <!--phan loai theo hang san pham-->
+        <div class="container" id = 'container'>
             <div class="brand-list">
                 <a href="indexLogin.html?brand=Acer"><img src="../img/acer.png" alt="acer"></a>
                 <a href="indexLogin.html?brand=Lenovo"><img src="../img/lenovo.png" alt="lenovo"></a>
-            </div>
+            </div> 
             <!--List cac san pham-->
-            <section class="product-one"> <!--section product list-->
+            <section class="product-one">
 				<h2>Các sản phẩm nổi bật</h2>
-				<div id="product-list" class="product-row"> </div>	<!-- Sản Phẩm-->		
-				<div id="product-info" class="modal" style="display: none;"><!--Chi Tiết Sản Phẩm-->
+				<div id="product-list" class="product-row"> </div>	
+                <!-- Sản Phẩm-->		
+				<div id="product-info" class="modal" style="display: none;">
+                    <!--Chi Tiết Sản Phẩm-->
 					<div id="info">
 						<button type="button" id="close" onclick="closeProductInfo()">x</button>
 						<div class="left">
@@ -86,8 +87,8 @@
 					</div>
 				</div>
 			</section>
-            <!--phan trang-->
-            <div id="pagination">
+                <!--phan trang-->
+             <div id="pagination">
 				<button>&lt;</button>
 				<button class="active">1</button>
 				<button>2</button>
@@ -95,35 +96,199 @@
 				<button>&gt;</button>
 			</div>
         </div>
+            <!-- 
+            <div class="Cart_container">
+                <div class="Cart_Details_Box Cart_products_details">
 
-        <!-- Giỏ hàng -->
-
-        <div class ="Modal" id = "Modal_2">
-            <div class = "Modal__overlay_cart"></div>
-            <div class= "Modal__body_cart">
-                <div class="cart_header">
-                    <p> Giỏ hàng của bạn</p>
-                    <a href = "#" id = "exit_cart" onclick="Close_Cart()"> X </a>
-                </div>
-
-
-                <div class = "Gio-hang" id="gio-hang">
-                        
-                </div>
-                
-                <div class= "cart_footer"> 
-                    <div class = "cart_page">
-                        <div class = "cart_page_numbers" id = "cart_page_1"> 1 </div>
-                        <div class = "cart_page_numbers" id = "cart_page_2"> 2 </div>
-                        <div class = "cart_page_numbers" id = "cart_page_3"> 3 </div>
+                    <div class="Cart_PB_Header">
+                        <h2> Giỏ hàng </h2>
                     </div>
-                    <button>Xác nhận mua</button>
+
+                    <div class="Cart_PB_Box Cart_PB_Box_Title"> 
+                        <div>
+                            <p>Tên sản phẩm</p>
+                        </div>
+
+                        <div>
+                            <p>Hình ảnh</p>
+                        </div>
+
+                        <div>
+                            <p>Giá tiền</p>
+                        </div>
+
+                        <div>
+                            <p>Số lượng</p>
+                        </div>
+
+                        <div>
+                            <p>Tổng</p>
+                        </div>
+
+                        <div class="Cart_product_delete">
+                            <i class="fa-solid fa-trash" onclick="XoaItemGH()"></i>
+                        </div>
+                    </div>    
                 </div>
-                
+
+                <div class="Cart_Details_Box Cart_user_details">
+                    <div>
+                        <h2> Thông tin khách hàng</h2>
+                    </div> 
+
+                    <div>
+                        <label for ="customer_name">Họ và tên </label>
+                        <input type="text" id = "customer_name">
+                    </div>
+
+                    <div>
+                        <label for ="customer_phone_number">Số điện thoại</label>
+                        <input type="text" id = "customer_phone_number">
+                    </div>
+
+                    <div>
+                        <label for ="address">Địa chỉ</label>
+                        <input type="text" id = "address">
+                    </div>
+
+
+                    <div class = "Cart_forms">
+                        <select>
+                            <option value="" disabled selected>Tỉnh / thành</option>
+                            <option value="BacNinh">Bắc Ninh</option>
+                            <option value="Hanoi">Hà Nội</option>
+                            <option value="HCM"> TP.HCM </option>
+                        </select>
+
+                        <select id="district" required>
+                            <option value="" disabled selected> Quận / huyện</option>
+                            <option></option>
+                        </select>
+
+                        <select id="ward" required>
+                            <option value="" disabled selected> Phường / xã</option>
+                        </select>
+                    </div>
+
+                    <div class="Cart_vouncher">
+                    <div>
+                        <label>Nhập mã giảm giá</label>
+                        <input type="text" id = "Cart_vouncher">
+                    </div>
+                        <button class= "btn_Cart btn_Cart_vouncher"> Áp dụng </button>
+                    </div>
+
+                    <div class="Cart_total">
+                        <h3>Total</h3>
+                        <div class="Total_info">
+                            <div class="previous_fee">
+                                <span>Tổng tiền</span>
+                                <span>100.000.000đ</span>
+                            </div>
+
+                            <div class="delivery_fee">
+                                <span>Phí vận chuyển</span>
+                                <span class="delivery_fee_number" >Free </span>
+                            </div>
+
+                            <div class="discount_fee">
+                                <span>Giảm giá</span>
+                                <span>-500.000đ </span>
+                            </div>
+
+                            <div class="final_fee">
+                                <span class="final_fee_title">Thanh toán</span>
+                                <span class="final_fee_number">99.500.000đ</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="Offer_btn">
+                        <button class="btn_Cart btn_Cart_offer">Thanh toán</button>
+                    </div>
+                </div>
             </div>
         </div>
-    
 
+        -->
+        <div class="Modal" id="Modal_Cart_details">    
+            <div class="Modal_overlay"></div>
+            <div class="Modal_body">
+                <div class="Modal_inner" id="Modal_Cart_details__inner">
+                    <div>
+                        <h2>Thông tin khách hàng</h2>
+                    </div> 
+        
+                    <div>
+                        <label for="customer_name">Họ và tên</label>
+                        <input type="text" id="customer_name">
+                        <p class="customer_name_warning_1"> *Họ và tên không được để trống</p>
+                        <p class="customer_name_warning_2"> *Họ và tên phải có hơn 5 ký tự</p>
+                    </div>
+        
+                    <div>
+                        <label for="customer_phone_number">Số điện thoại</label>
+                        <input type="text" id="customer_phone_number">
+                        <p> *Số điện thoại không được để trống </p>
+                        <p> *Vui lòng nhập số điện thoại phù hợp</p>
+                    </div>
+        
+                    <div>
+                        <label for="address">Địa chỉ</label>
+                        <input type="text" id="address">
+                    </div>
+        
+                    <div class="Cart_forms">
+                        <select>
+                            <option value="" disabled selected>Tỉnh / thành</option>
+                            <option value="BacNinh">Bắc Ninh</option>
+                            <option value="Hanoi">Hà Nội</option>
+                            <option value="HCM">TP.HCM</option>
+                        </select>
+        
+                        <select id="district" required>
+                            <option value="" disabled selected>Quận / huyện</option>
+                        </select>
+        
+                        <select id="ward" required>
+                            <option value="" disabled selected>Phường / xã</option>
+                        </select>                       
+                    </div>
+        
+                    <!-- Phần chọn phương thức thanh toán -->
+                    <div class="payment_method">
+                        <h3>Phương thức thanh toán</h3>
+                        <div>
+                            <label>
+                                <input type="radio" name="payment_method" value="cash" checked>
+                                <i class="fa-solid fa-money-bill-1-wave"></i>
+                                Thanh toán tiền mặt khi nhận hàng
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="radio" name="payment_method" value="credit_card">
+                                <i class="fa-solid fa-credit-card"></i>
+                                Thanh toán bằng thẻ tín dụng
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="radio" name="payment_method" value="online">
+                                <i class="fa-solid fa-building-columns"></i>
+                                Thanh toán online qua chuyển khoản
+                            </label>
+                        </div>
+                    </div>
+        
+                    <!-- Nút Submit -->
+                    <div class="submit_section">
+                        <button class="btn_submit" onclick="SubmitOrder()">Xác nhận đặt hàng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
 
     </main>
     <footer>
@@ -135,6 +300,7 @@
 </body>
 <script src="../js/index.js" ></script>
 <script src = "../js/GioHang.js"></script>
+<script src = "../js/indexAdmin.js"> </script>
 
 
 </html>

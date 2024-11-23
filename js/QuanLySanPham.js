@@ -98,7 +98,7 @@ function TaoSanPham (){
         return false
     }
     else
-        document.getElementById('AP_RAM_Warning').style.display ='none';
+        document.getElementById('AP_SSD_Warning').style.display ='none';
 
     if (NodeCard.value == ''){
         document.getElementById('AP_CARD_Warning').style.display ='block';
@@ -131,7 +131,14 @@ function TaoSanPham (){
     var SSD = NodeSSD.value
     var Card = NodeCard.value
     var MoTa = NodeMoTa.value
-  
+    NodeBrand.value = 'Acer';
+    NodeTen.value = '';
+    NodeGiaTien.value = '';
+    NodeViTri.value = '';
+    NodeRam.value = '';
+    NodeSSD.value = '';
+    NodeCard.value = '';
+    NodeMoTa.value = '';
 
     const fr = new FileReader();
     var HinhAnh
@@ -144,26 +151,16 @@ function TaoSanPham (){
         var SanPham = KhoiTaoSanPham(HinhAnh,Brand,Ten,GiaTien,ViTri,ID,Ram,SSD,Card,MoTa)
         DSSP.push(SanPham);
         console.log(DSSP)
-
-
+         
         /*Chuyen array DSSP thanh JSON roi them vao localStorage */
         var JSON_DSSP = JSON.stringify(DSSP)
         localStorage.setItem('products',JSON_DSSP)
         localStorage.setItem('countID', countID + 1); // Tăng countID và lưu lại
 
-    
+        NodeHinhAnh.value = '';
         alert("Thêm sản phẩm thành công")
      
-        NodeBrand.value = 'Acer';
-        NodeTen.value = '';
-        NodeGiaTien.value = '';
-        NodeViTri.value = '';
-        NodeRam.value = '';
-        NodeSSD.value = '';
-        NodeCard.value = '';
-        NodeMoTa.value = '';
-        NodeHinhAnh.value = ''; 
-
+     
     });
     
 }
@@ -224,8 +221,8 @@ function SettingProducts_Container(){
     return '<div class="Modal__AddProducts">\n'+
 '                <div class="AddProducts__Header">\n'+
 '                    <ul class="AP_HeaderList">\n'+
-'                        <li>Thêm sản phẩm</li>\n'+
-'                        <li><a href="indexAdmin.html" id="Thoat_TaoSP">Trở lại</a></li>\n'+
+'                        <li class= "Fix_Title">Thêm sản phẩm</li>\n'+
+'                        <li><a href="#" id="Thoat_TaoSP" onclick = "DivDSSanPham()">Trở lại</a></li>\n'+
 '                    </ul>\n'+
 '                </div>\n'+
 '                <div class="AP_main">\n'+
@@ -295,12 +292,53 @@ function SettingProducts_Container(){
 function FixProducts_Container(){
     return '<div class="FixProducts_Header">\n'+          //Phan nay hien thi truc tiep
 '                <ul class="AP_HeaderList">\n'+
-'                    <li>Sửa sản phẩm</li>\n'+
+'                    <li><a href="#" class ="Them_SP" id="Tao_SP"  onclick = "DivThemSanPham()">Thêm sản phẩm</a></li>'+
+'                    <li class = "Fix_Title"> QUẢN LÝ SẢN PHẨM </li>\n'+
 '                    <li><a href="indexAdmin.html" id="Thoat_TaoSP">Trở lại</a></li>\n'+
 '                </ul>\n'+
 '            </div>\n'+
+
+' <div class = "Container_FixProducts"> ' +
+'           <div class = "Products_box Products_box_title">\n'+
+'                    <div class="FixProduct_id">\n'+
+'                        <span>  ID   </span>\n'+
+'                    </div>\n'+
+'\n'+
+'                    <div class="FixProduct_img">\n'+
+'                        Hình ảnh \n'+
+'                    </div>\n'+
+'\n'+
+'                    <div class="FixProduct_name">\n'+
+'                        <p> Tên sản phẩm </p>\n'+
+'                    </div>\n'+
+'\n'+
+'                    <div class="FixProduct_brand">\n'+
+'                        <p> Hãng máy </p>\n'+
+'                    </div>\n'+
+'\n'+
+'                    <div class="FixProduct_price">\n'+
+'                        <span> Giá tiền </span>\n'+
+'                    </div>\n'+
+'\n'+
+'                    <div class="ChiTiet FixProduct_ram"> <span> RAM </span> </div>\n'+
+'                    <div class="ChiTiet FixProduct_ssd"> <span> SSD</span> </div>\n'+
+'                    <div class="ChiTiet FixProduct_card"> <span> CARD </span> </div>\n'+
+'                    <div class="ChiTiet FixProduct_location"> <span> Vị trí </span> </div>\n'+
+'                    \n'+
+'                    <div class="HD">\n'+
+'                        Sửa\n'+
+'                    </div>\n'+
+'\n'+
+'                    <div class="HD">\n'+
+'                        Xóa\n'+
+'                    </div>\n'+
+'                    <div class="HD1">\n'+
+'                         Thao tác\n'+
+'                    </div>\n'+
+'                </div>' +
+'  </div>  ' +
 '\n'+        //Phan nay duoc load tu javascript
-'            <div class = "Modal_FixProducts" id = "FixProducts_Main">\n'+
+'            <div class = "Container_FixProducts" id = "FixProducts_Main">\n'+
 '                \n'+
 '            </div>\n'+
 '\n'+
@@ -309,7 +347,11 @@ function FixProducts_Container(){
 '                     <a href ="#" class="FixProduct_page" id = "FixProduct_page_1" onclick="Fix_Page_1()"> 1 </a></li>\n'+
 '                     <a href ="#" class="FixProduct_page" id = "FixProduct_page_2" onclick="Fix_Page_2()"> 2 </a></li>\n'+
 '                </div>\n'+
-'            </div>';
+'            </div>' + 
+'           <div class="Modal" id = "Modal_fix_products">' +
+'               <div class="Modal_overlay"></div>' +
+'               <div class="Modal_body">' +
+'            <div class="Modal_inner" id = "Modal_fix_products__inner">';
 }
 
 
@@ -324,7 +366,7 @@ function DivThemSanPham(){
 
 var NodeFixMain, NodeFixFooter, NodeBtn_1, NodeBtn_2;
 
-function DivSuaSanPham() {
+function DivDSSanPham() {
     NodeContainer.innerHTML = FixProducts_Container(); // Chèn HTML động vào container
 
     // Lấy lại các phần tử sau khi HTML đã được chèn vào DOM
@@ -333,10 +375,10 @@ function DivSuaSanPham() {
     NodeBtn_1 = document.getElementById('FixProduct_page_1');
     NodeBtn_2 = document.getElementById('FixProduct_page_2');
 
-    if (!NodeFixMain || !NodeFixFooter) {
-        console.error("NodeFixMain hoặc NodeFixFooter không tồn tại sau khi chèn HTML!");
-        return;
-    }
+    // if (!NodeFixMain || !NodeFixFooter) {
+    //     console.error("NodeFixMain / NodeFixFooter không tồn tại !");
+    //     return;
+    // }
 
     TrangSanPham(); // Gọi hàm hiển thị sản phẩm và phân trang
 }
@@ -385,7 +427,7 @@ function ChuyenSanPhamSangHTML (SanPham){
 '                    <div class="ChiTiet FixProduct_card"> <span> '+ SanPham.card + '</span> </div>\n'+
 '                    <div class="ChiTiet FixProduct_location"> <span> '+ SanPham.location+ '</span> </div>\n'+
 '                    \n'+
-'                    <div class="Hanh-Dong">\n'+
+'                    <div class="Hanh-Dong" onclick = "DivSuaSanPham('+ SanPham.id+ ')">\n'+
 '                        <i class="fa-solid fa-wrench"> </i>\n'+
 '                    </div>\n'+
 '\n'+
@@ -460,3 +502,218 @@ function XoaSanPham(idSanPham){
 }
 
 
+var NodeModalFix = document.getElementById('Modal_fix_products')
+var NodeModalInner = document.getElementById('Modal_fix_products__inner')
+
+function DivSuaSanPham(idSanPham){
+    var Fix_SanPham;
+    for ( var i = 0 ; i < DSSP.length ;i++){
+        if (DSSP[i].id == idSanPham){
+            Fix_SanPham = DSSP[i];
+            break;
+        }
+    }
+
+    NodeModalFix.style.display = 'flex';
+    NodeModalInner.innerHTML = '            <a href="#" class="Modal_fix_exit" onclick = "Exit_FixingProduct()">X</a>' +
+'            <div class="Modal_fix_header">SỬA SẢN PHẨM</div>' +
+'            <div class="div_img_file">' +
+'                <div>' +
+'                    <label for="fix_hinhAnh">Hình ảnh</label>' +
+'                    <input type="file" id="fix_hinhAnh" accept="image/*" />' +
+'                </div>' +
+'               <div class="img_preview">' +
+'                   <img src="'+ Fix_SanPham.image+'" alt="Preview" />'+
+'               </div>' +
+'                <p class="AP_Warning" id="AP_IMG_Warning">*Hình ảnh không được để trống</p>' +
+'            </div>' +
+'            <div>' +
+'                <label for="fix_kind">Hãng máy</label>' +
+'           <select id="fix_kind">' +
+'               <option value="Acer" ' + (Fix_SanPham.kind === 'Acer' ? 'selected' : '') + '>Acer</option>' +
+'               <option value="Lenovo" ' + (Fix_SanPham.kind === 'Lenovo' ? 'selected' : '') + '>Lenovo</option>' +
+'               <option value="MSI" ' + (Fix_SanPham.kind === 'MSI' ? 'selected' : '') + '>MSI</option>' +
+'           </select>' +
+
+'            </div>' +
+'            <div>' +
+'                <label for="fix_name">Tên sản phẩm</label>' +
+'                <input type="text" id="fix_name" value = "'+ Fix_SanPham.name+'">' +
+'                <p class="AP_Warning" id="AP_NAME_Warning">*Tên sản phẩm không được để trống</p>' +
+'            </div>' +
+'            <div>' +
+'                <label for="fix_price">Giá tiền</label>' +
+'                <input type="number" id="fix_price" value = "'+ Fix_SanPham.price+ '"> ' +
+'                <p class="AP_Warning" id="AP_PRICE1_Warning">*Giá tiền phẩm không được để trống</p>' +
+'                <p class="AP_Warning" id="AP_PRICE2_Warning">*Giá tiền sản phẩm phải trên 9.000.000đ</p>' +
+'            </div>' +
+'            <div class="ChiTietSP">' +
+'                <div>' +
+'                    <label for="fix_location">Vị trí</label>' +
+'                    <input type="text" id="fix_location" value = "'+ Fix_SanPham.location+'">' +
+'                    <p class="AP_Warning" id="AP_LOCATION_Warning">*Vị trí không được để trống</p>' +
+'                </div>' +
+'                <div>' +
+'                    <label for="fix_id">ID</label>' +
+'                    <input type="text" id="fix_id" value="'+Fix_SanPham.id+'" readonly>' +
+'                </div>' +
+'                <div>' +
+'                    <label for="fix_ram">Ram</label>' +
+'                    <input type="text" id="fix_ram" value = "'+ Fix_SanPham.ram+'" > ' +
+'                    <p class="AP_Warning" id="AP_RAM_Warning">*Ram không được để trống</p>' +
+'                </div>' +
+'                <div>' +
+'                    <label for="fix_ssd">SSD</label>' +
+'                    <input type="text" id="fix_ssd" value = "'+ Fix_SanPham.ssd+'">' +
+'                    <p class="AP_Warning" id="AP_SSD_Warning">*SSD không được để trống</p>' +
+'                </div>' +
+'                <div>' +
+'                    <label for="fix_card">Card</label>' +
+'                    <input type="text" id="fix_card" value = "'+ Fix_SanPham.card+'">' +
+'                    <p class="AP_Warning" id="AP_CARD_Warning">*Card không được để trống</p>' +
+'                </div>' +
+'            </div>' +
+'            <div>' +
+'                <label for="fix_description">Mô tả</label>' +
+'                <input type="text" id="fix_description" value = "'+ Fix_SanPham.description +'">' +
+'                <p class="AP_Warning" id="AP_DESCRIPTION_Warning">*Mô tả không được để trống</p>' +
+'            </div>' +
+'            <div class="AP_Button_Div">' +
+'                <button class="AP_button" onclick="return SuaSanPham('+idSanPham+')">Sửa sản phẩm</button>' +
+'            </div>' +
+'        </div>' +
+'    </div>' +
+'</div>';
+}
+
+function SuaSanPham(idSanPham){
+    var NodeHinhAnh = document.getElementById("fix_hinhAnh");
+    var NodeBrand = document.getElementById("fix_kind");
+    var NodeTen = document.getElementById("fix_name");
+    var NodeGiaTien = document.getElementById("fix_price");
+    var NodeViTri = document.getElementById("fix_location");
+    var NodeRam = document.getElementById("fix_ram");
+    var NodeSSD = document.getElementById("fix_ssd");
+    var NodeCard = document.getElementById("fix_card");
+    var NodeMoTa = document.getElementById("fix_description");
+    
+    if (NodeTen.value == ''){
+        document.getElementById('AP_NAME_Warning').style.display ='block';
+        NodeTen.focus()
+        return false
+    }
+    else{
+        document.getElementById('AP_NAME_Warning').style.display ='none';
+    }
+
+    if (NodeGiaTien.value == ''){
+        document.getElementById('AP_PRICE1_Warning').style.display ='block';
+        NodeGiaTien.focus()
+        return false
+    }
+    else
+        document.getElementById('AP_PRICE1_Warning').style.display ='none';
+
+    
+    if (NodeGiaTien.value < 9000000){
+        document.getElementById('AP_PRICE2_Warning').style.display ='block';
+        NodeGiaTien.focus()
+        return false
+    }
+    else
+        document.getElementById('AP_PRICE2_Warning').style.display ='none';
+    
+
+    if (NodeViTri.value == ''){
+        document.getElementById('AP_LOCATION_Warning').style.display ='block';
+        NodeViTri.focus()
+        return false
+    }
+    else
+        document.getElementById('AP_LOCATION_Warning').style.display ='none';
+
+
+    if (NodeRam.value == ''){
+        document.getElementById('AP_RAM_Warning').style.display ='block';
+        NodeRam.focus()
+        return false
+    }
+    else
+        document.getElementById('AP_RAM_Warning').style.display ='none';
+
+    if (NodeSSD.value == ''){
+        document.getElementById('AP_SSD_Warning').style.display ='block';
+        NodeSSD.focus()
+        return false
+    }
+    else
+        document.getElementById('AP_SSD_Warning').style.display ='none';
+
+    if (NodeCard.value == ''){
+        document.getElementById('AP_CARD_Warning').style.display ='block';
+        NodeCard.focus()
+        return false
+    }
+    else
+        document.getElementById('AP_CARD_Warning').style.display ='none';
+
+    if (NodeMoTa.value == ''){
+        document.getElementById('AP_DESCRIPTION_Warning').style.display ='block';
+        NodeMoTa.focus()
+        return false
+    }
+    else
+        document.getElementById('AP_DESCRIPTION_Warning').style.display ='none';
+
+        console.log("idSanPham:", idSanPham);
+        console.log("Danh sách sản phẩm:", DSSP);
+
+    var Brand = NodeBrand.value
+    var Ten = NodeTen.value
+    var GiaTien = NodeGiaTien.value
+    var ViTri = NodeViTri.value
+    var Ram = NodeRam.value
+    var SSD = NodeSSD.value
+    var Card = NodeCard.value
+    var MoTa = NodeMoTa.value
+
+    for (var i = 0 ; i < DSSP.length ; i++ ){
+        if(DSSP[i].id == idSanPham){
+            DSSP[i].kind = Brand;
+            DSSP[i].name = Ten;
+            DSSP[i].price = GiaTien;
+            DSSP[i].location = ViTri;
+            DSSP[i].ram = Ram;
+            DSSP[i].ssd = SSD;
+            DSSP[i].card = Card;
+            DSSP[i].description = MoTa;
+            if (NodeHinhAnh.files.length !== 0) {
+                const fr = new FileReader();
+                fr.readAsDataURL(NodeHinhAnh.files[0]) 
+                fr.addEventListener('load', () => {
+                    const url = fr.result
+                    DSSP[i].image = url;
+                    localStorage.setItem('products', JSON.stringify(DSSP));
+                        DivDSSanPham();
+                        DivSuaSanPham(idSanPham);
+                });   
+                break;
+            }
+            else {
+                localStorage.setItem('products', JSON.stringify(DSSP));
+                DivDSSanPham();
+                DivSuaSanPham(idSanPham);
+                break;
+            }
+        }
+
+    }
+    
+
+    alert("Đã sửa");
+
+}
+
+function Exit_FixingProduct(){
+    NodeModalFix.style.display ='none';
+}
