@@ -126,74 +126,87 @@ function filterProducts() {
 }
 
 function displayProducts(products, productList) {
+    // Xóa nội dung cũ trong danh sách sản phẩm
+    productList.innerHTML = "";
+
     // Kiểm tra nếu danh sách sản phẩm trống
-    if (products.length === 0) {
+    if (!products || products.length === 0) {
         console.log("Không có sản phẩm nào để hiển thị");
+        productList.innerHTML = "<p>Không có sản phẩm nào!</p>";
         return;
     }
 
-    // Sử dụng vòng lặp for thay vì forEach
+    // Sử dụng DocumentFragment để tối ưu hiệu suất khi thêm nhiều phần tử
+    const fragment = document.createDocumentFragment();
+
+    // Duyệt qua danh sách sản phẩm
     for (let i = 0; i < products.length; i++) {
         const product = products[i];
 
+        // Kiểm tra tính hợp lệ của dữ liệu sản phẩm
+        if (!product.id || !product.name || !product.image || !product.price) {
+            console.error(`Dữ liệu không hợp lệ cho sản phẩm tại index ${i}`, product);
+            continue;
+        }
+
         // Tạo phần tử chính cho sản phẩm
-        const productItem = document.createElement("div");
-        productItem.className = "product-one-content-item1";
+        const productCard = document.createElement("div");
+        productCard.className = "product-card";
 
-        // Tạo phần tử hình ảnh
-        const productImage = document.createElement("img");
-        productImage.src = product.image;
-        productImage.alt = product.name;
+        // Tạo phần tử chứa hình ảnh
+        const productImage = document.createElement("div");
+        productImage.className = "product-image";
 
-        // Tạo danh sách chi tiết sản phẩm
-        const productDetails = document.createElement("ul");
-        productDetails.className = "product-one-content-text";
+        const productImageLink = document.createElement("a");
+        productImageLink.onclick = () => showProductDetails(product.id);
 
-        // Tạo từng phần tử thông tin sản phẩm
-        const sale = document.createElement("li");
-        sale.className = "sale";
-        sale.textContent = "HSSV GIẢM 500K";
+        const productImageElement = document.createElement("img");
+        productImageElement.src = product.image;
+        productImageElement.alt = product.name;
 
-        const name = document.createElement("li");
-        name.className = "product-name";
-        name.textContent = product.name;
+        productImageLink.appendChild(productImageElement);
+        productImage.appendChild(productImageLink);
 
-        // Thêm giá sản phẩm
-        const price = document.createElement("li");
-        price.style.color = "#E83A45";
-        price.style.fontSize = "19px";
-        price.innerHTML = `<strong>${product.price}<sup><u>đ</u></sup></strong>`;
+        // Tạo phần tử chứa thông tin sản phẩm
+        const productInfo = document.createElement("div");
+        productInfo.className = "product-info";
+
+        const productName = document.createElement("h3");
+        productName.className = "product-name";
+        productName.textContent = product.name;
+
+        const productPrice = document.createElement("p");
+        productPrice.className = "product-price";
+        productPrice.innerHTML = `<strong>${product.price.toLocaleString("vi-VN")}<sup><u>đ</u></sup></strong>`;
 
         // Tạo các nút chức năng
-        const buttonContainer = document.createElement("li");
-        buttonContainer.className = "product-one-configuration";
-        buttonContainer.id = "button-settings";
-
-        const detailButton = document.createElement("button");
-        detailButton.textContent = "Xem Chi Tiết";
-        detailButton.onclick = () => showProductDetails(product.id);
+        const productActions = document.createElement("div");
+        productActions.className = "product-actions";
 
         const addToCartButton = document.createElement("button");
-        addToCartButton.id = "addtoCart";
+        addToCartButton.className = "btn-cart";
         addToCartButton.textContent = "Thêm Vào Giỏ Hàng";
+        addToCartButton.onclick = () => ThemVaoGioHang(product.id);
 
-        buttonContainer.appendChild(detailButton);
-        buttonContainer.appendChild(addToCartButton);
+        productActions.appendChild(addToCartButton);
 
-        // Thêm các phần tử vào productDetails
-        productDetails.appendChild(sale);
-        productDetails.appendChild(name);
-        productDetails.appendChild(price);
-        productDetails.appendChild(buttonContainer);
+        // Thêm các phần tử vào productInfo
+        productInfo.appendChild(productName);
+        productInfo.appendChild(productPrice);
+        productInfo.appendChild(productActions);
 
-        // Thêm hình ảnh và chi tiết vào productItem
-        productItem.appendChild(productImage);
-        productItem.appendChild(productDetails);
+        // Gắn các phần tử vào productCard
+        productCard.appendChild(productImage);
+        productCard.appendChild(productInfo);
 
-        // Thêm productItem vào danh sách sản phẩm
-        productList.appendChild(productItem);
+        // Thêm productCard vào fragment
+        fragment.appendChild(productCard);
     }
+
+    // Gắn fragment vào danh sách sản phẩm
+    productList.appendChild(fragment);
 }
+
 
 // function renderProduct() {
 //     html = '';
@@ -238,9 +251,9 @@ let currentPage = 1; // Trang hiện tại
 // Hàm hiển thị danh sách sản phẩm cho trang hiện tại
 function renderProduct(page) {
     let html = '';
-    const start = (page - 1) * itemsPerPage;  // Tính chỉ mục bắt đầu
-    const end = start + itemsPerPage;  // Tính chỉ mục kết thúc
-    const paginatedProducts = products.slice(start, end);  // Cắt danh sách sản phẩm cho trang hiện tại
+    const start = (page - 1) * itemsPerPage; // Tính chỉ mục bắt đầu
+    const end = start + itemsPerPage; // Tính chỉ mục kết thúc
+    const paginatedProducts = products.slice(start, end); // Cắt danh sách sản phẩm cho trang hiện tại
 
     for (let i = 0; i < paginatedProducts.length; i++) {
         const product = paginatedProducts[i];
@@ -253,21 +266,22 @@ function renderProduct(page) {
 
         // Xây dựng HTML cho mỗi sản phẩm
         html += `
-        <div class="product-one-content-item1">
-            <a onclick="showProductDetails(${product.id})">
-                <img src="${product.image}" alt="${product.name}">
-            </a>
-            <ul class="product-one-content-text">
-                <li class="sale">HSSV GIẢM 500K</li>
-                <li class="product-name">${product.name}</li>
-                <li style="color: #E83A45; font-size: 19px">
+        <div class="product-card">
+            <div class="product-image">
+                <a onclick="showProductDetails(${product.id})">
+                    <img src="${product.image}" alt="${product.name}" />
+                </a>
+            </div>
+            <div class="product-info">
+            
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-price">
                     <strong>${product.price.toLocaleString('vi-VN')}<sup><u>đ</u></sup></strong>
-                </li>
-                <li class="product-one-configuration" id="button-settings">
-                    <button onclick="showProductDetails(${product.id})">Xem Chi Tiết</button>
-                    <button id="addtoCart" onclick="ThemVaoGioHang(${product.id})">Thêm Vào Giỏ Hàng</button>
-                </li>
-            </ul>
+                </p>
+                <div class="product-actions">
+                    <button class="btn-cart" onclick="ThemVaoGioHang(${product.id})">Thêm Vào Giỏ Hàng</button>
+                </div>
+            </div>
         </div>`;
     }
 
