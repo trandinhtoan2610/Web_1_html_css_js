@@ -63,7 +63,7 @@ function signup(e) {
     } else {
         if (isNaN(Number(phone.value))) {
             document.getElementById('phoneNumberError').style.display = 'block';
-            document.getElementById('phoneNumberError').innerHTML = 'Số điện thoại không hợp lệ';
+            document.getElementById('phoneNumberError').innerHTML = 'Số điện thoại không đúng định dạng';
             flag = false;
         } else {
             if (Number(phone.value) < 100000000 || Number(phone.value) > 999999999) {
@@ -147,7 +147,7 @@ function login(e) {
             }
         }
     }
-    document.getElementById('passwordloginerror').style.display = 'block';
-    document.getElementById('passwordloginerror').innerHTML = 'Sai thông tin đăng nhập';
+    document.getElementById('passwordError').style.display = 'block';
+    document.getElementById('passwordError').innerHTML = 'Sai thông tin đăng nhập';
     return false;
 }
