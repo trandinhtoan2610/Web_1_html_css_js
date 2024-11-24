@@ -1,5 +1,6 @@
 function displayUsername() {
     var user = JSON.parse(localStorage.getItem('userlogin'));
+    console.log(user);
     console.log(user.fullname);
     if (user.fullname) {
         document.getElementById("printUsername").innerHTML = user.fullname;

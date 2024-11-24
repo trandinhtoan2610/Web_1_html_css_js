@@ -4,8 +4,10 @@ document.getElementById('loginButton').addEventListener('click', function (e) {
 });
 function createAdmin() {
     if (localStorage.getItem('user') === null) {
+        var countIDUser = 0;
+        localStorage.setItem('countIDUser', countIDUser);
         var userArray = [];
-        var user = { username: 'admin', fullname: 'Hoang',address: '36', password: 'admin', phone: '0329997881', datesignup: '26-09-2005' };
+        var user = { id: countIDUser, username: 'admin', fullname: 'Hoang',address: '36', password: 'admin', phone: '0329997881', datesignup: '26-09-2005' };
         userArray.push(user);
         localStorage.setItem('user', JSON.stringify(userArray));
     }
@@ -63,12 +65,12 @@ function signup(e) {
     } else {
         if (isNaN(Number(phone.value))) {
             document.getElementById('phoneNumberError').style.display = 'block';
-            document.getElementById('phoneNumberError').innerHTML = 'Số điện thoại không đúng định dạng';
+            document.getElementById('phoneNumberError').innerHTML = '<i>*Số điện thoại không đúng định dạng</i>';
             flag = false;
         } else {
             if (Number(phone.value) < 100000000 || Number(phone.value) > 999999999) {
                 document.getElementById('phoneNumberError').style.display = 'block';
-                document.getElementById('phoneNumberError').innerHTML = 'Số điện thoại không đúng định dạng';
+                document.getElementById('phoneNumberError').innerHTML = '<i>*Số điện thoại không đúng định dạng</i>';
                 flag = false;
             } else {
                 document.getElementById('phoneNumberError').style.display = 'none';
@@ -82,7 +84,7 @@ function signup(e) {
     } else {
         if (password.value.length < 8) {
             document.getElementById('newPasswordError').style.display = 'block';
-            document.getElementById('newPasswordError').innerHTML = 'Mật khẩu phải trên 8 ký tự';
+            document.getElementById('newPasswordError').innerHTML = '<i>*Mật khẩu phải trên 8 ký tự</i>';
             flag = false;
         } else {
             document.getElementById('newPasswordError').style.display = 'none';
@@ -99,12 +101,14 @@ function signup(e) {
     }
     var d = new Date();
     var datesignup = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
-    var user = { username: username.value, fullname: fullname.value,address: address.value, password: password.value, phone: phone.value, datesignup: datesignup };
+    var countIDUser = JSON.parse(localStorage.getItem('countIDUser'));countIDUser += 1;
+    localStorage.setItem('countIDUser', countIDUser);
+    var user = { id: countIDUser.value, username: username.value, fullname: fullname.value,address: address.value, password: password.value, phone: phone.value, datesignup: datesignup };
     var userArray = JSON.parse(localStorage.getItem('user'));
     for (var i = 0; i < userArray.length; i++) {
         if (user.username == userArray[i].username) {
             document.getElementById('newUsernameError').style.display = 'block';
-            document.getElementById('newUsernameError').innerHTML = 'Tên đăng nhập đã có người sử dụng';
+            document.getElementById('newUsernameError').innerHTML = '<i>*Tên đăng nhập đã có người sử dụng</i>';
             username.focus();
             return false;
         }
@@ -148,6 +152,6 @@ function login(e) {
         }
     }
     document.getElementById('passwordError').style.display = 'block';
-    document.getElementById('passwordError').innerHTML = 'Sai thông tin đăng nhập';
+    document.getElementById('passwordError').innerHTML = '<i>*Sai thông tin đăng nhập</i>';
     return false;
 }

@@ -1,21 +1,5 @@
 var products_json = localStorage.getItem('products')
 var products = JSON.parse(products_json)
-
-function displayUsername() {
-    var username = localStorage.getItem("currentUser");
-    if (username) {
-        document.getElementById("printUsername").textContent = username;
-    }
-    else {
-        document.getElementById("printUsername").textContent = "Khách";
-    }
-}
-document.addEventListener('DOMContentLoaded', function () {
-    displayUsername();
-});
-
-
-
 function showProductDetails(productID) {
     console.log(document.getElementById('product-info')); // Check if it exists
     var btn_AddToCart = document.getElementById('color-Cart')
