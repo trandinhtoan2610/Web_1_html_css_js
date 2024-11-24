@@ -7,7 +7,9 @@
 	font-family: 'Roboto', sans-serif;
 }
 
-
+#loginButton2{
+	border-radius: 15px;
+}
 #registerForm form p{
 	color: black;
 }
@@ -18,7 +20,7 @@ body{
 }
 
 /*nav-bar*/
-.navbar-list {
+.navbar-list{
 	display: flex;
     justify-content: center;
 	align-items: center;
@@ -27,7 +29,6 @@ body{
 	padding: 15px 0 10px 0;
 	color: #fff;
 }
-
 .navbar-list img{
 	width: 270px;
 }
@@ -40,7 +41,7 @@ body{
 	cursor: pointer;
 }
 
-.navbar-list li {
+.navbar-list li{
     margin-right: 20px;
 }
 
@@ -397,20 +398,6 @@ ul {
 		width: 100%;
 	}
 }
-@media screen and (max-width: 768px) {
-    .navbar-list {
-        flex-direction: column;
-    }
-
-    .navbar-list li {
-        margin: 10px 0;
-    }
-
-    .navbar-list a {
-        font-size: 14px;
-    }
-}
-
 /* Modal Styles */
 .modal {
     display: none;

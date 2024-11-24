@@ -2,6 +2,10 @@ document.getElementById('loginButton').addEventListener('click', function (e) {
     event.preventDefault();
     document.getElementById('authModal').style.display = 'flex';
 });
+document.getElementById('loginButton2').addEventListener('click', function (e) {
+    event.preventDefault();
+    document.getElementById('authModal').style.display = 'flex';
+});
 function createAdmin() {
     if (localStorage.getItem('user') === null) {
         var countIDUser = 0;
