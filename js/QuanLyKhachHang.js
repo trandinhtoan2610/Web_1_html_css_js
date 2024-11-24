@@ -1,4 +1,4 @@
-// Hiển thị danh sách người dùng
+// Hàm hiển thị danh sách người dùng
 function displayUsers() {
     const container = document.getElementById('container');
     if (!container) {
@@ -48,45 +48,12 @@ function displayUsers() {
             <input type="text" id="addFullname">
             <label for="addPhonenumber">Số điện thoại:</label>
             <input type="text" id="addPhonenumber">
+            <label for="addAddress">Địa chỉ:</label>
+            <input type="text" id="addAddress">
             <label for="addPassword">Mật khẩu:</label>
             <input type="password" id="addPassword">
             <button onclick="addUserFromForm()">Lưu</button>
             <button onclick="hideAddUserForm()">Hủy</button>
-        </div>
-        <div id="editUserForm" style="display: none;">
-            <h3>Sửa thông tin người dùng</h3>
-            <input type="hidden" id="editOldUsername">
-            <label for="editUsername">Tên người dùng:</label>
-            <input type="text" id="editUsername">
-            <label for="editFullname">Họ tên:</label>
-            <input type="text" id="editFullname">
-            <label for="editPhonenumber">Số điện thoại:</label>
-            <input type="text" id="editPhonenumber">
-            <label for="editPassword">Mật khẩu:</label>
-            <input type="password" id="editPassword">
-            <button onclick="editUserFromForm()">Lưu</button>
-            <button onclick="hideEditUserForm()">Hủy</button>
-        </div>
-    <div id="editAddressForm" style="display: none;">
-    <h3>Sửa Địa Chỉ</h3>
-
-    <label for="editProvince">Tỉnh/Thành phố:</label>
-    <select id="editProvince"><option value="">Chọn Tỉnh/Thành phố</option></select><br>
-
-    <label for="editDistrict">Quận/Huyện:</label>
-    <select id="editDistrict" disabled><option value="">Chọn Quận/Huyện</option></select><br>
-
-    <label for="editCommune">Phường/Xã:</label>
-    <select id="editCommune" disabled><option value="">Chọn Phường/Xã</option></select><br>
-
-    <label for="editSpecificAddress">Địa chỉ cụ thể:</label>
-    <textarea id="editSpecificAddress" placeholder="Nhập địa chỉ cụ thể"></textarea><br>
-
-    <button onclick="saveAddressFromForm()">Lưu</button>
-    <button onclick="hideEditAddressForm()">Hủy</button>
-</div>
-
-
         </div>
         <div class="table">
             <div class="table-header">
@@ -100,24 +67,24 @@ function displayUsers() {
     `;
 
     if (userList.length === 0) {
-        userTable += `
+        userTable += ` 
             <div class="table-row">
                 <div class="table-data" colspan="5">Không có người dùng nào</div>
             </div>
         `;
     } else {
         userList.forEach(user => {
-            userTable += ` 
+            userTable += `
             <div class="table-row"> 
                 <div class="table-data">${user.id}</div>
                 <div class="table-data">${user.username}</div> 
                 <div class="table-data">${user.fullname}</div> 
                 <div class="table-data">${user.phonenumber}</div> 
                 <div class="table-data">
+                     <button onclick="deleteUser('${user.username}')">Xóa</button>
                      <button onclick="lockUser('${user.username}')">Khóa</button>
                      <button onclick="unlockUser('${user.username}')">Mở Khóa</button>
                      <button onclick="showEditUserForm('${user.username}', '${user.fullname}', '${user.phonenumber}', '${user.password}')">Sửa</button>
-                    <button onclick="showEditAddressForm('username')">Nhập Địa Chỉ</button>
                 </div>
             </div>`;
         });
@@ -130,6 +97,8 @@ function displayUsers() {
 
     container.innerHTML = userTable;
 }
+
+
 
 // Hiển thị form thêm người dùng
 function showAddUserForm() {
@@ -146,20 +115,16 @@ function showEditAddressForm(username) {
     const form = document.getElementById('editAddressForm');
     form.style.display = 'block';  // Hiển thị form
 
-    // Kiểm tra xem có người dùng trong localStorage không
-    const user = JSON.parse(localStorage.getItem(username)); // Lấy thông tin người dùng từ localStorage
+    // Kiểm tra xem có thông tin người dùng trong localStorage không
+    const user = JSON.parse(localStorage.getItem(username));
     if (user && user.address) {
-        loadProvinces(user.address.province); // Tải tỉnh và chọn tỉnh hiện tại
-        loadDistricts(user.address.provinceCode, user.address.district); // Tải quận/huyện đã lưu
-        loadCommunes(user.address.districtCode, user.address.commune); // Tải phường/xã đã lưu
-        document.getElementById('editSpecificAddress').value = user.address.specificAddress; // Điền địa chỉ cụ thể
+        document.getElementById('editAddressInput').value = user.address; // Hiển thị địa chỉ đã lưu
     } else {
-        loadProvinces(); // Nếu không có địa chỉ, tải danh sách tỉnh mặc định
+        document.getElementById('editAddressInput').value = ""; // Reset trường nhập nếu chưa có dữ liệu
     }
 
-    form.dataset.username = username; // Lưu username để dùng khi cập nhật
+    form.dataset.username = username; // Lưu username để dùng khi lưu
 }
-
 
 // Ẩn form nhập địa chỉ
 function hideEditAddressForm() {
@@ -167,181 +132,46 @@ function hideEditAddressForm() {
     form.style.display = 'none';
 }
 
+// Lưu địa chỉ từ form
 function saveAddressFromForm() {
     const form = document.getElementById('editAddressForm');
     const username = form.dataset.username; // Lấy username từ dataset của form
 
-    // Lấy giá trị các trường nhập vào
-    const province = document.getElementById('editProvince').value;
-    const district = document.getElementById('editDistrict').value;
-    const commune = document.getElementById('editCommune').value;
-    const specificAddress = document.getElementById('editSpecificAddress').value;
+    // Lấy giá trị từ trường nhập địa chỉ
+    const address = document.getElementById('editAddressInput').value.trim();
 
-    if (!province || !district || !commune || !specificAddress) {
-        alert("Vui lòng nhập đầy đủ thông tin địa chỉ!");
+    if (!address) {
+        alert("Vui lòng nhập địa chỉ!");
         return;
     }
 
     // Lấy thông tin người dùng từ localStorage
-    const user = JSON.parse(localStorage.getItem(username)); // Sử dụng đúng username từ form
-    if (user) {
-        user.address = {
-            province: document.getElementById('editProvince').options[document.getElementById('editProvince').selectedIndex].text,
-            provinceCode: province,
-            district: document.getElementById('editDistrict').options[document.getElementById('editDistrict').selectedIndex].text,
-            districtCode: district,
-            commune: document.getElementById('editCommune').options[document.getElementById('editCommune').selectedIndex].text,
-            communeCode: commune,
-            specificAddress: specificAddress
-        };
+    const user = JSON.parse(localStorage.getItem(username)) || {}; // Tạo đối tượng nếu chưa tồn tại
+    user.address = address; // Gán địa chỉ vào đối tượng người dùng
 
-        // Lưu thông tin người dùng vào localStorage
-        localStorage.setItem(username, JSON.stringify(user));
-        alert("Địa chỉ đã được cập nhật.");
-        hideEditAddressForm();  // Ẩn form sau khi lưu thành công
-        displayUsers();  // Cập nhật danh sách người dùng (nếu có hàm này)
-    } else {
-        alert("Không tìm thấy người dùng.");
-    }
+    // Lưu thông tin người dùng vào localStorage
+    localStorage.setItem(username, JSON.stringify(user));
+    alert("Địa chỉ đã được cập nhật.");
+    hideEditAddressForm();  // Ẩn form sau khi lưu thành công
+    displayUsers();  // Cập nhật danh sách người dùng (nếu có hàm này)
 }
-
-
-// Tải danh sách tỉnh/thành phố từ API
-async function loadProvinces(selectedProvince = null) {
-    try {
-        const response = await fetch("https://provinces.open-api.vn/api/p/");
-        const provinces = await response.json();
-        const provinceSelect = document.getElementById("editProvince");
-        provinceSelect.innerHTML = '<option value="">Chọn Tỉnh/Thành phố</option>';
-
-        provinces.forEach((province) => {
-            const option = document.createElement("option");
-            option.value = province.code; // Lưu code tỉnh
-            option.textContent = province.name; // Hiển thị tên tỉnh
-            provinceSelect.appendChild(option);
-        });
-
-        // Nếu có tỉnh đã được chọn (khi sửa địa chỉ), chọn tỉnh đó
-        if (selectedProvince) {
-            provinceSelect.value = selectedProvince; // Đặt giá trị đã lưu
-        }
-
-        // Sự kiện khi chọn Tỉnh/Thành phố
-        provinceSelect.addEventListener("change", () => {
-            const selectedProvinceCode = provinceSelect.value;
-            if (selectedProvinceCode) {
-                loadDistricts(selectedProvinceCode); // Tải danh sách quận/huyện
-            } else {
-                resetSelect("district");
-                resetSelect("commune");
-            }
-        });
-    } catch (error) {
-        console.error("Lỗi khi tải danh sách tỉnh/thành phố:", error);
-    }
-}
-
-async function loadDistricts(provinceCode, selectedDistrict = null) {
-    try {
-        // Gọi API để lấy dữ liệu quận/huyện theo tỉnh
-        const response = await fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`);
-        const province = await response.json();
-        const districtSelect = document.getElementById("editDistrict");
-        districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>'; // Reset dropdown Quận/Huyện
-
-        // Kiểm tra nếu có dữ liệu quận/huyện
-        if (province.districts && province.districts.length > 0) {
-            province.districts.forEach((district) => {
-                const option = document.createElement("option");
-                option.value = district.code; // Lưu mã quận
-                option.textContent = district.name; // Hiển thị tên quận
-                districtSelect.appendChild(option);
-            });
-            districtSelect.disabled = false; // Bật dropdown Quận/Huyện
-        } else {
-            districtSelect.disabled = true; // Nếu không có quận/huyện, vô hiệu hóa dropdown
-        }
-
-        // Nếu có quận đã được chọn, chọn quận đó
-        if (selectedDistrict) {
-            districtSelect.value = selectedDistrict;
-        }
-
-        // Sự kiện khi chọn Quận/Huyện
-        districtSelect.addEventListener("change", () => {
-            const selectedDistrictCode = districtSelect.value;
-            if (selectedDistrictCode) {
-                loadCommunes(selectedDistrictCode); // Tải danh sách Phường/Xã
-            } else {
-                resetSelect("commune");
-            }
-        });
-    } catch (error) {
-        console.error("Lỗi khi tải danh sách quận/huyện:", error);
-    }
-}
-
-
-
-async function loadCommunes(districtCode, selectedCommune = null) {
-    try {
-        const response = await fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`);
-        const district = await response.json();
-        const communeSelect = document.getElementById("editCommune");
-
-        communeSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>'; // Reset dropdown Phường/Xã
-
-        // Kiểm tra nếu có phường/xã
-        if (district.wards && district.wards.length > 0) {
-            district.wards.forEach((commune) => {
-                const option = document.createElement("option");
-                option.value = commune.code; // Lưu code phường
-                option.textContent = commune.name; // Hiển thị tên phường
-                communeSelect.appendChild(option);
-            });
-
-            communeSelect.disabled = false; // Bật dropdown Phường/Xã
-        } else {
-            communeSelect.disabled = true; // Nếu không có phường/xã, vô hiệu hóa dropdown
-        }
-
-        // Nếu đã có phường/xã được chọn, chọn phường đó
-        if (selectedCommune) {
-            communeSelect.value = selectedCommune;
-        }
-
-    } catch (error) {
-        console.error("Lỗi khi tải danh sách phường/xã:", error);
-    }
-}
-function resetSelect(id) {
-    const select = document.getElementById(id);
-    select.innerHTML = `<option value="">Chọn ${id === "district" ? "Quận/Huyện" : "Phường/Xã"}</option>`;
-    select.disabled = true; // Vô hiệu hóa dropdown nếu không có dữ liệu
-}
-
-
-// Hàm reset các dropdown (Quận/Huyện, Phường/Xã)
-function resetSelect(id) {
-    const select = document.getElementById(id);
-    select.innerHTML = `<option value="">Chọn ${id === "district" ? "Quận/Huyện" : "Phường/Xã"}</option>`;
-    select.disabled = true;
-}
-
 
 // Hàm thêm người dùng từ form
 function addUserFromForm() {
     const username = document.getElementById('addUsername').value;
     const fullname = document.getElementById('addFullname').value;
     const phonenumber = document.getElementById('addPhonenumber').value;
+    const address = document.getElementById('addAddress').value;
+
     const password = document.getElementById('addPassword').value;
 
-    addUser(username, fullname, phonenumber, password);
+
+    addUser(username, fullname, phonenumber,address, password);
     hideAddUserForm(); // Ẩn form sau khi thêm người dùng
 }
 // Hàm thêm người dùng (đã cập nhật với ID)
-function addUser(username, fullname, phonenumber, password) {
-    if (!username || !fullname || !phonenumber || !password) {
+function addUser(username, fullname, phonenumber, password, address) {
+    if (!username || !fullname || !phonenumber || !address ||!password) {
         alert("Vui lòng nhập đầy đủ thông tin người dùng.");
         return;
     }
@@ -367,9 +197,9 @@ function addUser(username, fullname, phonenumber, password) {
         username: username,
         fullname: fullname,
         phonenumber: phonenumber,
+        address : address,
         password: password,
         isLocked: false, // Mặc định tài khoản chưa bị khóa
-        address: null // Địa chỉ mặc định là null
     };
 
     // Lưu thông tin người dùng vào localStorage
@@ -487,6 +317,7 @@ function searchUserById() {
                     <div class="table-data">${user.fullname}</div>
                     <div class="table-data">${user.phonenumber}</div>
                     <div class="table-data">
+                        <button onclick="deleteUser('${user.username}')">Xóa</button>
                         <button onclick="lockUser('${user.username}')">Khóa</button>
                         <button onclick="unlockUser('${user.username}')">Mở Khóa</button>
                         <button onclick="showEditUserForm('${user.username}', '${user.fullname}', '${user.phonenumber}', '${user.password}')">Sửa</button>
@@ -533,6 +364,59 @@ function unlockUser(username) {
     } else {
         alert("Không tìm thấy người dùng.");
     }
+}
+// Hàm xóa người dùng
+function deleteUser(username) {
+    if (!username) {
+        alert("Không tìm thấy tên người dùng để xóa.");
+        return;
+    }
+
+    // Kiểm tra xem người dùng có tồn tại trong localStorage không
+    const user = localStorage.getItem(username);
+    if (!user) {
+        alert("Người dùng không tồn tại.");
+        return;
+    }
+
+    // Xóa người dùng khỏi localStorage
+    localStorage.removeItem(username);
+    alert(`Người dùng '${username}' đã được xóa thành công.`);
+
+    // Cập nhật lại danh sách ID sau khi xóa người dùng
+    updateUserIds();  // Cập nhật lại ID người dùng sau khi xóa
+
+    // Gọi lại hàm displayUsers() để tự động làm mới bảng
+    displayUsers();   // Gọi lại hàm displayUsers để cập nhật giao diện
+}
+
+// Hàm cập nhật lại danh sách ID sau khi xóa người dùng
+function updateUserIds() {
+    let userIdCounter = 0; // Khởi tạo lại ID từ 0
+    const users = [];
+
+    // Lấy tất cả các mục trong localStorage và lọc ra thông tin người dùng
+    for (let key in localStorage) {
+        if (localStorage.hasOwnProperty(key)) {
+            const user = JSON.parse(localStorage.getItem(key));
+            if (user && user.username && user.id) {
+                users.push(user);
+            }
+        }
+    }
+
+    // Sắp xếp người dùng theo ID cũ (để tránh xáo trộn thứ tự)
+    users.sort((a, b) => a.id - b.id);
+
+    // Gán lại ID mới cho từng người dùng
+    users.forEach((user) => {
+        userIdCounter++;
+        user.id = userIdCounter;
+        localStorage.setItem(user.username, JSON.stringify(user));
+    });
+
+    // Cập nhật bộ đếm ID mới
+    localStorage.setItem("userIdCounter", userIdCounter);
 }
 
 // Kiểm tra trạng thái người dùng khi đăng nhập
