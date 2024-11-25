@@ -1,9 +1,7 @@
 .Cart_container {
-	background-color: #ddd;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-
 }
 
 

@@ -28,9 +28,8 @@
                     </a>
                 </li>
                 <li>
-                    <input type="text" placeholder="Nhập tên sản phẩm...">
-                    <a href="#"><i class="fa-solid fa-magnifying-glass"
-                            style="font-size: 18px; color: #f1f1f1;"></i></a>
+                    <input type="text" id="search-input" placeholder="Nhập tên sản phẩm...">
+					<a onclick="searchProducts()"><i class="fa-solid fa-magnifying-glass"></i></a>
                 </li>
                 <li>
                     <a href="#">Tìm kiếm nâng cao</a>
@@ -69,8 +68,8 @@
                     </a>
                 </li>
                 <li class="hideSearch">
-                    <input type="text" placeholder="Nhập tên sản phẩm...">
-                    <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+                    <input type="text" id="search-input" placeholder="Nhập tên sản phẩm...">
+					<a onclick="searchProducts()"><i class="fa-solid fa-magnifying-glass"></i></a>
                 </li>
                 <li class="hideonMobile">
                     <a href="#">Tìm kiếm nâng cao</a>
@@ -139,119 +138,7 @@
                 <button>&gt;</button>
             </div>
         </div>
-        <!--
-        <div class="Cart_container">
-            <div class="Cart_Details_Box Cart_products_details">
-
-                <div class="Cart_PB_Header">
-                    <h2> Giỏ hàng </h2>
-                </div>
-
-                <div class="Cart_PB_Box Cart_PB_Box_Title">
-                    <div>
-                        <p>Tên sản phẩm</p>
-                    </div>
-
-                    <div>
-                        <p>Hình ảnh</p>
-                    </div>
-
-                    <div>
-                        <p>Giá tiền</p>
-                    </div>
-
-                    <div>
-                        <p>Số lượng</p>
-                    </div>
-
-                    <div>
-                        <p>Tổng</p>
-                    </div>
-
-                    <div class="Cart_product_delete">
-                        <i class="fa-solid fa-trash" onclick="XoaItemGH()"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="Cart_Details_Box Cart_user_details">
-                <div>
-                    <h2> Thông tin khách hàng</h2>
-                </div>
-
-                <div>
-                    <label for="customer_name">Họ và tên </label>
-                    <input type="text" id="customer_name">
-                </div>
-
-                <div>
-                    <label for="customer_phone_number">Số điện thoại</label>
-                    <input type="text" id="customer_phone_number">
-                </div>
-
-                <div>
-                    <label for="address">Địa chỉ</label>
-                    <input type="text" id="address">
-                </div>
-
-
-                <div class="Cart_forms">
-                    <select>
-                        <option value="" disabled selected>Tỉnh / thành</option>
-                        <option value="BacNinh">Bắc Ninh</option>
-                        <option value="Hanoi">Hà Nội</option>
-                        <option value="HCM"> TP.HCM </option>
-                    </select>
-
-                    <select id="district" required>
-                        <option value="" disabled selected> Quận / huyện</option>
-                        <option></option>
-                    </select>
-
-                    <select id="ward" required>
-                        <option value="" disabled selected> Phường / xã</option>
-                    </select>
-                </div>
-
-                <div class="Cart_vouncher">
-                    <div>
-                        <label>Nhập mã giảm giá</label>
-                        <input type="text" id="Cart_vouncher">
-                    </div>
-                    <button class="btn_Cart btn_Cart_vouncher"> Áp dụng </button>
-                </div>
-
-                <div class="Cart_total">
-                    <h3>Total</h3>
-                    <div class="Total_info">
-                        <div class="previous_fee">
-                            <span>Tổng tiền</span>
-                            <span>100.000.000đ</span>
-                        </div>
-
-                        <div class="delivery_fee">
-                            <span>Phí vận chuyển</span>
-                            <span class="delivery_fee_number">Free </span>
-                        </div>
-
-                        <div class="discount_fee">
-                            <span>Giảm giá</span>
-                            <span>-500.000đ </span>
-                        </div>
-
-                        <div class="final_fee">
-                            <span class="final_fee_title">Thanh toán</span>
-                            <span class="final_fee_number">99.500.000đ</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="Offer_btn">
-                    <button class="btn_Cart btn_Cart_offer">Thanh toán</button>
-                </div>
-            </div>
-        </div>
-        -->
+      
         </div>
     </main>
     <div class="footer-clean">

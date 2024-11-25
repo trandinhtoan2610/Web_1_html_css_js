@@ -33,75 +33,74 @@ function filterProducts() {
 }
 
 function displayProducts(products, productList) {
-    // Kiểm tra nếu danh sách sản phẩm trống
+    productList.innerHTML = ""; // Xóa các sản phẩm cũ
+    // Kiểm tra nếu danh sách sản phẩm trống và hiển thị thông báo cho người dùng
     if (products.length === 0) {
-        console.log("Không có sản phẩm nào để hiển thị");
+        const noProductsMessage = document.createElement("p");
+        noProductsMessage.textContent = "Không có sản phẩm nào để hiển thị";
+        productList.appendChild(noProductsMessage);
         return;
     }
 
-    // Sử dụng vòng lặp for thay vì forEach
-    for (let i = 0; i < products.length; i++) {
-        const product = products[i];
+    // Duyệt qua từng sản phẩm
+    products.forEach(product => {
+        // Tạo card cho mỗi sản phẩm
+        const productCard = document.createElement("div");
+        productCard.classList.add("product-card");
 
-        // Tạo phần tử chính cho sản phẩm
-        const productItem = document.createElement("div");
-        productItem.className = "product-one-content-item1";
+        // Tạo phần hình ảnh sản phẩm
+        const productImage = document.createElement("div");
+        productImage.classList.add("product-image");
 
-        // Tạo phần tử hình ảnh
-        const productImage = document.createElement("img");
-        productImage.src = product.image;
-        productImage.alt = product.name;
+        const imageLink = document.createElement("a");
+        imageLink.setAttribute("href", "#"); // Bạn có thể thay đổi href để dẫn đến trang chi tiết
+        imageLink.addEventListener("click", () => showProductDetails(product.id));
 
-        // Tạo danh sách chi tiết sản phẩm
-        const productDetails = document.createElement("ul");
-        productDetails.className = "product-one-content-text";
+        const img = document.createElement("img");
+        img.src = product.image;
+        img.alt = product.name;
 
-        // Tạo từng phần tử thông tin sản phẩm
-        const sale = document.createElement("li");
-        sale.className = "sale";
-        sale.textContent = "HSSV GIẢM 500K";
+        imageLink.appendChild(img);
+        productImage.appendChild(imageLink);
 
-        const name = document.createElement("li");
-        name.className = "product-name";
-        name.textContent = product.name;
+        // Tạo phần thông tin sản phẩm
+        const productInfo = document.createElement("div");
+        productInfo.classList.add("product-info");
 
-        // Thêm giá sản phẩm
-        const price = document.createElement("li");
-        price.style.color = "#E83A45";
-        price.style.fontSize = "19px";
-        price.innerHTML = `<strong>${product.price}<sup><u>đ</u></sup></strong>`;
+        const productName = document.createElement("h3");
+        productName.classList.add("product-name");
+        productName.textContent = product.name;
 
-        // Tạo các nút chức năng
-        const buttonContainer = document.createElement("li");
-        buttonContainer.className = "product-one-configuration";
-        buttonContainer.id = "button-settings";
+        const productPrice = document.createElement("p");
+        productPrice.classList.add("product-price");
+        productPrice.innerHTML = `<strong>${product.price.toLocaleString('vi-VN')}<sup><u>đ</u></sup></strong>`;
 
-        const detailButton = document.createElement("button");
-        detailButton.textContent = "Xem Chi Tiết";
-        detailButton.onclick = () => showProductDetails(product.id);
+        // Tạo các nút hành động
+        const productActions = document.createElement("div");
+        productActions.classList.add("product-actions");
 
         const addToCartButton = document.createElement("button");
-        addToCartButton.id = "addtoCart";
+        addToCartButton.classList.add("btn-cart");
         addToCartButton.textContent = "Thêm Vào Giỏ Hàng";
-        addToCartButton.onclick = () => ThemVaoGioHang(product);
+        addToCartButton.addEventListener("click", () => ThemVaoGioHang(product.id));
 
-        buttonContainer.appendChild(detailButton);
-        buttonContainer.appendChild(addToCartButton);
+        productActions.appendChild(addToCartButton);
 
-        // Thêm các phần tử vào productDetails
-        productDetails.appendChild(sale);
-        productDetails.appendChild(name);
-        productDetails.appendChild(price);
-        productDetails.appendChild(buttonContainer);
+        // Thêm thông tin vào product-info
+        productInfo.appendChild(productName);
+        productInfo.appendChild(productPrice);
+        productInfo.appendChild(productActions);
 
-        // Thêm hình ảnh và chi tiết vào productItem
-        productItem.appendChild(productImage);
-        productItem.appendChild(productDetails);
+        // Thêm các phần vào card
+        productCard.appendChild(productImage);
+        productCard.appendChild(productInfo);
 
-        // Thêm productItem vào danh sách sản phẩm
-        productList.appendChild(productItem);
-    }
+        // Thêm card vào danh sách sản phẩm
+        productList.appendChild(productCard);
+    });
 }
+
+
 // Mua theo số lượng
 var plus = document.getElementsByClassName('plus'),
     minus = document.getElementsByClassName('minus'),
@@ -122,4 +121,26 @@ for (var i = 0; i < plus.length; i++) {
         if (input.value > 0)
             input.value = parseInt(input.value) - 1;
     })
+}
+
+function searchProductsByName(searchQuery) {
+    // Lấy danh sách sản phẩm từ localStorage
+
+    
+    // Lọc sản phẩm dựa trên từ khóa tìm kiếm
+    return products.filter(product => 
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+}
+
+function searchProducts() {
+    // Lấy giá trị tìm kiếm từ input
+    const searchQuery = document.getElementById("search-input").value.trim();
+    // Lọc danh sách sản phẩm
+    const filteredProducts = searchProductsByName(searchQuery);
+    console.log(filteredProducts);  
+    const productList = document.getElementById("product-list");
+    
+    // Hiển thị sản phẩm lọc được
+    displayProducts(filteredProducts, productList);
 }
