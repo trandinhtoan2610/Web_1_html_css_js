@@ -1,4 +1,4 @@
-const itemsPerPage = 10; // Số sản phẩm mỗi trang
+const itemsPerPage = 8; // Số sản phẩm mỗi trang
 let currentPage = 1; // Trang hiện tại
 
 // Hàm hiển thị danh sách sản phẩm cho trang hiện tại
