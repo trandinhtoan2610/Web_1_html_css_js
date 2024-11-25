@@ -1,29 +1,29 @@
-var json = JSON.stringify(products);
-localStorage.setItem("products", json);
-function showProductDetails(productID) {
-    const product_Info = document.getElementById('product-info');
-    const product_Name = document.getElementById("productName");
-    const product_Price = document.getElementById("productPrice");
-    const product_Ram = document.getElementById("productRam");
-    const product_SSD = document.getElementById("productSSD");
-    const product_Card = document.getElementById("productCard");
-    const product_Location = document.getElementById("productLocation");
-    const product_img = document.getElementById("productImg");
-    const product_Description = document.getElementById("productDescription");
-    product_Info.style.display = 'flex';
-    var productArray = JSON.parse(localStorage.getItem("products"));
-    for (var i = 0; i < productArray.length; i++) {
-        if (productArray[i].id == productID) {
-            product_Name.innerHTML = productArray[i].name;
-            product_Price.innerHTML = "Giá: " + productArray[i].price;
-            product_Ram.innerHTML = "Ram: " + productArray[i].ram;
-            product_SSD.innerHTML = "SSD: " + productArray[i].ssd;
-            product_Card.innerHTML = "Card: " + productArray[i].card;
-            product_Location.innerHTML = "Vị Trí: " + productArray[i].location;
-            product_img.src = productArray[i].image;
-            product_Description.innerHTML = "Mô Tả: " + productArray[i].description;
-        }
+var product = JSON.stringify(products);
+localStorage.setItem("products", product);
+// Hàm hiển thị chi tiết sản phẩm trong modal
+function showProductDetails(productId) {
+    const product = getProductById(productId);
+
+    if (!product) {
+        console.error("Sản phẩm không tồn tại");
+        return;
     }
+
+    // Cập nhật thông tin chi tiết trong modal
+    document.getElementById("productImg").src = product.image;
+    document.getElementById("productName").textContent = product.name;
+    document.getElementById("productPrice").innerHTML = `Giá: ${product.price.toLocaleString('vi-VN')} <sup><u>đ<u></sup>`;
+    document.getElementById("productRam").textContent = `RAM: ${product.ram}`;
+    document.getElementById("productSSD").textContent = `SSD: ${product.ssd}`;
+    document.getElementById("productCard").textContent = `Card: ${product.card}`;
+    document.getElementById("productLocation").textContent = `Địa điểm: ${product.location}`;
+    document.getElementById("productDescription").textContent = product.description;
+
+    // Cập nhật sự kiện Thêm vào giỏ hàng trong modal
+    document.getElementById("color-Cart").setAttribute("onclick", `ThemVaoGioHang(${productId})`);
+
+    // Hiển thị modal
+    document.getElementById("product-info").style.display = "block";
 }
 function closeProductInfo() {
     document.getElementById('product-info').style.display = 'none';

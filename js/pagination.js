@@ -18,7 +18,7 @@ function renderProduct(page) {
         
         <div class="product-card">
                 <div class="product-image">
-                    <a onclick="showProductDetails(${product.id})">
+                    <a href="#" onclick="showProductDetails(${product.id})">
                         <img src="${product.image}" alt="${product.name}" />
                     </a>
                 </div>
@@ -34,7 +34,6 @@ function renderProduct(page) {
             </div>
         `;
     }
-
     document.getElementById("product-list").innerHTML = html;
 }
 
