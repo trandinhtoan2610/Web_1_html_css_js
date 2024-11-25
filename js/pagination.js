@@ -16,22 +16,24 @@ function renderProduct(page) {
             console.error(`Dữ liệu không hợp lệ cho sản phẩm tại index ${i}`, product);
         }
         html += `
-        <div class="product-one-content-item1">
-            <a onclick="showProductDetails(${product.id})">
-                <img src="${product.image}" alt="${product.name}">
-            </a>
-            <ul class="product-one-content-text">
-                <li class="sale">HSSV GIẢM 500K</li>
-                <li class="product-name">${product.name}</li>
-                <li style="color: #E83A45; font-size: 19px">
-                    <strong>${product.price.toLocaleString('vi-VN')}<sup><u>đ</u></sup></strong>
-                </li>
-                <li class="product-one-configuration" id="button-settings">
-                    <button onclick="showProductDetails(${product.id})">Xem Chi Tiết</button>
-                    <button id="addtoCart" onclick="ThemVaoGioHang(${product.id})">Thêm Vào Giỏ Hàng</button>
-                </li>
-            </ul>
-        </div>`;
+        
+        <div class="product-card">
+                <div class="product-image">
+                    <a onclick="showProductDetails(${product.id})">
+                        <img src="${product.image}" alt="${product.name}" />
+                    </a>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-price">
+                        <strong>${product.price.toLocaleString('vi-VN')}<sup><u>đ</u></sup></strong>
+                    </p>
+                    <div class="product-actions">
+                        <button class="btn-cart" onclick="ThemVaoGioHang(${product.id})">Thêm Vào Giỏ Hàng</button>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     // Cập nhật phần tử HTML để hiển thị sản phẩm

@@ -1,7 +1,9 @@
 const showOrderManagement = () => {
     const container = document.getElementById('container');
     container.innerHTML = `
-        
+        <input type="date" id="startDate" />
+        <input type="date" id="endDate" />
+        <button onclick="filterOrdersByDate()">Lọc</button>
         <div class="table">
             <div class="table-header">
                 <div class="header__item"><a id="id" class="filter__link" href="#">Mã đơn hàng</a></div>
@@ -10,6 +12,7 @@ const showOrderManagement = () => {
                 <div class="header__item"><a id="status" class="filter__link filter__link--number" href="#">Trạng thái</a></div>
                 <div class="header__item"><a id="createAt" class="filter__link filter__link--number" href="#">Ngày tạo</a></div>
                 <div class="header__item"><a id="handle" class="filter__link filter__link--number" href="#">Hành động</a></div>
+                <div class="header__item"><a id="handle" class="filter__link filter__link--number" href="#">Chi tiết hóa đơn</a></div>
 		    </div>
             <div class="table-content" id="table-content"></div>
         </div>
@@ -17,51 +20,96 @@ const showOrderManagement = () => {
     loadOrders(); // Tải danh sách đơn hàng từ Local Storage
 };
 
+//hàm format ngày tháng năm
+function formatDate(date) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(date).toLocaleDateString('vi-VN', options);
+}
+
+//hàm update trạng thái đơn hàng
+function updateOrderStatus(orderId) {
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    const updatedOrders = orders.map(order => {
+        if (order.orderId === orderId) {
+            if (order.status === 'Chưa xử lý') {
+                order.status = 'Đã xác nhận';
+            } else if (order.status === 'Đã xác nhận') {
+                order.status = 'Đã giao thành công';
+            }
+        }
+        return order;
+    });
+
+    localStorage.setItem('orders', JSON.stringify(updatedOrders));
+    alert('Cập nhật trạng thái thành công!');
+    loadOrders();
+}
+
+//hàm hủy đơn hàng
+function cancelOrder(orderId) {
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    const orderIndex = orders.findIndex(order => order.orderId === orderId);
+    if (orderIndex === -1) {
+        alert("Không tìm thấy đơn hàng với ID: " + orderId);
+        return;
+    }
+    orders[orderIndex].status = "Đã hủy";
+    localStorage.setItem('orders', JSON.stringify(orders));
+    alert("Đơn hàng đã được hủy!");
+    loadOrders();
+}
+
 // Hàm tải danh sách đơn hàng từ Local Storage
-const loadOrders = () => {
-    const invoices = JSON.parse(localStorage.getItem('invoices')) || [];
+const loadOrders = (filteredOrders) => {
+
+    if (filteredOrders) {
+        invoices = filteredOrders;
+    }else{
+        invoices = JSON.parse(localStorage.getItem('orders')) || [];
+    }
     const table = document.getElementById('table-content');
     table.innerHTML = ''; // Xóa dữ liệu cũ
-    invoices.forEach((invoice, index) => {
+    invoices.forEach((invoice) => {
         const row = `
             <div class="table-row">		
-				<div class="table-data">${invoice.id}</div>
-				<div class="table-data">${invoice.name}</div>
-				<div class="table-data">${invoice.price}</div>
+				<div class="table-data">${invoice.orderId}</div>
+				<div class="table-data">${invoice.fullname}</div>
+				<div class="table-data">${invoice.totalAmount}</div>
 				<div class="table-data">${invoice.status}</div>
-				<div class="table-data">${invoice.createAt}</div>
-                <div class="table-data"><button class="btn btn-delete" onclick="deleteOrder(${invoice.id})">Delete</button></div>
+				<div class="table-data">${formatDate(invoice.createdAt)}</div>
+                <div class="table-data">
+                    <button class="btn btn-handle" onclick="updateOrderStatus(${invoice.orderId})">${invoice.status === 'Chưa xử lý' ? 'Xác nhận' : invoice.status === 'Đã xác nhận' ? 'Đã giao thành công' : ''}</button> 
+                    <button class="btn btn-handle" onclick="cancelOrder(${invoice.orderId})">${invoice.status === 'Chưa xử lý' ? 'Hủy đơn hàng' : ''}</button>
+                </div>
+                <div class="table-data">
+                    <a href="order-details.html?orderId=${invoice.orderId}" class="btn btn-view">Xem chi tiết</a>
+                </div>
 			</div>
         `;
         table.innerHTML += row;
     });
 };
 
-// Hàm thêm đơn hàng mới
-const addOrder = () => {
-    const name = document.getElementById('orderName').value.trim();
-    const price = document.getElementById('orderPrice').value.trim();
 
-    if (!name || !price) {
-        alert('Please enter valid order details.');
+// lọc theo ngày 
+function filterOrdersByDate() {
+    const startDate = new Date(document.getElementById('startDate').value);
+    const endDate = new Date(document.getElementById('endDate').value);
+
+    if (!startDate || !endDate) {
+        loadOrders();
+    }
+    if (startDate > endDate) {
+        alert('Ngày bắt đầu phải nhỏ hơn ngày kết thúc');
         return;
     }
-
     const orders = JSON.parse(localStorage.getItem('orders')) || [];
-    orders.push({ name, price });
-    localStorage.setItem('orders', JSON.stringify(orders));
-    loadOrders();
 
-    // Clear inputs
-    document.getElementById('orderName').value = '';
-    document.getElementById('orderPrice').value = '';
-};
+    const filteredOrders = orders.filter(order => {
+        const createdAt = new Date(order.createdAt);
+        return createdAt >= startDate && createdAt <= endDate;
+    });
+    loadOrders(filteredOrders);
+}
 
-// Hàm xóa đơn hàng
-const deleteOrder = (index) => {
-    const orders = JSON.parse(localStorage.getItem('orders')) || [];
-    orders.splice(index, 1);
-    localStorage.setItem('orders', JSON.stringify(orders));
-    loadOrders();
-};
 
