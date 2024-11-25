@@ -1,4 +1,4 @@
-const itemsPerPage = 10; // Số sản phẩm mỗi trang
+const itemsPerPage = 8; // Số sản phẩm mỗi trang
 let currentPage = 1; // Trang hiện tại
 
 // Hàm hiển thị danh sách sản phẩm cho trang hiện tại
@@ -17,9 +17,11 @@ function renderProduct(page) {
         }
         html += `
         <div class="product-one-content-item1">
+            <div class="imageConsole">
             <a onclick="showProductDetails(${product.id})">
                 <img src="${product.image}" alt="${product.name}">
             </a>
+            </div>
             <ul class="product-one-content-text">
                 <li class="sale">HSSV GIẢM 500K</li>
                 <li class="product-name">${product.name}</li>
