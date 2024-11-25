@@ -126,7 +126,7 @@ function addUser(username, fullname, phone, address, password) {
         phone: phone,
         address: address,
         password: password,
-        isLocked: false,  // Mặc định tài khoản chưa bị khóa
+        status: true,  // Mặc định tài khoản chưa bị khóa
     };
 
     // Lưu thông tin người dùng vào localStorage
@@ -170,11 +170,11 @@ function lockUser(userId) {
     let userList = JSON.parse(localStorage.getItem('user')) || [];
     const user = userList.find(u => u.id === userId);
     if (user) {
-        if (user.isLocked) {
+        if (!user.status) {
             alert("Người dùng đã bị khóa.");
             return;
         }
-        user.isLocked = true;
+        user.status = false;
         localStorage.setItem('user', JSON.stringify(userList));
         alert(`Người dùng '${user.username}' đã bị khóa.`);
         displayUsers();
@@ -187,11 +187,11 @@ function unlockUser(userId) {
     let userList = JSON.parse(localStorage.getItem('user')) || [];
     const user = userList.find(u => u.id === userId);
     if (user) {
-        if (!user.isLocked) {
+        if (user.status) {
             alert("Người dùng không bị khóa.");
             return;
         }
-        user.isLocked = false;
+        user.status = true;
         localStorage.setItem('user', JSON.stringify(userList));
         alert(`Người dùng '${user.username}' đã được mở khóa.`);
         displayUsers();
@@ -259,46 +259,3 @@ function searchUserById() {
     const container = document.getElementById('container');
     container.innerHTML = searchResult;
 }
-function login(e) {
-    e.preventDefault();
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
-
-    if (!username || !password) {
-        alert("Vui lòng nhập đầy đủ tên người dùng và mật khẩu.");
-        return;
-    }
-
-    const userString = localStorage.getItem('user');
-    let userList = userString ? JSON.parse(userString) : [];
-    if (!Array.isArray(userList)) userList = [];
-
-    const user = userList.find(user => user.username === username);
-
-    console.log("Đăng nhập kiểm tra user:", user); // Gỡ lỗi
-
-    if (user) {
-        try {
-            console.log(`Trạng thái isLocked của người dùng: ${user.isLocked}`); // Gỡ lỗi
-            if (user.isLocked) {
-                alert("Tài khoản của bạn đã bị khóa! Vui lòng liên hệ quản trị viên.");
-                return; // Ngăn không cho tiếp tục xử lý
-            }
-            if (user.password === password) {
-                alert("Đăng Nhập Thành Công!!");
-                localStorage.setItem("currentUser", user.fullname);
-                window.location.href = "../html/indexLogin.html";
-            } else {
-                alert("Sai mật khẩu!");
-            }
-        } catch (e) {
-            console.error(`Lỗi khi xử lý dữ liệu người dùng: ${e}`);
-            alert("Đăng Nhập Thất Bại!!");
-        }
-    } else {
-        alert("Tên người dùng không tồn tại!");
-    }
-}
-
-// Hiển thị danh sách người dùng khi tải trang
-document.addEventListener('DOMContentLoaded', displayUsers);
