@@ -316,7 +316,7 @@ function Cart_container(){
 '                    </div>\n'+
 '                    \n'+
 '                    <div class="Offer_btn">\n'+
-'                        <button class="btn_Cart btn_Cart_offer" >Thanh toán</button>\n'+       //Them button onclick o day 
+'                        <button class="btn_Cart btn_Cart_offer" onclick="thanhtoan()">Thanh toán</button>\n'+       //Them button onclick o day 
 '                    </div>\n'+
 '                </div>\n'+
 '            </div>';
@@ -362,3 +362,55 @@ function LoadLocation() {
 }
 
 LoadLocation()
+
+function getProductById(productId) {
+    // Lấy danh sách sản phẩm từ Local Storage
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+
+    // Tìm sản phẩm theo id
+    const product = products.find(item => parseInt(item.id) === productId);
+
+    // Trả về sản phẩm nếu tìm thấy, hoặc null nếu không
+    return product || null;
+}
+
+function thanhtoan() {
+    const user = JSON.parse(localStorage.getItem('userlogin'));
+    const cart = JSON.parse(localStorage.getItem('DSGH')) || [];
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    if (!user) {
+        alert("Vui lòng đăng nhập để tiếp tục thanh toán!");
+        window.location.href = "/login.html";
+        return;
+    }
+
+    if (cart.length === 0) {
+        alert("Giỏ hàng của bạn đang trống. Vui lòng thêm sản phẩm!");
+        return;
+    }
+    const orderDetails = [];
+
+    cart.map(item => {
+        const product = getProductById(item.idSP);
+        console.log(product);
+        const orderDetail = {
+            productId: product.id,
+            productName: product.name,
+            quantity: item.sl,
+            totalPrice: product.price * item.sl
+        };
+        orderDetails.push(orderDetail);
+    });
+    const order = {
+        orderId: orders.length + 1,
+        userId: user.id,
+        fullname: user.fullname,
+        status: "Chưa xử lý", 
+        createdAt: new Date().toISOString(),
+        orderDetails: orderDetails,
+        totalAmount: orderDetails.map(item => item.totalPrice).reduce((a, b) => a + b, 0)
+    };
+    localStorage.setItem('orders', JSON.stringify([...orders, order]));
+}
+
+
