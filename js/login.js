@@ -10,8 +10,9 @@ function createAdmin() {
     if (localStorage.getItem('user') === null) {
         var countIDUser = 0;
         localStorage.setItem('countIDUser', countIDUser);
+        var status = true;
         var userArray = [];
-        var user = { id: countIDUser, username: 'admin', fullname: 'Hoang',address: '36', password: 'admin', phone: '0329997881', datesignup: '26-09-2005' };
+        var user = { id: countIDUser, username: 'admin', fullname: 'Hoang',address: '36', password: 'admin', phone: '0329997881', datesignup: '26-09-2005' , status: status};
         userArray.push(user);
         localStorage.setItem('user', JSON.stringify(userArray));
     }
@@ -105,9 +106,10 @@ function signup(e) {
     }
     var d = new Date();
     var datesignup = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+    var status = true;
     var countIDUser = JSON.parse(localStorage.getItem('countIDUser'));countIDUser += 1;
     localStorage.setItem('countIDUser', countIDUser);
-    var user = { id: countIDUser.value, username: username.value, fullname: fullname.value,address: address.value, password: password.value, phone: phone.value, datesignup: datesignup };
+    var user = { id: countIDUser, username: username.value, fullname: fullname.value,address: address.value, password: password.value, phone: phone.value, datesignup: datesignup, status: status };
     var userArray = JSON.parse(localStorage.getItem('user'));
     for (var i = 0; i < userArray.length; i++) {
         if (user.username == userArray[i].username) {
