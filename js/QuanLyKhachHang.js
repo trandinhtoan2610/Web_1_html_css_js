@@ -94,14 +94,15 @@ function addUserFromForm() {
     const phone = document.getElementById('addPhone').value;
     const address = document.getElementById('addAddress').value;
     const password = document.getElementById('addPassword').value;
-
-    addUser(username, fullname, phone, password, address);
+    var d = new Date();
+    var datesignup = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+    addUser(username, fullname, phone, address, password, datesignup);
     hideAddUserForm();
 }
 
 // Hàm thêm người dùng
-function addUser(username, fullname, phone, address, password) {
-    if (!username || !fullname || !phone || !address || !password) {
+function addUser(username, fullname, phone, address, password, datesignup) {
+    if (!username || !fullname || !phone || !address || !password || !datesignup) {
         alert("Vui lòng nhập đầy đủ thông tin người dùng.");
         return;
     }
@@ -126,6 +127,7 @@ function addUser(username, fullname, phone, address, password) {
         phone: phone,
         address: address,
         password: password,
+        datesignup: datesignup,  // Ngày đăng ký
         status: true,  // Mặc định tài khoản chưa bị khóa
     };
 
@@ -158,12 +160,16 @@ function editUser(userId, newUsername, newFullname, newPhone, newPassword) {
 
 // Hàm xóa người dùng
 function deleteUser(userId) {
-    let userList = JSON.parse(localStorage.getItem('user')) || [];
-    userList = userList.filter(user => user.id !== userId);
+    if (confirm("Bạn muốn xóa người dùng?!!") == false)
+        return;
+    else {
+        let userList = JSON.parse(localStorage.getItem('user')) || [];
+        userList = userList.filter(user => user.id !== userId);
 
-    localStorage.setItem('user', JSON.stringify(userList));
-    alert("Người dùng đã được xóa thành công.");
-    displayUsers();
+        localStorage.setItem('user', JSON.stringify(userList));
+        alert("Người dùng đã được xóa thành công.");
+        displayUsers();
+    }
 }
 //Hàm khóa người dùng
 function lockUser(userId) {

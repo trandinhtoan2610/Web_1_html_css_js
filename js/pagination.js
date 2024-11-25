@@ -1,12 +1,11 @@
-const itemsPerPage = 8; // Số sản phẩm mỗi trang
-let currentPage = 1; // Trang hiện tại
+const itemsPerPage = 8;
+let currentPage = 1;
 
-// Hàm hiển thị danh sách sản phẩm cho trang hiện tại
 function renderProduct(page) {
     let html = '';
-    const start = (page - 1) * itemsPerPage;  // Tính chỉ mục bắt đầu
-    const end = start + itemsPerPage;  // Tính chỉ mục kết thúc
-    const paginatedProducts = products.slice(start, end);  // Cắt danh sách sản phẩm cho trang hiện tại
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedProducts = products.slice(start, end);
 
     for (let i = 0; i < paginatedProducts.length; i++) {
         const product = paginatedProducts[i];
@@ -36,11 +35,9 @@ function renderProduct(page) {
         `;
     }
 
-    // Cập nhật phần tử HTML để hiển thị sản phẩm
     document.getElementById("product-list").innerHTML = html;
 }
 
-// Hàm tạo phân trang
 function renderPagination() {
     const totalPages = Math.ceil(products.length / itemsPerPage);
     let paginationHtml = '';
