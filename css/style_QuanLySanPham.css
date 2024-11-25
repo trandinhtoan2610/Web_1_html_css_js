@@ -1,0 +1,449 @@
+.container{
+    min-height: 100vh;
+    margin-left: calc(var(--navbar-width) + 30px);
+    margin-right: 30px;
+    padding-top: 20px;
+    transition: margin  0.0.3s ease;
+}
+
+
+.Modal__AddProducts{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.AddProducts__Header{
+    width: 100%;
+}
+
+.AP_HeaderList {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    border-bottom: 2px solid black;
+    position: relative; 
+    margin-top: 45px;
+    list-style: none;
+   
+
+}
+
+.Fix_Title{
+    font-size: 34px;
+    font-weight: bold;
+    margin: 0 auto; 
+    width: 50%;
+    text-align: center;
+}
+
+
+.Them_SP {
+    position: absolute;
+    bottom: 10px;
+    width: 25%;
+    
+}
+
+.AP_HeaderList li:last-child {
+    position: absolute;
+    right: 10px; 
+    bottom: 8px;
+
+}
+
+.AP_HeaderList li a {
+    font-size: 22px;
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.AP_HeaderList li a:hover{
+    color: #B22222;
+    font-weight: bold;
+}
+
+.AP_main div label {
+    font-size: 20px;
+    color: black;
+}
+
+.AP_Button_Div{
+    display: flex;
+}
+
+.AP_button {
+    margin: auto;
+    max-width: 50%;
+    padding: 1%;
+    background-color: #FF5050;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.AP_button:hover{
+    background-color: red;
+}
+
+.ChiTietSP {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px; 
+    width: 100%;
+}
+
+.ChiTietSP div {
+    width: 100%; 
+}
+
+.ChiTietSP div input {
+    padding: 10px;
+    width: 100%; 
+    font-size: 16px;
+}
+
+.AP_main div {
+    margin: 30px 0;
+    width: 100%;
+}
+
+.AP_main div input {
+    padding: 15px;
+    font-size: 18px;
+    width: 100%; 
+    box-sizing: border-box; 
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+
+input[type="number"] {
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px; 
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+
+
+#hinhAnh {
+    padding-left: 0;
+    border: none;
+}
+
+#kind {
+    font-size: 16px;
+}
+
+.AP_Warning {
+    color: red;
+    font-style: italic;
+    display: none;
+}
+
+.Container_FixProducts{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.Products_box{
+    display: flex;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin : 10px;
+    align-items: center;
+    font-size: 20px;
+    width: 100%;
+    background-color : white;
+    box-shadow: 2px 3px 4px gray;
+    text-align: center;
+}
+
+.Products_box img {
+    width: 100%;
+}
+
+.Products_box div {
+    margin: 1%;
+}
+
+.FixProducts_Header{
+    margin : 20px 0 15px 0;
+}
+
+.FixProduct_name{
+    width: 20%;
+}
+
+.FixProduct_brand{
+    width: 10%;
+}
+
+.FixProduct_price {
+    width: 10%;
+}
+
+.FixProduct_id{
+    width: 6%;
+}
+
+.FixProduct_img{
+    width: 10%;
+}
+
+.ChiTiet {
+    width: 4%;
+    
+}
+
+.Hanh-Dong{
+    width: 4%;
+}
+
+.HD{
+    width: 4%;
+}
+
+.HD1 {
+    display: none;
+}
+
+
+
+.FixProducts_Footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.FixProduct_Paging{
+    display: flex;
+}
+
+.FixProduct_page{
+    text-align: center;
+    padding: 5px 13px 5px 13px;
+    font-size: 25px;
+    margin: 10px;
+    background-color: yellowgreen;
+    box-shadow: 2px 2px 4px green;
+    border: 1px solid green;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+
+.FixProduct_page:hover {
+    background-color:lightgreen;
+}
+
+.FixProduct_page.active {
+    background-color: #6B8E23; /* Màu của nút được chọn */
+}
+
+.Hanh-Dong:hover{
+    color: red;
+    cursor: pointer;
+}
+
+.Products_box_title{
+    width: 100%;
+    background-color: black;
+    margin: 0;
+    border-radius: 0px 0px 5px 5px;
+    color: white;
+    box-shadow: none;
+    text-align: center;
+    padding: 0px;
+    font-weight: bold;
+}
+
+
+
+
+@media only screen and (max-width: 1500px) {
+    .ChiTietSP {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px; 
+        width: 100%;
+    }
+
+    .AP_button {
+        padding: 2%;
+    }
+
+    .ChiTiet{
+        display: none;
+    }
+
+    .FixProduct_img{
+        width: 15%;
+    }
+
+    .FixProduct_name{
+        width: 25%;
+    }
+
+    .FixProduct_price{
+        width: 25%;
+    }
+
+    .Hanh-Dong{
+        width: 5%;
+    }
+
+    .HD{
+        display: none;
+    }
+
+    .HD1 {
+        display: block;
+        width: 13%;
+    }
+
+}
+
+
+@media only screen and (max-width: 1100px) {
+    .ChiTietSP {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px; 
+        width: 100%;
+    }
+
+    .ChiTietSP div {
+        margin: 15px 0;
+    }
+        
+    .AP_button {
+        padding: 3%;
+    }
+
+    .ChiTiet{
+        display: none;
+    }
+
+    .FixProduct_img{
+        width: 25%;
+    }
+
+    .FixProduct_name{
+        width: 28%;
+    }
+
+    .FixProduct_brand{
+        width: 20%;
+    }
+
+    .FixProduct_price{
+        display: none;
+    }
+
+    .Hanh-Dong{
+        width: 4%;
+    }
+
+    .HD1{
+        width: 4%;
+    }
+    
+}
+
+
+
+
+.Modal {
+    position: fixed;
+    right: 0;  top : 0; left : 0;  bottom: 0;
+    z-index: 12;
+    display: none;
+}
+
+.Modal_overlay{
+    position: absolute;
+    background-color: rgba(0,0,0,0.6);
+    width: 100%;
+    height: 100%;
+}
+
+.Modal_body {
+    margin: auto;
+    z-index: 15;
+    display: flex;
+    max-height: 90%; 
+}
+
+.Modal_inner{
+    background-color: white;
+    padding: 3%;
+    border: 15px solid black;
+    border-radius: 12px;
+    position: relative;
+    max-height: 90%; 
+    overflow-y: auto; 
+       
+}
+
+.Modal_inner div {
+    margin : 20px 0 20px 0;
+}
+
+.Modal_inner input{
+    padding: 12px;
+    font-size: 15px;
+}
+
+.Modal_inner label {
+    font-size: 16px;
+    color: black;
+}
+
+.Modal_fix_header {
+    border-bottom: 2px solid black;
+    text-align: center;
+    font-size: 22px;
+}
+
+.Modal_fix_exit {
+    position: absolute;
+    top:0;
+    right: 10px;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+
+.div_img_file{
+    display: flex;
+}
+
+.img_preview {
+    width: 30%;
+    height: 30%;
+    border: 2px dashed black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img_preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; 
+}
+
+
