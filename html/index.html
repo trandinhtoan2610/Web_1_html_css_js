@@ -1,4 +1,4 @@
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,26 +9,28 @@
 	<link rel="stylesheet" href="../css/style_Mainpage.css"> <!-- css style - co the sua lai -->
 	<link rel="stylesheet" href="../css/footer.css"> <!-- css style - co the sua lai -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="../css/sidebar.css">
 	<title>Thế giới di động</title>
-	
+
 </head>
-<body id="blockLogin" onload="filterProducts()">
+
+<body id="blockLogin">
 	<header>
 		<nav>
-			<ul class="navbar-list">
+			<ul id="side-bar">
 				<!--link hompage-->
 				<li>
-					<a href="index.html">
-						<img src="../img/thegioididong.png">
+					<a href="#" onclick="closeSideBar()">
+						<i class="fa-solid fa-xmark"></i>
 					</a>
 				</li>
 				<li>
-					<input type="text" placeholder="Nhập tên sản phẩm...">
-					<a href="search1.html"><i class="fa-solid fa-magnifying-glass"></i></a>
+					<input type="text" id="search-input" placeholder="Nhập tên sản phẩm...">
+					<a onclick="searchProducts()"><i class="fa-solid fa-magnifying-glass"></i></a>
 				</li>
 				<li>
-					<a href="advSrch.html">Tìm kiếm nâng cao</a>
+					<a href="#">Tìm kiếm nâng cao</a>
 				</li>
 				<li>
 					<a onclick="remind()">
@@ -48,49 +50,94 @@
 							<i class="fa-solid fa-circle-user"></i>Đăng nhập
 						</button></a>
 				</li>
-				<div id="authModal" style="display:none;">
-					<div class="modal-content" id="modalContent">
-						<!-- Form đăng nhập -->
-						<div id="loginForm">
-							<form onsubmit="login()">
-								<label for="username">Tên đăng nhập:</label>
-								<input type="text" id="username" name="username" required
-									placeholder="Vui Lòng Nhập Tài Khoản"><br>
-								<label for="password">Mật khẩu:</label>
-								<input type="password" id="password" name="password" required
-									placeholder="Vui Lòng Nhập Mật Khẩu"><br />
-								<button type="submit" id="mySubmit">Đăng nhập</button>
-								<button type="button" id="change" onclick="showRegisterForm()">Chuyển sang Đăng
-									ký</button>
-							</form>
-						</div>
-
-						<!-- Form đăng ký (ẩn ban đầu) -->
-						<div id="registerForm" style="display:none;">
-							<form onsubmit="signup()">
-								<label for="newFullName">Họ và Tên:</label>
-								<input type="text" id="newFullName" name="newFullName" required
-									placeholder="Vui Lòng Nhập Họ Và Tên"><br />
-								<label for="newUsername">Tên đăng nhập:</label>
-								<input type="text" id="newUsername" name="newUsername" required
-									placeholder="Vui Lòng Nhập Tài Khoản"><br>
-								<label for="newPhoneNumber">Số Điện Thoại:</label>
-								<input type="text" id="newPhoneNumber" name="newPhoneNumber" required
-									placeholder="Vui Lòng Nhập Số Điện Thoại"><br>
-								<label for="newPassword">Mật khẩu:</label>
-								<input type="password" id="newPassword" name="newPassword" required
-									placeholder="Vui Lòng Nhập Mật Khẩu"><br />
-								<label for="newRepeatPassword">Nhập lại mật Khẩu:</label>
-								<input type="password" id="newRepeatPassword" name="newRepeatPassword" required
-									placeholder="Vui Lòng Nhập Lại Mật Khẩu"><br />
-								<button type="submit">Đăng ký</button>
-								<button type="button" id="change" onclick="showLoginForm()">Quay lại đăng nhập</button>
-							</form>
-						</div>
-					</div>
-				</div>
+			</ul>
+			<ul class="navbar-list">
+				<!--link hompage-->
+				<li class="hideIMG">
+					<a href="index.html">
+						<img src="../img/thegioididong.png">
+					</a>
+				</li>
+				<li class="hideSearch">
+					<input type="text" placeholder="Nhập tên sản phẩm...">
+					<a href="search1.html"><i class="fa-solid fa-magnifying-glass"></i></a>
+				</li>
+				<li class="hideonMobile">
+					<a href="#">Tìm kiếm nâng cao</a>
+				</li>
+				<li class="hideonMobile">
+					<a onclick="remind()">
+						<i class="fa-solid fa-cart-shopping"></i>
+						Giỏ hàng
+					</a>
+				</li>
+				<li class="hideonMobile">
+					<a onclick="remind()">
+						<i class="fa-solid fa-clock-rotate-left"></i>
+						Lịch sử mua hàng
+					</a>
+				</li>
+				<li class="hideonMobile">
+					<a href="#">
+						<button id="loginButton2">
+							<i class="fa-solid fa-circle-user"></i>Đăng nhập
+						</button></a>
+				</li>
+				<li class="menu-button" onclick="showSideBar()"><a href="#"><i class="fa-solid fa-bars"></i></a></li>
 			</ul>
 		</nav>
+		<div id="authModal" style="display:none;">
+			<div class="modal-content" id="modalContent">
+				<!-- Form đăng nhập -->
+				<form id="loginForm">
+					<div id="cssLoginForm">
+						<label for="username">Tên đăng nhập:</label>
+						<input type="text" id="username" name="username" placeholder="Nhập Tên Đăng Nhập"><br>
+						<div id="usernameError" style="color: red;"><i>*Bạn chưa nhập tên đăng nhập</i>
+						</div>
+						<label for="password">Mật khẩu:</label>
+						<input type="password" id="password" name="password" placeholder="Nhập Mật Khẩu"><br />
+						<div id="passwordError" style="color: red;"><i>*Bạn chưa nhập mật khẩu</i></div>
+					</div>
+					<button type="submit" id="mySubmit">Đăng nhập</button>
+					<button type="button" id="changing" onclick="showRegisterForm()">Chuyển sang Đăng
+						ký</button>
+				</form>
+
+				<!-- Form đăng ký (ẩn ban đầu) -->
+				<form id="registerForm" style="display:none;">
+					<div id="cssRegisterForm"> <!--onsubmit="signup()"-->
+						<label for="newFullName">Họ và Tên:</label>
+						<input type="text" id="newFullName" name="newFullName" placeholder="Nhập Họ Và Tên"><br />
+						<div id="fullNameError" style="color: red;"><i>*Bạn chưa nhập họ tên</i></div>
+						<label for="newUsername">Tên đăng nhập:</label>
+						<input type="text" id="newUsername" name="newUsername" placeholder="Nhập Tài Khoản"><br>
+						<div id="newUsernameError" style="color: red;"><i>*Bạn chưa nhập tên đăng nhập</i>
+						</div>
+
+						<label for="newPhoneNumber">Số Điện Thoại:</label>
+						<input type="text" id="newPhoneNumber" name="newPhoneNumber"
+							placeholder="Nhập Số Điện Thoại"><br>
+						<div id="phoneNumberError" style="color: red;"><i>*Bạn chưa nhập số điện thoại</i>
+						</div>
+						<label for="newAddress">Địa Chỉ: </label>
+						<input type="text" id="newAddress" name="newAddress" placeholder="Nhập Địa Chỉ"><br>
+						<div id="addressError" style="color: red;"><i>*Bạn chưa nhập địa chỉ</i></div>
+						<label for="newPassword">Mật khẩu:</label>
+						<input type="password" id="newPassword" name="newPassword" placeholder="Nhập Mật Khẩu"><br />
+						<div id="newPasswordError" style="color: red;"><i>*Bạn chưa nhập mật khẩu</i></div>
+
+						<label for="newRepeatPassword">Nhập lại mật Khẩu:</label>
+						<input type="password" id="newRepeatPassword" name="newRepeatPassword"
+							placeholder="Nhập Lại Mật Khẩu"><br />
+						<div id="repeatPasswordError" style="color: red;"><i>*Mật khẩu không trùng khớp</i>
+						</div>
+					</div>
+					<button type="submit">Đăng ký</button>
+					<button type="button" id="change" onclick="showLoginForm()">Quay lại đăng nhập</button>
+				</form>
+			</div>
+		</div>
 	</header>
 	<main>
 		<div class="container">
@@ -102,29 +149,31 @@
 				<a href="index.html?brand=Lenovo">
 					<img src="../img/lenovo.png" alt="lenovo">
 				</a>
+				<a href="index.html?brand=MSI"><img src="../img/msi.png" alt="MSI"></a>
+
 			</div>
 			<!--List cac san pham-->
 			<section class="product-one"> <!--section product list-->
 				<h2>Các sản phẩm nổi bật</h2>
-				<div id="product-list" class="product-row">	<!-- Sản Phẩm-->		
-				<div id="product-info" class="modal" style="display: none;"><!--Chi Tiết Sản Phẩm-->
-					<div id="info">
-						<button type="button" id="close" onclick="closeProductInfo()">x</button>
-						<div class="left">
-							<img id="productImg">
-						</div>
-						<div class="right">
-							<h2 id="productName"></h2>
-							<h4 id="productPrice"></h4>
-							<h4 id="productRam"></h4>
-							<h4 id="productSSD"></h4>
-							<h4 id="productCard"></h4>
-							<h4 id="productLocation"></h4>
-							<h6 id="productDescription"></h6>
-							<button class="addtoCart" id="color-Cart" onclick="remind()">Thêm Vào Giỏ</button>
+				<div id="product-list" class="product-row"> <!-- Sản Phẩm-->
+					<div id="product-info" class="modal" style="display: none;"><!--Chi Tiết Sản Phẩm-->
+						<div id="info">
+							<button type="button" id="close" onclick="closeProductInfo()">x</button>
+							<div class="left">
+								<img id="productImg">
+							</div>
+							<div class="right">
+								<h2 id="productName"></h2>
+								<h4 id="productPrice"></h4>
+								<h4 id="productRam"></h4>
+								<h4 id="productSSD"></h4>
+								<h4 id="productCard"></h4>
+								<h4 id="productLocation"></h4>
+								<h6 id="productDescription"></h6>
+								<button class="addtoCart" id="color-Cart" onclick="remind()">Thêm Vào Giỏ</button>
+							</div>
 						</div>
 					</div>
-				</div>
 			</section>
 
 			<!--phan trang-->
@@ -139,44 +188,49 @@
 	</main>
 	<div class="footer-clean">
 		<hr>
-        <footer>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Services</h3>
-                        <ul>
-                            <li><a href="#">Di động</a></li>
-                            <li><a href="#">Trả góp</a></li>
-                            <li><a href="#">Tư vấn</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Về chúng tôi</h3>
-                        <ul>
-                            <li><a href="#">Giới thiệu về công ty</a></li>
-                            <li><a href="#">Tuyển dụng</a></li>
-                            <li><a href="#">Góp ý</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Thông tin liên hệ</h3>
-                        <ul>
-                            <li><a href="#">sales@thoigioididong.con</a></li>
-                            <li><a href="#">1900 8686</a></li>
-                            <li><a href="#">Benefits</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a>
-                        <p class="copyright">Thới giới di động © 2024</p>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-	
+		<footer>
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-sm-4 col-md-3 item">
+						<h3>Services</h3>
+						<ul>
+							<li><a href="#">Di động</a></li>
+							<li><a href="#">Trả góp</a></li>
+							<li><a href="#">Tư vấn</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-4 col-md-3 item">
+						<h3>Về chúng tôi</h3>
+						<ul>
+							<li><a href="#">Giới thiệu về công ty</a></li>
+							<li><a href="#">Tuyển dụng</a></li>
+							<li><a href="#">Góp ý</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-4 col-md-3 item">
+						<h3>Thông tin liên hệ</h3>
+						<ul>
+							<li><a href="#">sales@thoigioididong.con</a></li>
+							<li><a href="#">1900 8686</a></li>
+							<li><a href="#">Benefits</a></li>
+						</ul>
+					</div>
+					<div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a
+							href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i
+								class="icon ion-social-snapchat"></i></a><a href="#"><i
+								class="icon ion-social-instagram"></i></a>
+						<p class="copyright">Thới giới di động © 2024</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<script src="../js/indexAdmin.js"></script>
+	<script src="../js/filterProduct.js"></script>
+	<script src="../js/sidebar.js"></script>
 	<script src="../js/login.js"></script>
-	<script src="../js/index.js"></script>
+	<script src="../js/productDetail.js"></script>
+	<script src="../js/pagination.js"></script>
 </body>
 
 </html>

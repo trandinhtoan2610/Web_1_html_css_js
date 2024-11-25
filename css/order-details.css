@@ -1,0 +1,99 @@
+/* Toàn bộ container */
+.order-details-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề chính */
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Tóm tắt đơn hàng */
+.order-summary {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.order-summary p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.order-summary p strong {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Chi tiết sản phẩm */
+#order-details {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.order-detail {
+    background-color: #f4f4f4;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.order-detail p {
+    margin: 5px 0;
+}
+
+.order-detail p strong {
+    font-weight: bold;
+}
+
+/* Nút chức năng xem chi tiết và sửa trạng thái */
+.btn {
+    padding: 8px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-view {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-view:hover {
+    background-color: #0056b3;
+}
+
+.btn-handle {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-handle:hover {
+    background-color: #218838;
+}
+
+.btn-cancel {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-cancel:hover {
+    background-color: #c82333;
+}

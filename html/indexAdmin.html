@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/1acf2d22a5.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../css/index.css"> 
-    <link rel="stylesheet" href = "../css/QuanLySanPham.css">
-    <link rel="stylesheet" href = "../css/style_Mainpage.css">
-    <link rel="stylesheet" href = "../css/style_QuanLySanPham.css">
-    <link rel="stylesheet" href = "../css/navbar.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/QuanLySanPham.css">
+    <link rel="stylesheet" href="../css/style_Mainpage.css">
+    <link rel="stylesheet" href="../css/style_QuanLySanPham.css">
+    <link rel="stylesheet" href="../css/navbar.css">
     <title>Thế giới di động</title>
 </head>
 
 <body onload="filterProducts()">
-    
+
     <main>
         <div id="nav-bar">
             <input type="checkbox" id="nav-toggle">
@@ -29,8 +29,8 @@
                 <hr>
             </div>
             <div id="nav-content">
-                <div class="nav-button" onclick = "DivDSSanPham()">
-                    <i class="fas fa-palette" ></i><span>Quản lý sản phẩm</span>
+                <div class="nav-button" onclick="DivDSSanPham()">
+                    <i class="fas fa-palette"></i><span>Quản lý sản phẩm</span>
                 </div>
                 <div class="nav-button" onclick="showOrderManagement()">
                     <i class="fas fa-images"></i><span>Quản lý hóa đơn</span>
@@ -38,8 +38,8 @@
                 <div class="nav-button">
                     <i class="fas fa-thumbtack"></i><span>Quản lý danh mục</span>
                 </div>
-                
-                <div class="nav-button">
+
+                <div class="nav-button" onclick="displayUsers()">
                     <i class="fas fa-heart"></i><span>Quản lý khách hàng</span>
                 </div>
                 <div class="nav-button">
@@ -49,101 +49,97 @@
                     <i class="fas fa-chart-line"></i><span>Thống kê</span>
                 </div>
             </div>
-            
+
         </div>
         <div class="container" id='container'>
-            
-
         </div>
 
-        <div class="Modal"  id = "Modal_fix_products">    
-            <div class="Modal_overlay" > </div>
-                <div class = "Modal_body">
-                    <div class="Modal_inner" id = "Modal_fix_products__inner"> </div>
-                </div>
-        </div>
-                    <!--    
-                        <a href="#"class ="Modal_fix_exit"> X </a>
-                        <div class="Modal_fix_header"> 
-                            SỬA SẢN PHẨM
+        <div class="Modal" id="Modal_fix_products">
+            <div class="Modal_overlay"> </div>
+            <div class="Modal_body">
+                <div class="Modal_inner" id="Modal_fix_products__inner">
+                    <a href="#" class="Modal_fix_exit"> X </a>
+                    <div class="Modal_fix_header">
+                        SỬA SẢN PHẨM
+                    </div>
+                    <div class="div_img_file">
+                        <div>
+                            <label for="fix_hinhAnh">Hình ảnh</label>
+                            <input type="file" id="fix_hinhAnh" accept="image/*" />
                         </div>
-                        <div class = "div_img_file">
-                            <div>
-                                <label for="fix_hinhAnh">Hình ảnh</label>
-                                <input type="file" id="fix_hinhAnh" accept="image/*" />
-                            </div>
-                            <div class ="img_preview">
+                        <div class="img_preview">
 
-                            </div>
-                            <p class="AP_Warning" id="AP_IMG_Warning">*Hình ảnh không được để trống</p>
+                        </div>
+                        <p class="AP_Warning" id="AP_IMG_Warning">*Hình ảnh không được để trống</p>
+                    </div>
+                    <div>
+                        <label for="fix_kind">Hãng máy</label>
+                        <select id="fix_kind">
+                            <option>Acer</option>
+                            <option>Lenovo</option>
+                            <option>MSI</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="fix_name">Tên sản phẩm</label>
+                        <input type="text" id="fix_name">
+                        <p class="AP_Warning" id="AP_NAME_Warning">*Tên sản phẩm không được để trống</p>
+                    </div>
+                    <div>
+                        <label for="fix_price">Giá tiền</label>
+                        <input type="number" id="fix_price">
+                        <p class="AP_Warning" id="AP_PRICE1_Warning">*Giá tiền phẩm không được để trống</p>
+                        <p class="AP_Warning" id="AP_PRICE2_Warning">*Giá tiền sản phẩm phải trên 9.000.000đ</p>
+                    </div>
+                    <div class="ChiTietSP">
+                        <div>
+                            <label for="fix_location">Vị trí</label>
+                            <input type="text" id="fix_location">
+                            <p class="AP_Warning" id="AP_LOCATION_Warning">*Vị trí không được để trống</p>
                         </div>
                         <div>
-                            <label for="fix_kind">Hãng máy</label>
-                            <select id="fix_kind">
-                                <option>Acer</option>
-                                <option>Lenovo</option>
-                                <option>MSI</option>
-                            </select>
+                            <label for="fix_id">ID</label>
+                            <input type="text" id="fix_id" value="ID" readonly>
                         </div>
                         <div>
-                            <label for="fix_name">Tên sản phẩm</label>
-                            <input type="text" id="fix_name">
-                            <p class="AP_Warning" id="AP_NAME_Warning">*Tên sản phẩm không được để trống</p>
+                            <label for="fix_ram">Ram</label>
+                            <input type="text" id="fix_ram">
+                            <p class="AP_Warning" id="AP_RAM_Warning">*Ram không được để trống </p>
                         </div>
                         <div>
-                            <label for="fix_price">Giá tiền</label>
-                            <input type="number" id="fix_price">
-                            <p class="AP_Warning" id="AP_PRICE1_Warning">*Giá tiền phẩm không được để trống</p>
-                            <p class="AP_Warning" id="AP_PRICE2_Warning">*Giá tiền sản phẩm phải trên 9.000.000đ</p>
-                        </div>
-                        <div class="ChiTietSP">
-                            <div>
-                                <label for="fix_location">Vị trí</label>
-                                <input type="text" id="fix_location">
-                                <p class="AP_Warning" id="AP_LOCATION_Warning">*Vị trí không được để trống</p>
-                            </div>
-                            <div>
-                                <label for="fix_id">ID</label>
-                                <input type="text" id="fix_id" value="ID" readonly>
-                            </div>
-                            <div>
-                                <label for="fix_ram">Ram</label>
-                                <input type="text" id="fix_ram">
-                                <p class="AP_Warning" id="AP_RAM_Warning">*Ram không được để trống </p>
-                            </div>
-                            <div>
-                                <label for="fix_ssd">SSD</label>
-                                <input type="text" id="fix_ssd">
-                                <p class="AP_Warning" id="AP_SSD_Warning">*SSD không được để trống</p>
-                            </div>
-                            <div>
-                                <label for="fix_card">Card</label>
-                                <input type="text" id="fix_card">
-                                <p class="AP_Warning" id="AP_CARD_Warning">*Card không được để trống</p>
-                            </div>
+                            <label for="fix_ssd">SSD</label>
+                            <input type="text" id="fix_ssd">
+                            <p class="AP_Warning" id="AP_SSD_Warning">*SSD không được để trống</p>
                         </div>
                         <div>
-                            <label for="fix_description">Mô tả</label>
-                            <input type="text" id="fix_description">
-                            <p class="AP_Warning" id="AP_DESCRIPTION_Warning">*Mô tả không được để trống</p>
-                        </div>
-                        <div class="AP_Button_Div">
-                            <button class="AP_button" onclick="return SuaSanPham()">Sửa sản phẩm</button>
+                            <label for="fix_card">Card</label>
+                            <input type="text" id="fix_card">
+                            <p class="AP_Warning" id="AP_CARD_Warning">*Card không được để trống</p>
                         </div>
                     </div>
-                    
-                        
+                    <div>
+                        <label for="fix_description">Mô tả</label>
+                        <input type="text" id="fix_description">
+                        <p class="AP_Warning" id="AP_DESCRIPTION_Warning">*Mô tả không được để trống</p>
+                    </div>
+                    <div class="AP_Button_Div">
+                        <button class="AP_button" onclick="return SuaSanPham()">Sửa sản phẩm</button>
+                    </div>
                 </div>
-        </div> -->
-     
+
+
+            </div>
+        </div>
+
     </main>
-    
+
 </body>
-<script src = "../js/QuanLySanPham.js"></script>
-<script src = "../js/QuanLyHoaDon.js"></script>
-<script src = "../js/indexAdmin.js"></script> 
-<script src = "../js/QuanLyDanhMuc.js"></script>
-<script src = "../js/ThongKe.js"></script>
+<script src="../js/QuanLySanPham.js"></script>
+<script src="../js/QuanLyHoaDon.js"></script>
+<script src="../js/indexAdmin.js"></script>
+<script src="../js/QuanLyDanhMuc.js"></script>
+<script src="../js/ThongKe.js"></script>
+<script src="../js/QuanLyKhachHang.js"></script>
 <script>
     const checkbox = document.getElementById('nav-toggle');
     const container = document.getElementById('container');
@@ -158,4 +154,5 @@
         }
     });
 </script>
+
 </html>

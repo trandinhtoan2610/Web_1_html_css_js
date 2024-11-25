@@ -495,10 +495,7 @@ function XoaSanPham(idSanPham){
         var DSSP_JSON = JSON.stringify(DSSP);
         localStorage.setItem('products',DSSP_JSON);
     }
-    if (idSanPham > 10 )
-        Fix_Page_2()
-    else
-        Fix_Page_1()
+    TrangSanPham();
 }
 
 

@@ -1,9 +1,8 @@
 .Cart_container {
-	background-color: #ddd;
+	background-color: white;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-
 }
 
 
@@ -216,167 +215,186 @@
 }
 
 
-/* Modal Container */
+
+/* Tổng thể modal */
 .Modal {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1000;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5); /* Overlay */
-	display: none;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none; /* Ẩn modal mặc định */
 }
 
-/* Modal Overlay */
 .Modal_overlay {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
 }
 
 .Modal_body {
     position: relative;
-    z-index: 1001;
-    width: 90%;
-    max-width: 500px;
-    max-height: 90vh; /* Chiều cao tối đa 90% chiều cao màn hình */
-    overflow-y: auto; /* Cuộn khi nội dung vượt quá chiều cao */
+    z-index: 2;
     background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-    overflow: hidden;
     padding: 20px;
-    animation: fadeIn 0.3s ease-out;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: 70%;
+    width: 100%;
+	max-height: 90%;
+	overflow-y: hidden;
+
 }
 
-/* Modal Inner Content */
-.Modal_inner {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+
+
+/* Nút đóng modal */
+.Modal_cart_exit {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.Modal_inner h2 {
-    font-size: 24px;
+/* Header */
+.Cart_Modal__header {
+    font-size: 20px;
     font-weight: bold;
     text-align: center;
+    margin-bottom: 20px;
     color: #333;
+}
+
+/* Các input và label */
+.Modal_inner label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.Modal_inner input[type="text"],
+.Modal_inner input[type="number"],
+.Modal_inner input[type="radio"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.Modal_inner input[type="radio"] {
+    width: auto;
+    margin-right: 5px;
+}
+
+/* Cảnh báo */
+.customer_Warning {
+    font-size: 12px;
+    color: red;
+    margin-top: -8px;
+    margin-bottom: 10px;
+    display: none; /* Ẩn cảnh báo mặc định */
+}
+
+/* Phương thức thanh toán */
+.Modal_inner div > div {
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
 }
 
-/* Form Labels */
-.Modal_inner label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #555;
+.Modal_inner div > div label {
+    margin-left: 5px;
 }
 
-/* Input Fields */
-.Modal_inner input[type="text"],
-.Modal_inner select {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background-color: #f9f9f9;
-    outline: none;
-    transition: border-color 0.2s ease-in-out;
-}
-
-.Modal_inner input[type="text"]:focus,
-.Modal_inner select:focus {
-    border-color: #007bff;
-}
-
-/* Dropdowns (Tỉnh/Thành, Quận/Huyện, Phường/Xã) */
-.Cart_forms {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.Cart_forms select {
-    flex: 1; /* Để các dropdown bằng nhau */
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .Modal_body {
-        width: 95%;
-		max-height: 95vh;
-    }
-}
-
-@media (max-height: 700px) {
-    .Modal_body {
-        max-height: 80vh; /* Giới hạn chiều cao tối đa cho màn hình nhỏ hơn */
-        overflow-y: auto; /* Thêm thanh cuộn khi cần thiết */
-    }
-}
-
-/* Fade-In Animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-
-/* Phần chọn phương thức thanh toán */
-.payment_method {
+/* Nút bấm */
+.Cart_Button_Div {
+    text-align: center;
     margin-top: 20px;
 }
 
-.payment_method h3 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.payment_method label {
-    display: block;
-    margin-bottom: 10px;
-    font-size: 14px;
-    color: #555;
-    cursor: pointer;
-}
-
-.payment_method input[type="radio"] {
-    margin-right: 10px;
-}
-
-/* Nút Submit */
-.submit_section {
-    margin-top: 30px;
-    text-align: center;
-}
-
-.btn_submit {
+.Cart_button {
     padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
     background-color: #007bff;
     color: #fff;
+    font-size: 14px;
+    font-weight: bold;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.btn_submit:hover {
+.Cart_button:hover {
     background-color: #0056b3;
+}
+
+
+.location {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px; 
+    width: 100%; 
+    align-items: flex-start; 
+    justify-content: space-between;
+    margin: 10px 0; 
+}
+
+.location div {
+    display: flex;
+    flex-direction: column; 
+    text-align: left; 
+}
+
+/* Điều chỉnh input bên trong .location */
+.location input {
+	margin-top: 3px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Thanh cuộn - tổng thể */
+.Modal_body::-webkit-scrollbar {
+    width: 10px; /* Độ rộng của thanh cuộn */
+}
+
+/* Nền của thanh cuộn */
+.Modal_body::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Nền màu xám nhạt */
+    border-radius: 5px; /* Góc bo tròn */
+}
+
+/* Thanh cuộn */
+.Modal_body::-webkit-scrollbar-thumb {
+    background: #888; /* Màu của thanh cuộn */
+    border-radius: 5px; /* Góc bo tròn */
+}
+
+/* Thanh cuộn khi hover */
+.Modal_body::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Màu tối hơn khi di chuột */
+}
+
+
+#payment_gateway{
+	display: none;
 }

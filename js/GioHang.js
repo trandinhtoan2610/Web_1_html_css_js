@@ -316,7 +316,8 @@ function Cart_container(){
 '                    </div>\n'+
 '                    \n'+
 '                    <div class="Offer_btn">\n'+
-'                        <button class="btn_Cart btn_Cart_offer" >Thanh toán</button>\n'+       //Them button onclick o day 
+'                        <button class="btn_Cart btn_Cart_offer" onclick="Cart_confirm_1()">Xác nhận</button>\n'+       //Them button onclick o day
+// '                        <button class="btn_Cart btn_Cart_offer" onclick="thanhtoan()">Thanh toán</button>\n'+       //Them button onclick o day 
 '                    </div>\n'+
 '                </div>\n'+
 '            </div>';
@@ -324,7 +325,10 @@ function Cart_container(){
     return html;
 }
 
-
+var NodeCartModal = document.getElementById('Cart_Modal')
+function Cart_confirm_1(){
+    NodeCartModal.style.display ='flex'
+}
 
 
 var NodeContainer = document.getElementById('container')
@@ -345,20 +349,325 @@ function DivThongTinThanhToan(){
     NodeModalFix.style.display = 'flex';
     NodeModalInner.innerHTML = '       ';
 }
-function LoadLocation() {
 
-    const districtSelect = document.getElementById('district');
-    const wardSelect = document.getElementById('ward')
-    for (var i = 1; i <= 12; i++) {
-        const option = document.createElement('option');
-        const option_ward = document.createElement('option');
-        option.value = i;
-        option_ward.value = i;
-        option.textContent = 'Quận '+i+'';
-        option_ward.textContent= 'Phường '+i+'';
-        districtSelect.appendChild(option);
-        wardSelect.append(option_ward);
+function getProductById(productId) {
+    // Lấy danh sách sản phẩm từ Local Storage
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+
+    // Tìm sản phẩm theo id
+    const product = products.find(item => parseInt(item.id) === productId);
+
+    // Trả về sản phẩm nếu tìm thấy, hoặc null nếu không
+    return product || null;
+}
+
+function Check_UserDetails() {
+    var customerName = document.getElementById('customer_name').value;
+    var customerPhone = document.getElementById('customer_phone').value;
+    var customerAddress = document.getElementById('customer_address').value;
+    var customerDistrict = document.getElementById('customer_district').value;
+    var customerWard = document.getElementById('customer_ward').value;
+
+    var nameRegex = /^[A-Za-zÀ-ỹ\s-]+$/; 
+    var numberRegex = /^[0-9]+$/;       
+    var addressRegex = /^[0-9/]+[A-Za-z]?\s[A-Za-zÀ-ỹ\s]+$/; 
+    var CityRegex = /^[A-Za-zÀ-ỹ\s.]+$/;
+    var LettersRegex = /^[A-Za-zÀ-ỹ\s]+$/;
+
+    // Kiểm tra Họ và Tên
+    if (!customerName) {
+        document.getElementById('customer_warning_name_1').style.display = "block";
+        document.getElementById('customer_warning_name_2').style.display = "none";
+        document.getElementById('customer_warning_name_3').style.display = "none";
+        document.getElementById('customer_name').focus();
+        return false;
+    }
+    if (customerName.split(' ').join('').length < 4) {
+        document.getElementById('customer_warning_name_1').style.display = "none";
+        document.getElementById('customer_warning_name_2').style.display = "block";
+        document.getElementById('customer_warning_name_3').style.display = "none";
+        document.getElementById('customer_name').focus();
+        return false;
+    }
+    if (!customerName.match(nameRegex)) {
+        document.getElementById('customer_warning_name_1').style.display = "none";
+        document.getElementById('customer_warning_name_2').style.display = "none";
+        document.getElementById('customer_warning_name_3').style.display = "block";
+        document.getElementById('customer_name').focus();
+        return false;
+    }
+    document.getElementById('customer_warning_name_1').style.display = "none";
+    document.getElementById('customer_warning_name_2').style.display = "none";
+    document.getElementById('customer_warning_name_3').style.display = "none";
+
+    // Kiểm tra Số điện thoại
+    if (!customerPhone) {
+        document.getElementById('customer_warning_phone_1').style.display = "block";
+        document.getElementById('customer_warning_phone_2').style.display = "none";
+        document.getElementById('customer_phone').focus();
+        return false;
+    }
+    if (customerPhone.length < 7 || customerPhone.length > 11 || !customerPhone.match(numberRegex)) {
+        document.getElementById('customer_warning_phone_1').style.display = "none";
+        document.getElementById('customer_warning_phone_2').style.display = "block";
+        document.getElementById('customer_phone').focus();
+        return false;
+    }
+    document.getElementById('customer_warning_phone_1').style.display = "none";
+    document.getElementById('customer_warning_phone_2').style.display = "none";
+
+    // Kiểm tra Địa chỉ
+    if (!customerAddress) {
+        document.getElementById('customer_warning_address_1').style.display = "block";
+        document.getElementById('customer_warning_address_2').style.display = "none";
+        document.getElementById('customer_address').focus();
+        return false;
+    }
+    if (!customerAddress.match(addressRegex)) {
+        document.getElementById('customer_warning_address_1').style.display = "none";
+        document.getElementById('customer_warning_address_2').style.display = "block";
+        document.getElementById('customer_address').focus();
+        return false;
+    }
+    document.getElementById('customer_warning_address_1').style.display = "none";
+    document.getElementById('customer_warning_address_2').style.display = "none";
+
+   
+
+    // Kiểm tra Quận
+    if (!customerDistrict) {
+        document.getElementById('customer_warning_district_1').style.display = "block";
+        document.getElementById('customer_warning_district_2').style.display = "none";
+        document.getElementById('customer_district').focus();
+        return false;
+    }
+    if (!customerDistrict.match(LettersRegex) && !customerDistrict.match(numberRegex) ) {
+        document.getElementById('customer_warning_district_1').style.display = "none";
+        document.getElementById('customer_warning_district_2').style.display = "block";
+        document.getElementById('customer_district').focus();
+        return false;
+    }
+    document.getElementById('customer_warning_district_1').style.display = "none";
+    document.getElementById('customer_warning_district_2').style.display = "none";
+
+    // Kiểm tra Phường
+    if (!customerWard) {
+        document.getElementById('customer_warning_ward_1').style.display = "block";
+        document.getElementById('customer_warning_ward_2').style.display = "none";
+        document.getElementById('customer_ward').focus();
+        return false;
+    }
+    if (!customerWard.match(LettersRegex) && !customerWard.match(numberRegex) ) {
+        document.getElementById('customer_warning_ward_1').style.display = "none";
+        document.getElementById('customer_warning_ward_2').style.display = "block";
+        document.getElementById('customer_ward').focus();
+        return false;
+    }
+    document.getElementById('customer_warning_ward_1').style.display = "none";
+    document.getElementById('customer_warning_ward_2').style.display = "none";
+
+    if (checkPaymentMethod() == 0 )
+        document.getElementById('customer_warning_payment').style.display = "block";
+    else
+        document.getElementById('customer_warning_payment').style.display = "none";
+
+    if (checkPaymentMethod() == 2 ){
+        var CardName = document.getElementById('card_name').value
+        var CardNumber = document.getElementById('card_number').value
+        var CardDate = document.getElementById('expiry_date').value
+        var CardCVV = document.getElementById('cvv').value
+
+        var cardNumberRegex = /^[0-9]{16}$/;
+        var cardNameRegex = /^[A-Za-z\s-]+$/;
+        var cardDateRegex = /^(0[1-9]|1[0-2])\/\d{4}$/;
+        var cvvRegex = /^[0-9]{3,4}$/;
+
+
+        //Kiểm tra số thẻ
+        if (!CardNumber) {
+            document.getElementById('card_number_warning_2').style.display = 'none';
+            document.getElementById('card_number_warning_1').style.display ='block';
+            document.getElementById('card_number').focus();
+            return false;
+        }
+
+        else if (!CardNumber.match(cardNumberRegex)){
+            document.getElementById('card_number_warning_1').style.display ='none';
+            document.getElementById('card_number_warning_2').style.display ='block';
+            document.getElementById('card_number').focus();
+            return false;
+        }
+
+        else {
+            document.getElementById('card_number_warning_1').style.display ='none';
+            document.getElementById('card_number_warning_2').style.display ='none';
+        }
+
+        //Kiểm tra tên chủ thẻ
+        if (!CardName) {
+            document.getElementById('card_name_warning_2').style.display = 'none';
+            document.getElementById('card_name_warning_1').style.display ='block';
+            document.getElementById('card_name').focus();
+            return false;
+        }
+
+        else if (!CardName.match(cardNameRegex)){
+            document.getElementById('card_name_warning_1').style.display ='none';
+            document.getElementById('card_name_warning_2').style.display ='block';
+            document.getElementById('card_name').focus();
+            return false;
+        }
+
+        else {
+            document.getElementById('card_name_warning_1').style.display ='none';
+            document.getElementById('card_name_warning_2').style.display ='none';
+        }
+
+        //Kiểm tra ngày hết hạn thẻ
+        if (!CardDate) {
+            document.getElementById('card_date_warning_2').style.display = 'none';
+            document.getElementById('card_date_warning_1').style.display ='block';
+            document.getElementById('card_date').focus();
+            return false;
+        }
+
+        else if (!CardDate.match(cardDateRegex)){
+            document.getElementById('card_date_warning_1').style.display ='none';
+            document.getElementById('card_date_warning_2').style.display ='block';
+            document.getElementById('card_date').focus();
+            return false;
+        }
+
+        else {
+            document.getElementById('card_date_warning_1').style.display ='none';
+            document.getElementById('card_date_warning_2').style.display ='none';
+        }
+
+         //Kiểm tra CVV thẻ
+         if (!CardCVV) {
+            document.getElementById('card_cvv_warning_2').style.display = 'none';
+            document.getElementById('card_cvv_warning_1').style.display ='block';
+            document.getElementById('card_cvv').focus();
+            return false;
+        }
+
+        else if (!CardCVV.match(cvvRegex)){
+            document.getElementById('card_cvv_warning_1').style.display ='none';
+            document.getElementById('card_cvv_warning_2').style.display ='block';
+            document.getElementById('card_cvv').focus();
+            return false;
+        }
+
+        else {
+            document.getElementById('card_cvv_warning_1').style.display ='none';
+            document.getElementById('card_cvv_warning_2').style.display ='none';
+        }
+    }
+
+    return true; 
+}
+
+// Kiểm tra phương thức thanh toán nào được chọn
+function checkPaymentMethod() {
+    const cashPayment = document.getElementById('cash_payment');
+    const transferPayment = document.getElementById('transfer_payment');
+    const cardPayment = document.getElementById('card_payment');
+
+    // Tiền mặt và chuyển khoản
+    if (cashPayment.checked || transferPayment.checked) {
+        return 1;
+    } 
+    
+    // Thẻ tín dụng
+    else if (cardPayment.checked) {
+        return 2;
+    } 
+
+    //Chưa chọn
+    else {
+        return 0;
+    }
+
+}
+
+var NodeCart_ModalBody = document.getElementById('Cart_Modal_Body')
+
+function PrintPaymentForm() {
+    // Lấy các radio button
+    const cardPayment = document.getElementById('card_payment');
+    const paymentForm = document.getElementById('payment_gateway');
+
+    // Kiểm tra nếu chọn "Thanh toán qua thẻ"
+    if (cardPayment.checked) {
+        paymentForm.style.display = "block"; 
+        NodeCart_ModalBody.style.overflowY ='auto'
+    } 
+    else {
+        paymentForm.style.display = "none"; 
+        NodeCart_ModalBody.style.overflowY ='none'
     }
 }
 
-LoadLocation()
+function CheckPaymentCard(){
+
+}
+
+function Cart_Confirm_Details(){
+    if ( !Check_UserDetails())
+        return false;
+
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function thanhtoan() {
+    const user = JSON.parse(localStorage.getItem('userlogin'));
+    const cart = JSON.parse(localStorage.getItem('DSGH')) || [];
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    if (!user) {
+        alert("Vui lòng đăng nhập để tiếp tục thanh toán!");
+        window.location.href = "/login.html";
+        return;
+    }
+
+    if (cart.length === 0) {
+        alert("Giỏ hàng của bạn đang trống. Vui lòng thêm sản phẩm!");
+        return;
+    }
+    const orderDetails = [];
+
+    cart.map(item => {
+        const product = getProductById(item.idSP);
+        console.log(product);
+        const orderDetail = {
+            productId: product.id,
+            productName: product.name,
+            quantity: item.sl,
+            totalPrice: product.price * item.sl
+        };
+        orderDetails.push(orderDetail);
+    });
+    const order = {
+        orderId: orders.length + 1,
+        userId: user.id,
+        fullname: user.fullname,
+        status: "Chưa xử lý", 
+        createdAt: new Date().toISOString(),
+        orderDetails: orderDetails,
+        totalAmount: orderDetails.map(item => item.totalPrice).reduce((a, b) => a + b, 0)
+    };
+    localStorage.setItem('orders', JSON.stringify([...orders, order]));
+}
+
+
