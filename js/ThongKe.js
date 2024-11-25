@@ -16,7 +16,7 @@ function displayStats(filteredOrders) {
     } 
    
     const productStats = {};
-    
+    console.log(orders);
     // Duyệt qua các đơn hàng và tính toán
     orders.forEach(order => {
       if (order.status === 'Đã giao thành công') {
@@ -41,11 +41,11 @@ function displayStats(filteredOrders) {
     
     // Tìm mặt hàng bán chạy nhất và ế nhất
     const bestSellingProduct = Object.keys(productStats).reduce((best, productName) => {
-      return productStats[productName].totalRevenue > productStats[best].totalRevenue ? productName : best;
+      return productStats[productName].totalQuantity > productStats[best].totalQuantity ? productName : best;
     }, Object.keys(productStats)[0]);
     
     const leastSellingProduct = Object.keys(productStats).reduce((least, productName) => {
-      return productStats[productName].totalRevenue < productStats[least].totalRevenue ? productName : least;
+      return productStats[productName].totalQuantity < productStats[least].totalQuantity ? productName : least;
     }, Object.keys(productStats)[0]);
   const container = document.getElementById('container');
 
@@ -111,13 +111,14 @@ function displayTopCustomers(orders) {
     // Duyệt qua các đơn hàng và tính toán doanh thu theo khách hàng
     orders.forEach(order => {
     if (order.status === 'Đã giao thành công') {
-        const customerId = order.customerId; // ID khách hàng
+        const customerId = order.userId; // ID khách hàng
         if (!customerStats[customerId]) {
-        customerStats[customerId] = {
-            totalRevenue: 0,
-            customerName: order.fullname,
-            orders: []
-        };
+          customerStats[customerId] = {
+              totalRevenue: 0,
+              customerName: order.fullname,
+              customerId: order.userId,
+              orders: []
+          };
         }
         
         let orderRevenue = 0;
@@ -148,14 +149,14 @@ function displayTopCustomers(orders) {
 		    </div>
             <div class="table-content" id="table-content">
   `;
-  
+  console.log(topCustomers);
   topCustomers.forEach(customer => {
     customersHTML += `
       
        <div class="table-row">		
 				<div class="table-data">${customer.customerName}</div>
 				<div class="table-data">${formatCurrencyVND(customer.totalRevenue)}</div>
-				<div class="table-data"><button onclick="viewCustomerOrders('${customer.customerName}')">Xem hóa đơn</button></div>
+				<div class="table-data"><button onclick="viewInvoices('${customer.order}')">Xem hóa đơn</button></div>
 		</div>
     `;
   });
