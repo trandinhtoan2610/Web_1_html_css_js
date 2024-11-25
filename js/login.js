@@ -10,7 +10,7 @@ function createAdmin() {
     if (localStorage.getItem('user') === null) {
         var countIDUser = 0;
         localStorage.setItem('countIDUser', countIDUser);
-        var status = true;
+        var status = false;
         var userArray = [];
         var user = { id: countIDUser, username: 'admin', fullname: 'Hoang',address: '36', password: 'admin', phone: '0329997881', datesignup: '26-09-2005' , status: status};
         userArray.push(user);
@@ -148,6 +148,13 @@ function login(e) {
     }
     var userArray = JSON.parse(localStorage.getItem('user'));
     for (var i = 0; i < userArray.length; i++) {
+        if (username == userArray[i].username && password == userArray[i].password) {
+            if(userArray[i].status == false){
+                alert('Tài khoản đã bị khóa!');
+                document.getElementById('authModal').style.display = 'none';
+                return false;
+            }
+        }
         if (username == userArray[i].username) {
             if (password == userArray[i].password) {
                 document.getElementById('authModal').style.display = 'none';
