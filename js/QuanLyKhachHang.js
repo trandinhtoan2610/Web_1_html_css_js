@@ -6,31 +6,10 @@ function displayUsers() {
         return;
     }
 
-    // Lấy danh sách tất cả các người dùng từ localStorage
-    let userList = [];
-    let userId = 1; // ID người dùng bắt đầu từ 1
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key !== "currentUser" && key !== "userIdCounter") { // Loại trừ currentUser và userIdCounter
-            const userString = localStorage.getItem(key);
-
-            try {
-                const user = JSON.parse(userString);
-                if (user && user.username) {
-                    // Gán ID cho người dùng và cập nhật trong localStorage nếu chưa có ID
-                    if (!user.id) {
-                        user.id = userId++;
-                    } else {
-                        user.id = userId++;
-                    }
-                    localStorage.setItem(key, JSON.stringify(user)); // Cập nhật thông tin người dùng trong localStorage
-                    userList.push(user);
-                }
-            } catch (e) {
-                console.error(`Không thể phân tích chuỗi JSON: ${userString}`, e);
-            }
-        }
-    }
+    // Lấy danh sách người dùng từ localStorage
+    const userString = localStorage.getItem('user');
+    let userList = userString ? JSON.parse(userString) : [];
+    if (!Array.isArray(userList)) userList = [];
 
     // Tạo bảng hiển thị danh sách người dùng
     let userTable = `
@@ -46,8 +25,8 @@ function displayUsers() {
             <input type="text" id="addUsername">
             <label for="addFullname">Họ tên:</label>
             <input type="text" id="addFullname">
-            <label for="addPhonenumber">Số điện thoại:</label>
-            <input type="text" id="addPhonenumber">
+            <label for="addPhone">Số điện thoại:</label>
+            <input type="text" id="addPhone">
             <label for="addAddress">Địa chỉ:</label>
             <input type="text" id="addAddress">
             <label for="addPassword">Mật khẩu:</label>
@@ -57,17 +36,17 @@ function displayUsers() {
         </div>
         <div class="table">
             <div class="table-header">
-                <div class="header__item"><a id="id" class="filter__link" href="#">ID</a></div>
+                <div class="header__item"><a id="countIDUser" class="filter__link" href="#">ID</a></div>
                 <div class="header__item"><a id="username" class="filter__link" href="#">Tên người dùng</a></div>
                 <div class="header__item"><a id="fullname" class="filter__link" href="#">Họ tên</a></div>
-                <div class="header__item"><a id="phonenumber" class="filter__link" href="#">Số điện thoại</a></div>
+                <div class="header__item"><a id="phone" class="filter__link" href="#">Số điện thoại</a></div>
                 <div class="header__item"><a id="status" class="filter__link" href="#">Trạng thái</a></div>
             </div>
             <div class="table-content" id="table-content">
     `;
 
     if (userList.length === 0) {
-        userTable += ` 
+        userTable += `
             <div class="table-row">
                 <div class="table-data" colspan="5">Không có người dùng nào</div>
             </div>
@@ -75,16 +54,16 @@ function displayUsers() {
     } else {
         userList.forEach(user => {
             userTable += `
-            <div class="table-row"> 
+            <div class="table-row">
                 <div class="table-data">${user.id}</div>
-                <div class="table-data">${user.username}</div> 
-                <div class="table-data">${user.fullname}</div> 
-                <div class="table-data">${user.phonenumber}</div> 
+                <div class="table-data">${user.username}</div>
+                <div class="table-data">${user.fullname}</div>
+                <div class="table-data">${user.phone}</div>
                 <div class="table-data">
-                     <button onclick="deleteUser('${user.username}')">Xóa</button>
-                     <button onclick="lockUser('${user.username}')">Khóa</button>
-                     <button onclick="unlockUser('${user.username}')">Mở Khóa</button>
-                     <button onclick="showEditUserForm('${user.username}', '${user.fullname}', '${user.phonenumber}', '${user.password}')">Sửa</button>
+                     <button onclick="deleteUser(${user.id})">Xóa</button>
+                     <button onclick="lockUser(${user.id})">Khóa</button>
+                     <button onclick="unlockUser(${user.id})">Mở Khóa</button>
+                     <button onclick="showEditUserForm(${user.id})">Sửa</button>
                 </div>
             </div>`;
         });
@@ -98,8 +77,6 @@ function displayUsers() {
     container.innerHTML = userTable;
 }
 
-
-
 // Hiển thị form thêm người dùng
 function showAddUserForm() {
     document.getElementById('addUserForm').style.display = 'block';
@@ -110,157 +87,117 @@ function hideAddUserForm() {
     document.getElementById('addUserForm').style.display = 'none';
 }
 
-// Hiển thị form nhập địa chỉ
-function showEditAddressForm(username) {
-    const form = document.getElementById('editAddressForm');
-    form.style.display = 'block';  // Hiển thị form
-
-    // Kiểm tra xem có thông tin người dùng trong localStorage không
-    const user = JSON.parse(localStorage.getItem(username));
-    if (user && user.address) {
-        document.getElementById('editAddressInput').value = user.address; // Hiển thị địa chỉ đã lưu
-    } else {
-        document.getElementById('editAddressInput').value = ""; // Reset trường nhập nếu chưa có dữ liệu
-    }
-
-    form.dataset.username = username; // Lưu username để dùng khi lưu
-}
-
-// Ẩn form nhập địa chỉ
-function hideEditAddressForm() {
-    const form = document.getElementById('editAddressForm');
-    form.style.display = 'none';
-}
-
-// Lưu địa chỉ từ form
-function saveAddressFromForm() {
-    const form = document.getElementById('editAddressForm');
-    const username = form.dataset.username; // Lấy username từ dataset của form
-
-    // Lấy giá trị từ trường nhập địa chỉ
-    const address = document.getElementById('editAddressInput').value.trim();
-
-    if (!address) {
-        alert("Vui lòng nhập địa chỉ!");
-        return;
-    }
-
-    // Lấy thông tin người dùng từ localStorage
-    const user = JSON.parse(localStorage.getItem(username)) || {}; // Tạo đối tượng nếu chưa tồn tại
-    user.address = address; // Gán địa chỉ vào đối tượng người dùng
-
-    // Lưu thông tin người dùng vào localStorage
-    localStorage.setItem(username, JSON.stringify(user));
-    alert("Địa chỉ đã được cập nhật.");
-    hideEditAddressForm();  // Ẩn form sau khi lưu thành công
-    displayUsers();  // Cập nhật danh sách người dùng (nếu có hàm này)
-}
-
 // Hàm thêm người dùng từ form
 function addUserFromForm() {
     const username = document.getElementById('addUsername').value;
     const fullname = document.getElementById('addFullname').value;
-    const phonenumber = document.getElementById('addPhonenumber').value;
+    const phone = document.getElementById('addPhone').value;
     const address = document.getElementById('addAddress').value;
-
     const password = document.getElementById('addPassword').value;
 
-
-    addUser(username, fullname, phonenumber,address, password);
-    hideAddUserForm(); // Ẩn form sau khi thêm người dùng
+    addUser(username, fullname, phone, password, address);
+    hideAddUserForm();
 }
-// Hàm thêm người dùng (đã cập nhật với ID)
-function addUser(username, fullname, phonenumber, password, address) {
-    if (!username || !fullname || !phonenumber || !address ||!password) {
+
+// Hàm thêm người dùng
+function addUser(username, fullname, phone, address, password) {
+    if (!username || !fullname || !phone || !address || !password) {
         alert("Vui lòng nhập đầy đủ thông tin người dùng.");
         return;
     }
 
     // Kiểm tra xem người dùng đã tồn tại chưa
-    if (localStorage.getItem(username)) {
+    let userList = JSON.parse(localStorage.getItem('user')) || [];
+    if (userList.some(user => user.username === username)) {
         alert("Người dùng đã tồn tại.");
         return;
     }
 
-    // Tạo ID mới cho người dùng
-    let userId = localStorage.getItem("userIdCounter");
-    if (!userId) {
-        userId = 1; // ID bắt đầu từ 1 nếu chưa tồn tại
-    } else {
-        userId = parseInt(userId, 10) + 1;
-    }
-    localStorage.setItem("userIdCounter", userId); // Lưu lại ID mới
+    // Lấy ID mới cho người dùng
+    let countIDUser = parseInt(localStorage.getItem('countIDUser')) || 0;
+    countIDUser += 1;
+    localStorage.setItem('countIDUser', countIDUser);  // Cập nhật countIDUser
 
     // Tạo đối tượng người dùng mới
     const newUser = {
-        id: userId,
+        id: countIDUser,  // ID người dùng mới
         username: username,
         fullname: fullname,
-        phonenumber: phonenumber,
-        address : address,
+        phone: phone,
+        address: address,
         password: password,
-        isLocked: false, // Mặc định tài khoản chưa bị khóa
+        isLocked: false,  // Mặc định tài khoản chưa bị khóa
     };
 
     // Lưu thông tin người dùng vào localStorage
-    localStorage.setItem(username, JSON.stringify(newUser));
+    userList.push(newUser);
+    localStorage.setItem('user', JSON.stringify(userList));
+
     alert("Người dùng đã được thêm thành công.");
-    displayUsers(); // Cập nhật danh sách người dùng sau khi thêm
-}
-
-// Hiển thị form sửa người dùng
-function showEditUserForm(username, fullname, phonenumber, password) {
-    document.getElementById('editOldUsername').value = username;
-    document.getElementById('editUsername').value = username;
-    document.getElementById('editFullname').value = fullname;
-    document.getElementById('editPhonenumber').value = phonenumber;
-    document.getElementById('editPassword').value = password;
-    document.getElementById('editUserForm').style.display = 'block';
-}
-
-// Ẩn form sửa người dùng
-function hideEditUserForm() {
-    document.getElementById('editUserForm').style.display = 'none';
-}
-
-// Hàm xử lý sửa người dùng từ form
-function editUserFromForm() {
-    const oldUsername = document.getElementById('editOldUsername').value;
-    const newUsername = document.getElementById('editUsername').value;
-    const newFullname = document.getElementById('editFullname').value;
-    const newPhonenumber = document.getElementById('editPhonenumber').value;
-    const newPassword = document.getElementById('editPassword').value;
-
-    editUser(oldUsername, newUsername, newFullname, newPhonenumber, newPassword);
-    hideEditUserForm(); // Ẩn form sau khi sửa người dùng
+    displayUsers();  // Cập nhật danh sách người dùng sau khi thêm
 }
 
 // Hàm sửa thông tin người dùng
-function editUser(oldUsername, newUsername, newFullname, newPhonenumber, newPassword) {
-    if (!oldUsername || !newUsername || !newFullname || !newPhonenumber || !newPassword) {
-        alert("Vui lòng nhập đầy đủ thông tin để sửa.");
-        return;
-    }
-
-    // Lấy thông tin người dùng từ localStorage
-    let user = localStorage.getItem(oldUsername);
+function editUser(userId, newUsername, newFullname, newPhone, newPassword) {
+    let userList = JSON.parse(localStorage.getItem('user')) || [];
+    const user = userList.find(u => u.id === userId);
     if (!user) {
         alert("Không tìm thấy người dùng.");
         return;
     }
 
-    user = JSON.parse(user);
     user.username = newUsername;
     user.fullname = newFullname;
-    user.phonenumber = newPhonenumber;
+    user.phone = newPhone;
     user.password = newPassword;
 
-    // Xóa thông tin người dùng cũ và lưu thông tin mới
-    localStorage.removeItem(oldUsername);
-    localStorage.setItem(newUsername, JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(userList));
     alert("Thông tin người dùng đã được sửa thành công.");
-    updateUserIds(); // Cập nhật lại ID của tất cả người dùng sau khi sửa
-    displayUsers(); // Cập nhật danh sách người dùng sau khi sửa
+    displayUsers();
+}
+
+// Hàm xóa người dùng
+function deleteUser(userId) {
+    let userList = JSON.parse(localStorage.getItem('user')) || [];
+    userList = userList.filter(user => user.id !== userId);
+
+    localStorage.setItem('user', JSON.stringify(userList));
+    alert("Người dùng đã được xóa thành công.");
+    displayUsers();
+}
+//Hàm khóa người dùng
+function lockUser(userId) {
+    let userList = JSON.parse(localStorage.getItem('user')) || [];
+    const user = userList.find(u => u.id === userId);
+    if (user) {
+        if (user.isLocked) {
+            alert("Người dùng đã bị khóa.");
+            return;
+        }
+        user.isLocked = true;
+        localStorage.setItem('user', JSON.stringify(userList));
+        alert(`Người dùng '${user.username}' đã bị khóa.`);
+        displayUsers();
+    } else {
+        alert("Không tìm thấy người dùng.");
+    }
+}
+//Hàm mở khóa người dùng
+function unlockUser(userId) {
+    let userList = JSON.parse(localStorage.getItem('user')) || [];
+    const user = userList.find(u => u.id === userId);
+    if (user) {
+        if (!user.isLocked) {
+            alert("Người dùng không bị khóa.");
+            return;
+        }
+        user.isLocked = false;
+        localStorage.setItem('user', JSON.stringify(userList));
+        alert(`Người dùng '${user.username}' đã được mở khóa.`);
+        displayUsers();
+    } else {
+        alert("Không tìm thấy người dùng.");
+    }
 }
 
 // Hàm tìm kiếm ID của người dùng
@@ -277,28 +214,19 @@ function searchUserById() {
         return;
     }
 
-    let userList = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key !== "currentUser" && key !== "userIdCounter") { // Loại trừ currentUser và userIdCounter
-            const userString = localStorage.getItem(key);
-            try {
-                const user = JSON.parse(userString);
-                if (user && user.username) {
-                    userList.push(user);
-                }
-            } catch (e) {
-                console.error(`Không thể phân tích chuỗi JSON: ${userString}`, e);
-            }
-        }
-    }
+    // Lấy danh sách người dùng từ localStorage
+    const userString = localStorage.getItem('user');
+    let userList = userString ? JSON.parse(userString) : [];
+    if (!Array.isArray(userList)) userList = [];
 
+    // Tìm người dùng theo ID
     const user = userList.find(user => user.id === userId);
     if (!user) {
         alert('Không tìm thấy người dùng với ID đã nhập.');
         return;
     }
 
+    // Hiển thị kết quả tìm kiếm
     let searchResult = `
         <h2>Kết quả tìm kiếm</h2>
         <button onclick="displayUsers()">Quay lại</button>
@@ -307,7 +235,7 @@ function searchUserById() {
                 <div class="header__item"><a id="id" class="filter__link" href="#">ID</a></div>
                 <div class="header__item"><a id="username" class="filter__link" href="#">Tên người dùng</a></div>
                 <div class="header__item"><a id="fullname" class="filter__link" href="#">Họ tên</a></div>
-                <div class="header__item"><a id="phonenumber" class="filter__link" href="#">Số điện thoại</a></div>
+                <div class="header__item"><a id="phone" class="filter__link" href="#">Số điện thoại</a></div>
                 <div class="header__item"><a id="status" class="filter__link" href="#">Trạng thái</a></div>
             </div>
             <div class="table-content">
@@ -315,139 +243,62 @@ function searchUserById() {
                     <div class="table-data">${user.id}</div>
                     <div class="table-data">${user.username}</div>
                     <div class="table-data">${user.fullname}</div>
-                    <div class="table-data">${user.phonenumber}</div>
+                    <div class="table-data">${user.phone}</div>
                     <div class="table-data">
-                        <button onclick="deleteUser('${user.username}')">Xóa</button>
-                        <button onclick="lockUser('${user.username}')">Khóa</button>
-                        <button onclick="unlockUser('${user.username}')">Mở Khóa</button>
-                        <button onclick="showEditUserForm('${user.username}', '${user.fullname}', '${user.phonenumber}', '${user.password}')">Sửa</button>
+                        <button onclick="deleteUser(${user.id})">Xóa</button>
+                        <button onclick="lockUser(${user.id})">Khóa</button>
+                        <button onclick="unlockUser(${user.id})">Mở Khóa</button>
+                        <button onclick="showEditUserForm(${user.id})">Sửa</button>
                     </div>
                 </div>
             </div>
         </div>
     `;
+
+    // Cập nhật giao diện để hiển thị kết quả
     const container = document.getElementById('container');
     container.innerHTML = searchResult;
 }
-// Hàm khóa người dùng
-function lockUser(username) {
-    let user = localStorage.getItem(username);
-    if (user) {
-        try {
-            user = JSON.parse(user);
-            user.isLocked = true; // Thêm thuộc tính "isLocked" vào thông tin người dùng
-            localStorage.setItem(username, JSON.stringify(user));
-            alert(`Người dùng ${username} đã bị khóa.`);
-            displayUsers(); // Cập nhật danh sách sau khi khóa
-        } catch (e) {
-            console.error(`Không thể phân tích chuỗi JSON: ${user}`, e);
-        }
-    } else {
-        alert("Không tìm thấy người dùng.");
-    }
-}
-
-
-// Hàm mở khóa người dùng (nếu cần)
-function unlockUser(username) {
-    let user = localStorage.getItem(username);
-    if (user) {
-        try {
-            user = JSON.parse(user);
-            delete user.isLocked; // Xóa thuộc tính "isLocked"
-            localStorage.setItem(username, JSON.stringify(user));
-            alert(`Người dùng ${username} đã được mở khóa.`);
-            displayUsers(); // Cập nhật danh sách sau khi mở khóa
-        } catch (e) {
-            console.error(`Không thể phân tích chuỗi JSON: ${user}`, e);
-        }
-    } else {
-        alert("Không tìm thấy người dùng.");
-    }
-}
-// Hàm xóa người dùng
-function deleteUser(username) {
-    if (!username) {
-        alert("Không tìm thấy tên người dùng để xóa.");
-        return;
-    }
-
-    // Kiểm tra xem người dùng có tồn tại trong localStorage không
-    const user = localStorage.getItem(username);
-    if (!user) {
-        alert("Người dùng không tồn tại.");
-        return;
-    }
-
-    // Xóa người dùng khỏi localStorage
-    localStorage.removeItem(username);
-    alert(`Người dùng '${username}' đã được xóa thành công.`);
-
-    // Cập nhật lại danh sách ID sau khi xóa người dùng
-    updateUserIds();  // Cập nhật lại ID người dùng sau khi xóa
-
-    // Gọi lại hàm displayUsers() để tự động làm mới bảng
-    displayUsers();   // Gọi lại hàm displayUsers để cập nhật giao diện
-}
-
-// Hàm cập nhật lại danh sách ID sau khi xóa người dùng
-function updateUserIds() {
-    let userIdCounter = 0; // Khởi tạo lại ID từ 0
-    const users = [];
-
-    // Lấy tất cả các mục trong localStorage và lọc ra thông tin người dùng
-    for (let key in localStorage) {
-        if (localStorage.hasOwnProperty(key)) {
-            const user = JSON.parse(localStorage.getItem(key));
-            if (user && user.username && user.id) {
-                users.push(user);
-            }
-        }
-    }
-
-    // Sắp xếp người dùng theo ID cũ (để tránh xáo trộn thứ tự)
-    users.sort((a, b) => a.id - b.id);
-
-    // Gán lại ID mới cho từng người dùng
-    users.forEach((user) => {
-        userIdCounter++;
-        user.id = userIdCounter;
-        localStorage.setItem(user.username, JSON.stringify(user));
-    });
-
-    // Cập nhật bộ đếm ID mới
-    localStorage.setItem("userIdCounter", userIdCounter);
-}
-
-// Kiểm tra trạng thái người dùng khi đăng nhập
 function login(e) {
     e.preventDefault();
-    const username = document.getElementById("username").value;
+    const username = document.getElementById("username").value.trim();
     const password = document.getElementById("password").value;
 
-    let user = localStorage.getItem(username);
+    if (!username || !password) {
+        alert("Vui lòng nhập đầy đủ tên người dùng và mật khẩu.");
+        return;
+    }
+
+    const userString = localStorage.getItem('user');
+    let userList = userString ? JSON.parse(userString) : [];
+    if (!Array.isArray(userList)) userList = [];
+
+    const user = userList.find(user => user.username === username);
+
+    console.log("Đăng nhập kiểm tra user:", user); // Gỡ lỗi
+
     if (user) {
         try {
-            let data = JSON.parse(user);
-
-            if (data.isLocked) {
-                alert("Tài khoản của bạn đã bị khóa!");
-            } else if (username === data.username && password === data.password) {
+            console.log(`Trạng thái isLocked của người dùng: ${user.isLocked}`); // Gỡ lỗi
+            if (user.isLocked) {
+                alert("Tài khoản của bạn đã bị khóa! Vui lòng liên hệ quản trị viên.");
+                return; // Ngăn không cho tiếp tục xử lý
+            }
+            if (user.password === password) {
                 alert("Đăng Nhập Thành Công!!");
-                localStorage.setItem("currentUser", data.fullname);
+                localStorage.setItem("currentUser", user.fullname);
                 window.location.href = "../html/indexLogin.html";
             } else {
                 alert("Sai mật khẩu!");
             }
         } catch (e) {
-            console.error(`Không thể phân tích chuỗi JSON: ${user}`, e);
+            console.error(`Lỗi khi xử lý dữ liệu người dùng: ${e}`);
             alert("Đăng Nhập Thất Bại!!");
         }
     } else {
-        alert("Đăng Nhập Thất Bại!!");
+        alert("Tên người dùng không tồn tại!");
     }
 }
 
-// Gọi hàm để hiển thị danh sách người dùng khi tải trang
+// Hiển thị danh sách người dùng khi tải trang
 document.addEventListener('DOMContentLoaded', displayUsers);
-
