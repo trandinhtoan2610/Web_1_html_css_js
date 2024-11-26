@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="../css/QuanLySanPham.css">
     <title>Thế giới di động</title>
 
 </head>
@@ -41,7 +42,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a onclick="displayOrderHistory()">
                         <i class="fa-solid fa-clock-rotate-left"></i>
                         Lịch sử mua hàng
                     </a>
@@ -81,7 +82,7 @@
                     </a>
                 </li>
                 <li class="hideonMobile">
-                    <a>
+                    <a  onclick="displayOrderHistory()">
                         <i class="fa-solid fa-clock-rotate-left"></i>
                         Lịch sử mua hàng
                     </a>
@@ -178,6 +179,13 @@
                     </div>
                 </div>
             </div>
+            <div id="orderDetailsModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeModal()">&times;</span>
+                    <h2>Chi tiết đơn hàng</h2>
+                    <div id="orderDetailsContent"></div>
+                </div>
+            </div>
         </footer>
     </div>
 
@@ -188,6 +196,6 @@
 <script src="../js/username.js"></script>
 <script src="../js/GioHang.js"></script>
 <script src="../js/indexAdmin.js"> </script>
-
+<script src="../js/history.js"> </script>
 
 </html>

@@ -61,7 +61,7 @@ function cancelOrder(orderId) {
 
 // Hàm tải danh sách đơn hàng từ Local Storage
 const loadOrders = (filteredOrders) => {
-
+   
     if (filteredOrders) {
         invoices = filteredOrders;
     }else{
@@ -96,8 +96,9 @@ function filterOrdersByDate() {
     const startDate = new Date(document.getElementById('startDate').value);
     const endDate = new Date(document.getElementById('endDate').value);
 
-    if (!startDate || !endDate) {
-        loadOrders();
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+        alert('chọn ngày bắt đầu và ngày kết thúc');
+        return;
     }
     if (startDate > endDate) {
         alert('Ngày bắt đầu phải nhỏ hơn ngày kết thúc');
