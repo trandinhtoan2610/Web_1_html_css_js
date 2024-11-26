@@ -23,6 +23,7 @@ function filterProducts(e) {
             filteredProducts.push(productArray[i]);
         }
     }
+    console.log(filteredProducts);
 
     // Hiển thị sản phẩm đã lọc
     const productList = document.getElementById("product-list");
