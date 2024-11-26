@@ -37,7 +37,12 @@
     text-align: center;
 }
 
-
+.TimKiemSP{
+    position: absolute;
+    bottom:10px;
+    width: 25%;
+    left: 18%;
+}
 .Them_SP {
     position: absolute;
     bottom: 10px;

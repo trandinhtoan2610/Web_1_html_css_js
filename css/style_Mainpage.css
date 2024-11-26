@@ -229,7 +229,11 @@ button[type="submit"]{
 	background-color: rgb(5, 129, 102);
 	color: #fff;
 }
-
+button[type="button"]{
+    width: 100%;
+    background-color: #E83A45;
+    color: #fff;
+}
 #change:hover {
 	background-color: #0056b3;
 }
@@ -456,6 +460,7 @@ ul {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    outline: none;
 }
 
 

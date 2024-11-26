@@ -34,17 +34,10 @@
                     <i class="fas fa-palette"></i><span>Quản lý sản phẩm</span>
                 </div>
                 <div class="nav-button" onclick="showOrderManagement()">
-                    <i class="fas fa-images"></i><span>Quản lý hóa đơn</span>
+                    <i class="fas fa-thumbtack"></i><span>Quản lý hóa đơn</span>
                 </div>
-                <div class="nav-button">
-                    <i class="fas fa-thumbtack"></i><span>Quản lý danh mục</span>
-                </div>
-
                 <div class="nav-button" onclick="displayUsers()">
-                    <i class="fas fa-heart"></i><span>Quản lý khách hàng</span>
-                </div>
-                <div class="nav-button">
-                    <i class="fas fa-user"></i><span>Quản lý nhân viên</span>
+                    <i class="fas fa-user"></i><span>Quản lý khách hàng</span>
                 </div>
                 <div class="nav-button" onclick="displayStats()">
                     <i class="fas fa-chart-line"></i><span>Thống kê</span>
@@ -129,12 +122,12 @@
             </div>
         </div>
         <div id="overlay"></div>
-        <form id="addUserForm" style="display: none;">
+        <form id="addUserForm" style="display: none;" onsubmit="addUser(event)">
             <button class="close-btn" onclick="hideAddUserForm()">X</button>
             <h3>Thêm người dùng mới</h3>
             <div id="cssRegisterForm">
                 <div class="columm"> <!--onsubmit="signup()"-->
-                    <label for="newFullName">Họ và Tên:</label>
+                    <label for="addFullname">Họ và Tên:</label>
                     <input type="text" id="addFullname" name="addFullname" placeholder="Nhập Họ Và Tên"><br />
                     <div id="fullNameError" style="color: red;"><i>*Bạn chưa nhập họ tên</i></div>
                     <label for="addUsername">Tên đăng nhập:</label>
@@ -166,9 +159,43 @@
                     </div>
                 </div>
             </div>
-            <button onclick="addUserFromForm()">Lưu</button>
-            <button onclick="hideAddUserForm()">Hủy</button>
+            <button type="submit">Lưu</button>
+            <button type="button" onclick="hideAddUserForm()">Hủy</button>
         </form>
+        <form id="editUserForm" style="display: none;">
+            <h3>Sửa thông tin người dùng</h3>
+            <label for="editFullname">Họ và Tên:</label>
+            <input type="text" id="editFullname" placeholder="Họ và Tên">
+            <div id="editFullNameError" style="color: red;"></div>
+        
+            <label for="editUsername">Tên đăng nhập:</label>
+            <input type="text" id="editUsername" placeholder="Tên đăng nhập" disabled>
+            <div id="editUsernameError" style="color: red;"></div>
+        
+            <label for="editPhone">Số Điện Thoại:</label>
+            <input type="text" id="editPhone" placeholder="Số Điện Thoại">
+            <div id="editPhoneNumberError" style="color: red;"></div>
+        
+            <label for="editAddress">Số nhà, Đường:</label>
+            <input type="text" id="editAddress" placeholder="Số nhà, Đường">
+            <div id="editAddressError" style="color: red;"></div>
+        
+            <label for="editPhuong">Phường:</label>
+            <input type="text" id="editPhuong" placeholder="Phường">
+            <div id="editPhuongError" style="color: red;"></div>
+        
+            <label for="editQuan">Quận:</label>
+            <input type="text" id="editQuan" placeholder="Quận">
+            <div id="editQuanError" style="color: red;"></div>
+        
+            <label for="editPassword">Mật khẩu:</label>
+            <input type="password" id="editPassword" placeholder="Mật khẩu">
+            <div id="editPasswordError" style="color: red;"></div>
+        
+            <button type="button" id="setting--Button" onclick="saveEdit()">Lưu</button>
+            <button type="button" onclick="hideEditUserForm()">Hủy</button>
+        </form>
+        
 
     </main>
 
