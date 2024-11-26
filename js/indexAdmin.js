@@ -8,26 +8,9 @@ function filterProducts() {
     // Lấy danh sách sản phẩm từ localStorage
     const productArray = JSON.parse(localStorage.getItem("products")) || [];
 
-<<<<<<< HEAD
-    // Kiểm tra nếu productArray tồn tại và không rỗng, và nếu brand tồn tại
-    if (!productArray || productArray.length === 0 || !brand) return;
-
-    // Lọc sản phẩm theo thương hiệu
-    const filteredProducts = [];
-    for (let i = 0; i < productArray.length; i++) {
-        if (productArray[i].kind === brand) {
-            filteredProducts.push(productArray[i]);
-        }
-    }
-    const productList = document.getElementById("product-list");
-    // Kiểm tra nếu có sản phẩm đã lọc
-    if (!filteredProducts) {
-        productList.innerHTML = `<p>Không có sản phẩm nào phù hợp.</p>`;
-=======
     // Kiểm tra nếu không có sản phẩm trong localStorage
     if (!productArray || productArray.length === 0) {
         console.warn("Danh sách sản phẩm trống hoặc không tồn tại.");
->>>>>>> cdbbb02523174b761f1d398bf7e6e2adfa131eb1
         return;
     }
 
@@ -44,7 +27,7 @@ function filterProducts() {
     });
 
     // Lấy phần tử product-list và xóa các sản phẩm cũ
-    
+    const productList = document.getElementById("product-list");
     productList.innerHTML = ""; // Xóa các sản phẩm cũ
 
     // Hiển thị kết quả
@@ -55,7 +38,6 @@ function filterProducts() {
 
     displayProducts(filteredProducts, productList);
 }
-
 
 function displayProducts(products, productList) {
     productList.innerHTML = ""; // Xóa các sản phẩm cũ
@@ -125,7 +107,6 @@ function displayProducts(products, productList) {
 
 
 function searchByName() {
-  
     const searchInput = document.getElementById("Search_Name").value.trim();
     console.log(`Search Input: "${searchInput}"`);
 
@@ -139,5 +120,18 @@ function searchByName() {
     currentUrl.searchParams.set("search", searchInput); 
     window.location.href = currentUrl.toString(); 
 }
+function searchByName2() {
+    const searchInput = document.getElementById("Search_Name2").value.trim();
+    console.log(`Search Input: "${searchInput}"`);
 
+
+    if (!searchInput) {
+        alert("Vui lòng nhập từ khóa tìm kiếm!");
+        return;
+    }
+
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set("search", searchInput); 
+    window.location.href = currentUrl.toString(); 
+}
 
