@@ -14,7 +14,7 @@ function renderProduct(page) {
         if (!product.id || !product.name || !product.image || !product.price) {
             console.error(`Dữ liệu không hợp lệ cho sản phẩm tại index ${i}`, product);
         }
-        console.log(product.price.toLocaleString('vi-VN'));
+        product.price = Number(product.price);
         html += `
         <div class="product-card">
                 <div class="product-image">
