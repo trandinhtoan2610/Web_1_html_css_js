@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../css/style_Mainpage.css">
     <link rel="stylesheet" href="../css/style_QuanLySanPham.css">
     <link rel="stylesheet" href="../css/navbar.css">
-   
+    <link rel="stylesheet" href="../css/QuanLyKhachHang.css">
     <title>Thế giới di động</title>
 </head>
 
@@ -34,17 +34,10 @@
                     <i class="fas fa-palette"></i><span>Quản lý sản phẩm</span>
                 </div>
                 <div class="nav-button" onclick="showOrderManagement()">
-                    <i class="fas fa-images"></i><span>Quản lý hóa đơn</span>
+                    <i class="fas fa-thumbtack"></i><span>Quản lý hóa đơn</span>
                 </div>
-                <div class="nav-button">
-                    <i class="fas fa-thumbtack"></i><span>Quản lý danh mục</span>
-                </div>
-
                 <div class="nav-button" onclick="displayUsers()">
-                    <i class="fas fa-heart"></i><span>Quản lý khách hàng</span>
-                </div>
-                <div class="nav-button">
-                    <i class="fas fa-user"></i><span>Quản lý nhân viên</span>
+                    <i class="fas fa-user"></i><span>Quản lý khách hàng</span>
                 </div>
                 <div class="nav-button" onclick="displayStats()">
                     <i class="fas fa-chart-line"></i><span>Thống kê</span>
@@ -54,7 +47,6 @@
         </div>
         <div class="container" id='container'>
         </div>
-
         <div class="Modal" id="Modal_fix_products">
             <div class="Modal_overlay"> </div>
             <div class="Modal_body">
@@ -127,10 +119,83 @@
                         <button class="AP_button" onclick="return SuaSanPham()">Sửa sản phẩm</button>
                     </div>
                 </div>
-
-
             </div>
         </div>
+        <div id="overlay"></div>
+        <form id="addUserForm" style="display: none;" onsubmit="addUser(event)">
+            <button class="close-btn" onclick="hideAddUserForm()">X</button>
+            <h3>Thêm người dùng mới</h3>
+            <div id="cssRegisterForm">
+                <div class="columm"> <!--onsubmit="signup()"-->
+                    <label for="addFullname">Họ và Tên:</label>
+                    <input type="text" id="addFullname" name="addFullname" placeholder="Nhập Họ Và Tên"><br />
+                    <div id="fullNameError" style="color: red;"><i>*Bạn chưa nhập họ tên</i></div>
+                    <label for="addUsername">Tên đăng nhập:</label>
+                    <input type="text" id="addUsername" name="addUsername" placeholder="Nhập Tài Khoản"><br>
+                    <div id="newUsernameError" style="color: red;"><i>*Bạn chưa nhập tên đăng nhập</i>
+                    </div>
+                    <label for="addPhone">Số Điện Thoại:</label>
+                    <input type="text" id="addPhone" name="addPhone"
+                        placeholder="Nhập Số Điện Thoại"><br>
+                    <div id="phoneNumberError" style="color: red;"><i>*Bạn chưa nhập số điện thoại</i>
+                    </div>
+                    <label for="addAddress">Số Nhà, Đường: </label>
+                    <input type="text" id="addAddress" name="addAddress" placeholder="Nhập Số Nhà, Đường"><br>
+                    <div id="addressError" style="color: red;"><i>*Bạn chưa nhập số nhà, đường</i></div>
+                </div>
+                <div class="columm">
+                    <label for="addPhuong">Phường: </label>
+                    <input type="text" id="addPhuong" name="addPhuong" placeholder="Nhập Phường"><br>
+                    <div id="phuongError" style="color: red;"><i>*Bạn chưa nhập phường</i>
+                    </div>
+                    <label for="addQuan">Quận: </label>
+                    <input type="text" id="addQuan" name="addQuan" placeholder="Nhập Quận"><br>
+                    <div id="quanError" style="color: red;"><i>*Bạn chưa nhập quận</i>
+                    </div>
+                    <label for="addPassword">Mật khẩu:</label>
+                    <input type="password" id="addPassword" name="addPassword"
+                        placeholder="Nhập Mật Khẩu"><br />
+                    <div id="newPasswordError" style="color: red;"><i>*Bạn chưa nhập mật khẩu</i></div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit">Lưu</button>
+            <button type="button" onclick="hideAddUserForm()">Hủy</button>
+        </form>
+        <form id="editUserForm" style="display: none;">
+            <h3>Sửa thông tin người dùng</h3>
+            <label for="editFullname">Họ và Tên:</label>
+            <input type="text" id="editFullname" placeholder="Họ và Tên">
+            <div id="editFullNameError" style="color: red;"></div>
+        
+            <label for="editUsername">Tên đăng nhập:</label>
+            <input type="text" id="editUsername" placeholder="Tên đăng nhập" disabled>
+            <div id="editUsernameError" style="color: red;"></div>
+        
+            <label for="editPhone">Số Điện Thoại:</label>
+            <input type="text" id="editPhone" placeholder="Số Điện Thoại">
+            <div id="editPhoneNumberError" style="color: red;"></div>
+        
+            <label for="editAddress">Số nhà, Đường:</label>
+            <input type="text" id="editAddress" placeholder="Số nhà, Đường">
+            <div id="editAddressError" style="color: red;"></div>
+        
+            <label for="editPhuong">Phường:</label>
+            <input type="text" id="editPhuong" placeholder="Phường">
+            <div id="editPhuongError" style="color: red;"></div>
+        
+            <label for="editQuan">Quận:</label>
+            <input type="text" id="editQuan" placeholder="Quận">
+            <div id="editQuanError" style="color: red;"></div>
+        
+            <label for="editPassword">Mật khẩu:</label>
+            <input type="password" id="editPassword" placeholder="Mật khẩu">
+            <div id="editPasswordError" style="color: red;"></div>
+        
+            <button type="button" id="setting--Button" onclick="saveEdit()">Lưu</button>
+            <button type="button" onclick="hideEditUserForm()">Hủy</button>
+        </form>
+        
 
     </main>
 

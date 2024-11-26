@@ -13,38 +13,25 @@ function displayUsers() {
 
     // Tạo bảng hiển thị danh sách người dùng
     let userTable = `
-        <h2>Quản lí Khách Hàng</h2>
-        <button onclick="showAddUserForm()">Thêm người dùng</button>
-        <div>
-            <input type="text" id="searchInput" placeholder="Nhập ID người dùng">
-            <button onclick="searchUserById()">Tìm kiếm ID người dùng</button>
-        </div>
-        <div id="addUserForm" style="display: none;">
-            <h3>Thêm người dùng mới</h3>
-            <label for="addUsername">Tên người dùng:</label>
-            <input type="text" id="addUsername">
-            <label for="addFullname">Họ tên:</label>
-            <input type="text" id="addFullname">
-            <label for="addPhone">Số điện thoại:</label>
-            <input type="text" id="addPhone">
-            <label for="addAddress">Địa chỉ:</label>
-            <input type="text" id="addAddress">
-            <label for="addPassword">Mật khẩu:</label>
-            <input type="password" id="addPassword">
-            <button onclick="addUserFromForm()">Lưu</button>
-            <button onclick="hideAddUserForm()">Hủy</button>
-        </div>
+        <div class="FixProducts_Header">
+                <ul class="AP_HeaderList">
+                    <li><a href="#" class="Them_SP" id="Tao_SP" onclick="showAddUserForm()">Thêm Người Dùng</a></li>                <li class="Fix_Title"> QUẢN LÝ KHÁCH HÀNG </li>
+                    <li><a href="indexAdmin.html" id="Thoat_TaoSP">Trở lại</a></li>
+                </ul>
+            </div>
         <div class="table">
             <div class="table-header">
                 <div class="header__item"><a id="countIDUser" class="filter__link" href="#">ID</a></div>
                 <div class="header__item"><a id="username" class="filter__link" href="#">Tên người dùng</a></div>
                 <div class="header__item"><a id="fullname" class="filter__link" href="#">Họ tên</a></div>
                 <div class="header__item"><a id="phone" class="filter__link" href="#">Số điện thoại</a></div>
+                <div class="header__item"><a id="Address" class="filter__link" href="#">Địa Chỉ</a></div>
                 <div class="header__item"><a id="status" class="filter__link" href="#">Trạng thái</a></div>
+                <div class="header__item"><a id="locked" class="filter__link" href="#">Khóa/Mở Khóa</a></div>
+                <div class="header__item"><a id="repair" class="filter__link" href="#">Sửa/Xóa</a></div>
             </div>
             <div class="table-content" id="table-content">
     `;
-
     if (userList.length === 0) {
         userTable += `
             <div class="table-row">
@@ -59,11 +46,14 @@ function displayUsers() {
                 <div class="table-data">${user.username}</div>
                 <div class="table-data">${user.fullname}</div>
                 <div class="table-data">${user.phone}</div>
+                <div class="table-data" id="customAddress">${user.address} ,Phường:${user.phuong},Quận:${user.quan}</div>
+                <div class="table-data">${user.status}</div>
                 <div class="table-data">
-                     <button onclick="deleteUser(${user.id})">Xóa</button>
-                     <button onclick="lockUser(${user.id})">Khóa</button>
-                     <button onclick="unlockUser(${user.id})">Mở Khóa</button>
-                     <button onclick="showEditUserForm(${user.id})">Sửa</button>
+                <button onclick="unlockUser(${user.id})">Mở Khóa</button>
+                <button onclick="lockUser(${user.id})">Khóa</button></div>
+                <div class="table-data">
+                <button onclick="openEditForm(${user.id})">Sửa</button>
+                <button onclick="deleteUser(${user.id})">Xóa</button>                       
                 </div>
             </div>`;
         });
@@ -80,82 +70,233 @@ function displayUsers() {
 // Hiển thị form thêm người dùng
 function showAddUserForm() {
     document.getElementById('addUserForm').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
 }
 
-// Ẩn form thêm người dùng
 function hideAddUserForm() {
     document.getElementById('addUserForm').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
 }
+
 
 // Hàm thêm người dùng từ form
-function addUserFromForm() {
-    const username = document.getElementById('addUsername').value;
+function addUser(event) {
+    event.preventDefault(); // Ngăn form reload lại trang
+
+    // Lấy dữ liệu từ form
     const fullname = document.getElementById('addFullname').value;
+    const username = document.getElementById('addUsername').value;
     const phone = document.getElementById('addPhone').value;
     const address = document.getElementById('addAddress').value;
+    const phuong = document.getElementById('addPhuong').value;
+    const quan = document.getElementById('addQuan').value;
     const password = document.getElementById('addPassword').value;
-    var d = new Date();
-    var datesignup = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
-    addUser(username, fullname, phone, address, password, datesignup);
-    hideAddUserForm();
-}
 
-// Hàm thêm người dùng
-function addUser(username, fullname, phone, address, password, datesignup) {
-    if (!username || !fullname || !phone || !address || !password || !datesignup) {
-        alert("Vui lòng nhập đầy đủ thông tin người dùng.");
-        return;
+    let valid = true;
+
+    // Kiểm tra lỗi
+    if (!fullname) {
+        document.getElementById('fullNameError').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('fullNameError').style.display = 'none';
     }
 
-    // Kiểm tra xem người dùng đã tồn tại chưa
-    let userList = JSON.parse(localStorage.getItem('user')) || [];
+    if (!username) {
+        document.getElementById('newUsernameError').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('newUsernameError').style.display = 'none';
+    }
+
+    if (!phone) {
+        document.getElementById('phoneNumberError').style.display = 'block';
+        valid = false;
+    } else if (isNaN(Number(phone)) || phone.length !== 10) {
+        document.getElementById('phoneNumberError').innerHTML = '<i>*Số điện thoại không đúng định dạng</i>';
+        document.getElementById('phoneNumberError').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('phoneNumberError').style.display = 'none';
+    }
+    if (!address) {
+        document.getElementById('addressError').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('addressError').style.display = 'none';
+    }
+
+    if (!phuong) {
+        document.getElementById('phuongError').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('phuongError').style.display = 'none';
+    }
+
+    if (!quan) {
+        document.getElementById('quanError').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('quanError').style.display = 'none';
+    }
+
+    if (!password || password.length < 8) {
+        document.getElementById('newPasswordError').innerHTML = '<i>*Mật khẩu phải trên 8 ký tự</i>';
+        document.getElementById('newPasswordError').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('newPasswordError').style.display = 'none';
+    }
+
+    if (!valid) return; // Ngừng nếu có lỗi
+
+    // Lưu vào localStorage
+    const userList = JSON.parse(localStorage.getItem('user')) || [];
+    const countIDUser = parseInt(localStorage.getItem('countIDUser') || "0") + 1;
+
     if (userList.some(user => user.username === username)) {
-        alert("Người dùng đã tồn tại.");
+        alert("Người dùng đã tồn tại!");
         return;
     }
 
-    // Lấy ID mới cho người dùng
-    let countIDUser = parseInt(localStorage.getItem('countIDUser')) || 0;
-    countIDUser += 1;
-    localStorage.setItem('countIDUser', countIDUser);  // Cập nhật countIDUser
-
-    // Tạo đối tượng người dùng mới
     const newUser = {
-        id: countIDUser,  // ID người dùng mới
-        username: username,
-        fullname: fullname,
-        phone: phone,
-        address: address,
-        password: password,
-        datesignup: datesignup,  // Ngày đăng ký
-        status: true,  // Mặc định tài khoản chưa bị khóa
+        id: countIDUser,
+        fullname,
+        username,
+        phone,
+        address,
+        phuong,
+        quan,
+        password,
+        datesignup: new Date().toLocaleDateString(),
+        status: true,
     };
 
-    // Lưu thông tin người dùng vào localStorage
     userList.push(newUser);
     localStorage.setItem('user', JSON.stringify(userList));
+    localStorage.setItem('countIDUser', countIDUser);
 
-    alert("Người dùng đã được thêm thành công.");
-    displayUsers();  // Cập nhật danh sách người dùng sau khi thêm
+    alert("Người dùng được thêm thành công!");
+    document.getElementById('addUserForm').reset(); // Xóa dữ liệu form
+    hideAddUserForm(); // Ẩn form
 }
 
 // Hàm sửa thông tin người dùng
-function editUser(userId, newUsername, newFullname, newPhone, newPassword) {
-    let userList = JSON.parse(localStorage.getItem('user')) || [];
+function openEditForm(userId) {
+    const userList = JSON.parse(localStorage.getItem('user')) || [];
     const user = userList.find(u => u.id === userId);
+
     if (!user) {
-        alert("Không tìm thấy người dùng.");
+        alert("Người dùng không tồn tại!");
         return;
     }
 
-    user.username = newUsername;
-    user.fullname = newFullname;
-    user.phone = newPhone;
-    user.password = newPassword;
+    // Điền thông tin cũ vào form
+    document.getElementById('editFullname').value = user.fullname;
+    document.getElementById('editUsername').value = user.username; // Khóa không cho sửa
+    document.getElementById('editPhone').value = user.phone;
+    document.getElementById('editAddress').value = user.address;
+    document.getElementById('editPhuong').value = user.phuong;
+    document.getElementById('editQuan').value = user.quan;
+    document.getElementById('editPassword').value = user.password;
 
+    // Hiển thị form sửa
+    document.getElementById('editUserForm').style.display = 'block';
+
+    // Gắn ID vào form để xử lý sau
+    document.getElementById('editUserForm').setAttribute('data-user-id', userId);
+}
+function saveEdit() {
+    const userId = parseInt(document.getElementById('editUserForm').getAttribute('data-user-id'));
+    const userList = JSON.parse(localStorage.getItem('user')) || [];
+
+    // Tìm người dùng cần sửa
+    const userIndex = userList.findIndex(user => user.id === userId);
+    if (userIndex === -1) {
+        alert("Người dùng không tồn tại!");
+        return;
+    }
+
+    // Lấy thông tin đã chỉnh sửa từ form
+    const fullname = document.getElementById('editFullname').value;
+    const phone = document.getElementById('editPhone').value;
+    const address = document.getElementById('editAddress').value;
+    const phuong = document.getElementById('editPhuong').value;
+    const quan = document.getElementById('editQuan').value;
+    const password = document.getElementById('editPassword').value;
+
+    let valid = true;
+
+    // Kiểm tra lỗi
+    if (!fullname) {
+        document.getElementById('editFullNameError').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('editFullNameError').style.display = 'none';
+    }
+
+    if (!phone) {
+        document.getElementById('editPhoneNumberError').style.display = 'block';
+        valid = false;
+    } else if (isNaN(Number(phone)) || phone.length !== 10) {
+        document.getElementById('editPhoneNumberError').innerHTML = '<i>*Số điện thoại không đúng định dạng</i>';
+        document.getElementById('editPhoneNumberError').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('editPhoneNumberError').style.display = 'none';
+    }
+
+    if (!address) {
+        document.getElementById('editAddressError').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('editAddressError').style.display = 'none';
+    }
+
+    if (!phuong) {
+        document.getElementById('editPhuongError').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('editPhuongError').style.display = 'none';
+    }
+
+    if (!quan) {
+        document.getElementById('editQuanError').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('editQuanError').style.display = 'none';
+    }
+
+    if (!password || password.length < 8) {
+        document.getElementById('editPasswordError').innerHTML = '<i>*Mật khẩu phải trên 8 ký tự</i>';
+        document.getElementById('editPasswordError').style.display = 'block';
+        valid = false;
+    } else {
+        document.getElementById('editPasswordError').style.display = 'none';
+    }
+
+    if (!valid) return;
+
+    // Cập nhật thông tin trong danh sách
+    userList[userIndex] = {
+        ...userList[userIndex],
+        fullname,
+        phone,
+        address,
+        phuong,
+        quan,
+        password,
+    };
+
+    // Lưu lại vào localStorage
     localStorage.setItem('user', JSON.stringify(userList));
-    alert("Thông tin người dùng đã được sửa thành công.");
-    displayUsers();
+
+    alert("Thông tin người dùng đã được cập nhật!");
+    hideEditUserForm(); // Ẩn form sửa
+    displayUsers(); // Cập nhật danh sách hiển thị
+}
+function hideEditUserForm() {
+    document.getElementById('editUserForm').style.display = 'none';
 }
 
 // Hàm xóa người dùng
@@ -204,64 +345,4 @@ function unlockUser(userId) {
     } else {
         alert("Không tìm thấy người dùng.");
     }
-}
-
-// Hàm tìm kiếm ID của người dùng
-function searchUserById() {
-    const searchInput = document.getElementById('searchInput').value;
-    if (!searchInput) {
-        alert('Vui lòng nhập ID để tìm kiếm.');
-        return;
-    }
-
-    const userId = parseInt(searchInput, 10);
-    if (isNaN(userId)) {
-        alert('ID không hợp lệ. Vui lòng nhập một số nguyên.');
-        return;
-    }
-
-    // Lấy danh sách người dùng từ localStorage
-    const userString = localStorage.getItem('user');
-    let userList = userString ? JSON.parse(userString) : [];
-    if (!Array.isArray(userList)) userList = [];
-
-    // Tìm người dùng theo ID
-    const user = userList.find(user => user.id === userId);
-    if (!user) {
-        alert('Không tìm thấy người dùng với ID đã nhập.');
-        return;
-    }
-
-    // Hiển thị kết quả tìm kiếm
-    let searchResult = `
-        <h2>Kết quả tìm kiếm</h2>
-        <button onclick="displayUsers()">Quay lại</button>
-        <div class="table">
-            <div class="table-header">
-                <div class="header__item"><a id="id" class="filter__link" href="#">ID</a></div>
-                <div class="header__item"><a id="username" class="filter__link" href="#">Tên người dùng</a></div>
-                <div class="header__item"><a id="fullname" class="filter__link" href="#">Họ tên</a></div>
-                <div class="header__item"><a id="phone" class="filter__link" href="#">Số điện thoại</a></div>
-                <div class="header__item"><a id="status" class="filter__link" href="#">Trạng thái</a></div>
-            </div>
-            <div class="table-content">
-                <div class="table-row table-row-highlight">
-                    <div class="table-data">${user.id}</div>
-                    <div class="table-data">${user.username}</div>
-                    <div class="table-data">${user.fullname}</div>
-                    <div class="table-data">${user.phone}</div>
-                    <div class="table-data">
-                        <button onclick="deleteUser(${user.id})">Xóa</button>
-                        <button onclick="lockUser(${user.id})">Khóa</button>
-                        <button onclick="unlockUser(${user.id})">Mở Khóa</button>
-                        <button onclick="showEditUserForm(${user.id})">Sửa</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-
-    // Cập nhật giao diện để hiển thị kết quả
-    const container = document.getElementById('container');
-    container.innerHTML = searchResult;
 }

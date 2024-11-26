@@ -12,7 +12,7 @@ function createAdmin() {
         localStorage.setItem('countIDUser', countIDUser);
         var status = false;
         var userArray = [];
-        var user = { id: countIDUser, username: 'admin', fullname: 'Hoang',address: '36', password: 'admin', phone: '0329997881', datesignup: '26-09-2005' , status: status};
+        var user = { id: countIDUser, username: 'admin', fullname: 'Hoang',address: '270/97 Phan Đình Phùng',phuong: '1',quan: 'Phú Nhuận', password: 'admin', phone: '0329997881', datesignup: '26-09-2005' , status: status};
         userArray.push(user);
         localStorage.setItem('user', JSON.stringify(userArray));
     }
@@ -42,6 +42,8 @@ function signup(e) {
     var fullname = document.getElementById('newFullName');
     var phone = document.getElementById('newPhoneNumber');
     var address = document.getElementById('newAddress');
+    var phuong = document.getElementById('newPhuong');
+    var quan = document.getElementById('newQuan');
     var username = document.getElementById('newUsername');
     var password = document.getElementById('newPassword');
     var password2 = document.getElementById('newRepeatPassword');
@@ -63,6 +65,18 @@ function signup(e) {
         flag = false;
     }else{
         document.getElementById('addressError').style.display = 'none';
+    }
+    if(!phuong.value){
+        document.getElementById('phuongError').style.display = 'block';
+        flag = false;
+    }else{
+        document.getElementById('phuongError').style.display = 'none';
+    }
+    if(!quan.value){
+        document.getElementById('quanError').style.display = 'block';
+        flag = false;
+    }else{
+        document.getElementById('quanError').style.display = 'none';
     }
     if (!phone.value) {
         document.getElementById('phoneNumberError').style.display = 'block';
@@ -109,7 +123,7 @@ function signup(e) {
     var status = true;
     var countIDUser = JSON.parse(localStorage.getItem('countIDUser'));countIDUser += 1;
     localStorage.setItem('countIDUser', countIDUser);
-    var user = { id: countIDUser, username: username.value, fullname: fullname.value,address: address.value, password: password.value, phone: phone.value, datesignup: datesignup, status: status };
+    var user = { id: countIDUser, username: username.value, fullname: fullname.value,address: address.value,phuong: phuong.value,quan: quan.value, password: password.value, phone: phone.value, datesignup: datesignup, status: status };
     var userArray = JSON.parse(localStorage.getItem('user'));
     for (var i = 0; i < userArray.length; i++) {
         if (user.username == userArray[i].username) {

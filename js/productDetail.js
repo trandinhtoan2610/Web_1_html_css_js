@@ -1,3 +1,6 @@
+function remind(){
+    alert("Bạn phải đăng nhập mới thêm vào được giỏ hàng!!");
+}
 var json = JSON.stringify(products);
 localStorage.setItem("products", json);
 function showProductDetails(productID) {
@@ -15,7 +18,13 @@ function showProductDetails(productID) {
     for (var i = 0; i < productArray.length; i++) {
         if (productArray[i].id == productID) {
             product_Name.innerHTML = productArray[i].name;
-            product_Price.innerHTML = "Giá: " + productArray[i].price;
+            if (typeof productArray[i].price === 'number') {
+                product_Price.innerHTML = "Giá: " + price.toLocaleString('vi-VN') + "<sup><u>đ</u></sup>";
+            } else if (!isNaN(Number(productArray[i].price))) {
+                product_Price.innerHTML = "Giá: " + Number(productArray[i].price).toLocaleString('vi-VN') + "<sup><u>đ</u></sup>";
+            } else {
+                product_Price.innerHTML = "Giá: Không hợp lệ";
+            }
             product_Ram.innerHTML = "Ram: " + productArray[i].ram;
             product_SSD.innerHTML = "SSD: " + productArray[i].ssd;
             product_Card.innerHTML = "Card: " + productArray[i].card;
