@@ -18,15 +18,18 @@ function filterProducts() {
         }
     }
 
-    // Kiểm tra nếu có sản phẩm đã lọc
-    if (filteredProducts.length === 0) {
-        console.warn("Không có sản phẩm nào phù hợp với thương hiệu:", brand);
-        return;
-    }
-
     // Lấy phần tử product-list và xóa các sản phẩm cũ
     const productList = document.getElementById("product-list");
     productList.innerHTML = ""; // Xóa các sản phẩm cũ
+
+    // Kiểm tra nếu có sản phẩm đã lọc
+    if (filteredProducts.length === 0) {
+        console.warn("Không có sản phẩm nào phù hợp với thương hiệu:", brand);
+        productList.innerHTML = "Không có"; 
+        return;
+    }
+
+    
 
     // Hiển thị các sản phẩm đã lọc
     displayProducts(filteredProducts, productList);

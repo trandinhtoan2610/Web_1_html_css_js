@@ -37,12 +37,7 @@
     text-align: center;
 }
 
-.TimKiemSP{
-    position: absolute;
-    bottom:10px;
-    width: 25%;
-    left: 18%;
-}
+
 .Them_SP {
     position: absolute;
     bottom: 10px;
@@ -167,7 +162,7 @@ input[type="number"] {
     border-radius: 5px;
     margin : 10px;
     align-items: center;
-    font-size: 16px;
+    font-size: 20px;
     width: 100%;
     background-color : white;
     box-shadow: 2px 3px 4px gray;
@@ -391,4 +386,64 @@ input[type="number"] {
     display: flex;
     max-height: 90%; 
 }
+
+.Modal_inner{
+    background-color: white;
+    padding: 3%;
+    border: 15px solid black;
+    border-radius: 12px;
+    position: relative;
+    max-height: 90%; 
+    overflow-y: auto; 
+       
+}
+
+.Modal_inner div {
+    margin : 20px 0 20px 0;
+}
+
+.Modal_inner input{
+    padding: 12px;
+    font-size: 15px;
+}
+
+.Modal_inner label {
+    font-size: 16px;
+    color: black;
+}
+
+.Modal_fix_header {
+    border-bottom: 2px solid black;
+    text-align: center;
+    font-size: 22px;
+}
+
+.Modal_fix_exit {
+    position: absolute;
+    top:0;
+    right: 10px;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+
+.div_img_file{
+    display: flex;
+}
+
+.img_preview {
+    width: 30%;
+    height: 30%;
+    border: 2px dashed black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img_preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; 
+}
+
 
