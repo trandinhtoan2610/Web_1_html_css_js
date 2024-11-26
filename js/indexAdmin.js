@@ -2,11 +2,13 @@ var products_json = localStorage.getItem('products')
 var products = JSON.parse(products_json);
 function filterProducts() {
     const urlParams = new URLSearchParams(window.location.search);
-    const brand = urlParams.get('brand');
+    const brand = urlParams.get('brand'); // Lọc theo thương hiệu
+    const searchQuery = urlParams.get('search'); // Lọc theo từ khóa tìm kiếm
 
     // Lấy danh sách sản phẩm từ localStorage
-    const productArray = JSON.parse(localStorage.getItem("products"));
+    const productArray = JSON.parse(localStorage.getItem("products")) || [];
 
+<<<<<<< HEAD
     // Kiểm tra nếu productArray tồn tại và không rỗng, và nếu brand tồn tại
     if (!productArray || productArray.length === 0 || !brand) return;
 
@@ -21,16 +23,39 @@ function filterProducts() {
     // Kiểm tra nếu có sản phẩm đã lọc
     if (!filteredProducts) {
         productList.innerHTML = `<p>Không có sản phẩm nào phù hợp.</p>`;
+=======
+    // Kiểm tra nếu không có sản phẩm trong localStorage
+    if (!productArray || productArray.length === 0) {
+        console.warn("Danh sách sản phẩm trống hoặc không tồn tại.");
+>>>>>>> cdbbb02523174b761f1d398bf7e6e2adfa131eb1
         return;
     }
+
+    // Lọc sản phẩm theo thương hiệu và từ khóa tìm kiếm
+    const filteredProducts = productArray.filter(product => {
+        // Kiểm tra theo thương hiệu (nếu có)
+        const matchesBrand = !brand || product.kind === brand;
+
+        // Kiểm tra theo từ khóa tìm kiếm (nếu có)
+        const matchesSearch = !searchQuery || product.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+        // Chỉ giữ lại sản phẩm thỏa mãn cả hai điều kiện
+        return matchesBrand && matchesSearch;
+    });
 
     // Lấy phần tử product-list và xóa các sản phẩm cũ
     
     productList.innerHTML = ""; // Xóa các sản phẩm cũ
 
-    // Hiển thị các sản phẩm đã lọc
+    // Hiển thị kết quả
+    if (filteredProducts.length === 0) {
+        productList.innerHTML = "<p>Không tìm thấy sản phẩm nào phù hợp.</p>";
+        return;
+    }
+
     displayProducts(filteredProducts, productList);
 }
+
 
 function displayProducts(products, productList) {
     productList.innerHTML = ""; // Xóa các sản phẩm cũ
@@ -97,3 +122,22 @@ function displayProducts(products, productList) {
         productList.appendChild(productCard);
     }
 }
+
+
+function searchByName() {
+  
+    const searchInput = document.getElementById("Search_Name").value.trim();
+    console.log(`Search Input: "${searchInput}"`);
+
+
+    if (!searchInput) {
+        alert("Vui lòng nhập từ khóa tìm kiếm!");
+        return;
+    }
+
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.set("search", searchInput); 
+    window.location.href = currentUrl.toString(); 
+}
+
+
