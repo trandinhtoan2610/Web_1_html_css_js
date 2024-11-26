@@ -51,7 +51,7 @@ function TaoSanPham (){
     if (NodeTen.value == ''){
         document.getElementById('AP_NAME_Warning').style.display ='block';
         NodeTen.focus()
-        return false
+        return false;
     }
     else{
         document.getElementById('AP_NAME_Warning').style.display ='none';
