@@ -143,10 +143,11 @@
         <div class="Modal" id="Cart_Modal">
             <div class="Modal_overlay"></div>
             <div class="Modal_body" id = "Cart_Modal_Body">
-                <div class="Modal_inner" id="Modal_fix_products__inner">
-                    <a href="#" class="Modal_cart_exit"> X </a>
+                <div class="Modal_inner" id="Cart_Modal__inner">
+                    <a href="#" class="Modal_cart_exit" onclick = "Close_Cart_confirm_1()"> X </a>
                     <div class="Cart_Modal__header">
-                        Thông tin khách hàng
+                        <p>Thông tin khách hàng</p>
+                        <p class="btn_customer_info" onclick="Customer_Info()"> Dùng thông tin hiện tại </a>
                     </div>
         
                     <!-- Họ và tên -->
@@ -240,14 +241,29 @@
                             </div>
                         </form>
                     </div>
-                </div>
-        
-                    <!-- Nút Sửa -->
                     <div class="Cart_Button_Div">
-                        <button class="Cart_button" onclick="return Cart_Confirm_Details()">Xác nhận</button>
+                        <button class="Cart_button" onclick="Cart_Confirm_Details()">Xác nhận</button>
                     </div>
                 </div>
+
+                <div class="Modal_inner" id="Cart_Modal__inner_2">
+                    <h2>Tóm tắt hóa đơn</h2>
+                    <div id="summary_content">
+                        <p>Họ và tên : </p>
+                        <p>Địa chỉ :  </p>
+                        <p>Phương thức thanh toán : </p>
+                        <div>Sản phẩm : </div>
+                        <p>Tổng : </p>
+                    </div>
+                    <div class="btn_payment">
+                        <button onclick="Close_Cart_confirm_2()">Quay lại</button>
+                        <button onclick="thanhtoan()">Xác nhận mua</button>
+                    </div>
+                </div>
+                
             </div>
+
+        </div>
 
           
         

@@ -173,8 +173,7 @@ function filterOrdersByDateThongKe(){
     const endDate = new Date(document.getElementById('endDateThongKe').value);
     console.log(startDate, endDate);
     if (!startDate || !endDate) {
-      alert("Nhập ngày");
-      return;
+      displayStats();
     }
     if (startDate > endDate) {
         alert('Ngày bắt đầu phải nhỏ hơn ngày kết thúc');

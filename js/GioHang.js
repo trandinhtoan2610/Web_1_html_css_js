@@ -221,39 +221,6 @@ function XoaItemGH(ItemID){
     DivGioHang();
 }
 
-function CheckVouncher(){
-    var NodeVouncher = document.getElementById('Cart_vouncher')
-    var NodeVouncher_warning_1 = document.getElementById('Vouncher_warning_1');
-    var NodeVouncher_warning_2 = document.getElementById('Vouncher_warning_2');
-    var discount = 0;
-    if (NodeVouncher.value == ' ')
-        discount = 0;
-
-    if (NodeVouncher.value == 'HSSV')
-    {
-        NodeVouncher_warning_2.style.display = 'block';
-        NodeVouncher_warning_1.style.display = 'none';
-        discount= -500000
-    }
-
-    else {
-        NodeVouncher_warning_1.style.display = 'block';
-        NodeVouncher_warning_2.style.display = 'none';
-        discount = 0;
-    }
-    document.querySelector('.discount_fee span:last-child').textContent = PriceToString(discount);
-    if (TinhTongTien() + discount > 0)
-        document.querySelector('.final_fee_number').textContent = PriceToString(TinhTongTien() + discount); 
-
-    return discount;
-
-}
-
-
-
-
-
-
 
 
 
@@ -325,11 +292,6 @@ function Cart_container(){
     return html;
 }
 
-var NodeCartModal = document.getElementById('Cart_Modal')
-function Cart_confirm_1(){
-    NodeCartModal.style.display ='flex'
-}
-
 
 var NodeContainer = document.getElementById('container')
 
@@ -343,12 +305,7 @@ function DivGioHang(){
 var NodeModalCart = document.getElementById('Modal_Cart_details')
 var NodeModalInner = document.getElementById('Modal_Cart_details__inner')
 
-function DivThongTinThanhToan(){
-    
 
-    NodeModalFix.style.display = 'flex';
-    NodeModalInner.innerHTML = '       ';
-}
 
 function getProductById(productId) {
     // Lấy danh sách sản phẩm từ Local Storage
@@ -466,12 +423,14 @@ function Check_UserDetails() {
     document.getElementById('customer_warning_ward_1').style.display = "none";
     document.getElementById('customer_warning_ward_2').style.display = "none";
 
-    if (checkPaymentMethod() == 0 )
+    if (checkPaymentMethod() == 0 ){
         document.getElementById('customer_warning_payment').style.display = "block";
+        return false;
+    }
     else
         document.getElementById('customer_warning_payment').style.display = "none";
 
-    if (checkPaymentMethod() == 2 ){
+    if (checkPaymentMethod() == 3 ){
         var CardName = document.getElementById('card_name').value
         var CardNumber = document.getElementById('card_number').value
         var CardDate = document.getElementById('expiry_date').value
@@ -574,13 +533,15 @@ function checkPaymentMethod() {
     const cardPayment = document.getElementById('card_payment');
 
     // Tiền mặt và chuyển khoản
-    if (cashPayment.checked || transferPayment.checked) {
+    if (cashPayment.checked ) {
         return 1;
     } 
     
+    else if (transferPayment.checked)
+        return 2
     // Thẻ tín dụng
     else if (cardPayment.checked) {
-        return 2;
+        return 3;
     } 
 
     //Chưa chọn
@@ -590,7 +551,6 @@ function checkPaymentMethod() {
 
 }
 
-var NodeCart_ModalBody = document.getElementById('Cart_Modal_Body')
 
 function PrintPaymentForm() {
     // Lấy các radio button
@@ -600,33 +560,109 @@ function PrintPaymentForm() {
     // Kiểm tra nếu chọn "Thanh toán qua thẻ"
     if (cardPayment.checked) {
         paymentForm.style.display = "block"; 
-        NodeCart_ModalBody.style.overflowY ='auto'
     } 
     else {
         paymentForm.style.display = "none"; 
-        NodeCart_ModalBody.style.overflowY ='none'
     }
 }
 
-function CheckPaymentCard(){
+function Customer_Info(){
+    var CurrentUser = JSON.parse(localStorage.getItem('userlogin'))
+    // alert(typeof CurrentUser)
+    var NodeUserName = document.getElementById('customer_name')
+    var NodeUserPhone = document.getElementById('customer_phone')
+    var NodeUserAdrress = document.getElementById('customer_address')
+    var NodeUserDistrict = document.getElementById('customer_district')
+    var NodeUserWard = document.getElementById('customer_ward')
+    
+    NodeUserAdrress.value = CurrentUser.address;
+    NodeUserDistrict.value = CurrentUser.quan;
+    NodeUserWard.value = CurrentUser.phuong;
+    NodeUserPhone.value = CurrentUser.phone;
+    NodeUserName.value = CurrentUser.fullname;
+}
+
+var NodeCartModal = document.getElementById('Cart_Modal')
+var NodeCartInput = document.getElementById('Cart_Modal__inner')
+var NodeCartInvoice = document.getElementById('Cart_Modal__inner_2')
+
+function Cart_confirm_1(){
+    var DSGH = layDanhSachItemGH()
+    if (DSGH == null || DSGH.length == 0 ){
+        alert("Giỏ hàng hiện tại đang trống !")
+        return;
+    }
+    Customer_Info()
+    NodeCartModal.style.display ='flex'
+    NodeCartInput.style.display = 'block'
+    NodeCartInvoice.style.display = 'none'
 
 }
+
+function Cart_confirm_2(){
+    NodeCartModal.style.display ='flex'
+    NodeCartInput.style.display = 'none'
+    NodeCartInvoice.style.display = 'flex'
+    Summary_Content()
+}
+
+
+
+function Close_Cart_confirm_1(){
+    NodeCartModal.style.display ='none'
+}
+
+
+function Close_Cart_confirm_2(){
+    NodeCartInput.style.display = 'block'
+    NodeCartInvoice.style.display = 'none'
+   
+}
+
+
 
 function Cart_Confirm_Details(){
     if ( !Check_UserDetails())
-        return false;
+        return;
 
-    
-    
+    Cart_confirm_2()
 }
 
+function HTML_Summary_Content (){
+    var CurrentUser = JSON.parse(localStorage.getItem('userlogin'))
+    var PaymentMethod;
+    if (checkPaymentMethod() == 1 ) 
+        PaymentMethod = "Tiền mặt"
+
+    else if (checkPaymentMethod() == 2 )
+        PaymentMethod = "Chuyển khoản"
+    else    
+        PaymentMethod = "Thẻ tín dụng"
+
+    var DSGH = layDanhSachItemGH();
+    var Cart_products_html = "";
+    for (var i = 0 ; i < DSGH.length ; i++ ){
+        var product = LayItemTheoID(DSGH[i].idSP);
+        Cart_products_html += '<div class = "summary_products_line"> ' 
+                            + '<p>Tên sản phẩm : '+ product.name +' </p>' + 
+'                              <p> \t \t Số lượng : '+DSGH[i].sl +' </p> </div>'
+    }
 
 
+    var html =          '<p>Họ và tên : '+ CurrentUser.fullname + '</p>\n'+
+'                        <p>Địa chỉ :  '+ CurrentUser.address+' Phường '+CurrentUser.phuong+' Quận '+CurrentUser.quan+'  </p>\n'+
+'                        <p>Phương thức thanh toán : '+ PaymentMethod + '</p>\n'+
+'                        <div class = "summary_products"> Sản phẩm : </div>\n'+ Cart_products_html +
+'                        <p>Tổng : '+ PriceToString(TinhTongTien())+' </p>';
 
+    return html;
+}
 
-
-
-
+function Summary_Content() {
+    var NodeSummary = document.getElementById('summary_content')
+    
+    NodeSummary.innerHTML = HTML_Summary_Content();
+}
 
 
 
@@ -668,6 +704,12 @@ function thanhtoan() {
         totalAmount: orderDetails.map(item => item.totalPrice).reduce((a, b) => a + b, 0)
     };
     localStorage.setItem('orders', JSON.stringify([...orders, order]));
+    localStorage.removeItem('DSGH');
+    alert("Đặt đơn hàng thành công.")
+
+    Close_Cart_confirm_1()
+    Close_Cart_confirm_2()
+    DivGioHang()
 }
 
 
