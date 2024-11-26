@@ -139,166 +139,151 @@
                 <button>&gt;</button>
             </div>
         </div>
-        <!--
-        <div class="Cart_container">
-            <div class="Cart_Details_Box Cart_products_details">
 
-                <div class="Cart_PB_Header">
-                    <h2> Giỏ hàng </h2>
+        <div class="Modal" id="Cart_Modal">
+            <div class="Modal_overlay"></div>
+            <div class="Modal_body" id = "Cart_Modal_Body">
+                <div class="Modal_inner" id="Cart_Modal__inner">
+                    <a href="#" class="Modal_cart_exit" onclick = "Close_Cart_confirm_1()"> X </a>
+                    <div class="Cart_Modal__header">
+                        <p>Thông tin khách hàng</p>
+                        <p class="btn_customer_info" onclick="Customer_Info()"> Dùng thông tin hiện tại </a>
+                    </div>
+        
+                    <!-- Họ và tên -->
+                    <div>
+                        <label for="customer_name">Họ và tên</label>
+                        <input type="text" id="customer_name">
+                        <p class="customer_Warning" id="customer_warning_name_1">*Họ và tên không được để trống</p>
+                        <p class="customer_Warning" id="customer_warning_name_2">*Họ và tên phải có ít nhất 4 kí tự</p>
+                        <p class="customer_Warning" id="customer_warning_name_3">*Vui lòng nhập đúng định dạng</p>
+                    </div>
+        
+                    <!-- Số điện thoại -->
+                    <div>
+                        <label for="customer_phone">Số điện thoại</label>
+                        <input type="text" id="customer_phone">
+                        <p class="customer_Warning" id="customer_warning_phone_1">*Số điện thoại không được để trống</p>
+                        <p class="customer_Warning" id="customer_warning_phone_2">*Vui lòng nhập SĐT hợp lệ</p>
+                    </div>
+        
+                    <!-- Địa chỉ -->
+                    <div>
+                        <label for="customer_address">Địa chỉ</label>
+                        <input type="text" id="customer_address">
+                        <p class="customer_Warning" id="customer_warning_address_1">*Địa chỉ không được để trống</p>
+                        <p class="customer_Warning" id="customer_warning_address_2">*Vui lòng nhập địa chỉ phù hợp</p>
+                    </div>
+        
+                    <!-- Thành phố, Quận, Phường -->
+                    <div class="location">
+                        <div>
+                            <label for="customer_district">Quận</label>
+                            <input type="text" id="customer_district">
+                            <p class="customer_Warning" id="customer_warning_district_1">*Quận không được để trống</p>
+                            <p class="customer_Warning" id="customer_warning_district_2">*Chỉ nhập số hoặc chỉ nhập chữ cái</p>
+                        </div>
+                        
+                        <div>
+                            <label for="customer_ward">Phường</label>
+                            <input type="text" id="customer_ward">
+                            <p class="customer_Warning" id="customer_warning_ward_1">*Phường không được để trống</p>
+                            <p class="customer_Warning" id="customer_warning_ward_2">*Chỉ nhập số hoặc chỉ nhập chữ cái</p>
+                        </div>
+                    </div>
+        
+                    <!-- Phương thức thanh toán -->
+                    <div>
+                        <p>Phương thức thanh toán:</p>
+                        <p class="customer_Warning" id = "customer_warning_payment"> Vui lòng chọn phương thức thanh toán </p>
+                        <div>
+                            <input type="radio" id="cash_payment" name="payment_method" value="cash" onclick="PrintPaymentForm()">
+                            <label for="cash_payment">Thanh toán tiền mặt</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="transfer_payment" name="payment_method" value="transfer" onclick="PrintPaymentForm()">
+                            <label for="transfer_payment">Chuyển khoản</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="card_payment" name="payment_method" value="card" onclick="PrintPaymentForm()">
+                            <label for="card_payment">Thanh toán qua thẻ</label>
+                        </div>
+                    </div>
+
+
+                    <div  id="payment_gateway" >
+                        <h3>Nhập thông tin thẻ :</h3>
+                        <form id="card_form">
+                            <div>
+                                <label for="card_number">Số thẻ:</label>
+                                <input type="text" id="card_number" placeholder="Số thẻ">
+                                <p class="customer_Warning" id="card_number_warning_1">*Số thẻ không được để trống</p>
+                                <p class="customer_Warning" id="card_number_warning_2">*Vui lòng nhập số thẻ hợp lệ</p>
+
+                            </div>
+                            <div>
+                                <label for="card_name">Tên chủ thẻ:</label>
+                                <input type="text" id="card_name" placeholder="Họ và tên chủ thẻ">
+                                <p class="customer_Warning" id="card_name_warning_1">*Tên chủ thẻ không được để trống</p>
+                                <p class="customer_Warning" id="card_name_warning_2">*Vui lòng nhập tên chủ thẻ hợp lệ</p>
+                            </div>
+                            <div>
+                                <label for="expiry_date">Ngày hết hạn:</label>
+                                <input type="text" id="expiry_date" placeholder="MM/YYYY">
+                                <p class="customer_Warning" id="card_date_warning_1">*Ngày hết hạn không được để trống</p>
+                                <p class="customer_Warning" id="card_date_warning_2">*Vui lòng nhập đúng định dạng</p>
+                            </div>
+                            <div>
+                                <label for="cvv">CVV:</label>
+                                <input type="text" id="cvv" placeholder="CVV">
+                                <p class="customer_Warning" id="card_cvv_warning_1">*Ngày hết hạn không được để trống</p>
+                                <p class="customer_Warning" id="card_cvv_warning_2">*Vui lòng nhập đúng định dạng</p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="Cart_Button_Div">
+                        <button class="Cart_button" onclick="Cart_Confirm_Details()">Xác nhận</button>
+                    </div>
                 </div>
 
-                <div class="Cart_PB_Box Cart_PB_Box_Title">
-                    <div>
-                        <p>Tên sản phẩm</p>
+                <div class="Modal_inner" id="Cart_Modal__inner_2">
+                    <h2>Tóm tắt hóa đơn</h2>
+                    <div id="summary_content">
+                        <p>Họ và tên : </p>
+                        <p>Địa chỉ :  </p>
+                        <p>Phương thức thanh toán : </p>
+                        <div>Sản phẩm : </div>
+                        <p>Tổng : </p>
                     </div>
-
-                    <div>
-                        <p>Hình ảnh</p>
-                    </div>
-
-                    <div>
-                        <p>Giá tiền</p>
-                    </div>
-
-                    <div>
-                        <p>Số lượng</p>
-                    </div>
-
-                    <div>
-                        <p>Tổng</p>
-                    </div>
-
-                    <div class="Cart_product_delete">
-                        <i class="fa-solid fa-trash" onclick="XoaItemGH()"></i>
+                    <div class="btn_payment">
+                        <button onclick="Close_Cart_confirm_2()">Quay lại</button>
+                        <button onclick="thanhtoan()">Xác nhận mua</button>
                     </div>
                 </div>
+                
             </div>
-            
-            <div class="Cart_Details_Box Cart_user_details">
-                <div>
-                    <h2> Thông tin khách hàng</h2>
-                </div>
 
-                <div>
-                    <label for="customer_name">Họ và tên </label>
-                    <input type="text" id="customer_name">
-                </div>
-
-                <div>
-                    <label for="customer_phone_number">Số điện thoại</label>
-                    <input type="text" id="customer_phone_number">
-                </div>
-
-                <div>
-                    <label for="address">Địa chỉ</label>
-                    <input type="text" id="address">
-                </div>
-
-
-                <div class="Cart_forms">
-                    <select>
-                        <option value="" disabled selected>Tỉnh / thành</option>
-                        <option value="BacNinh">Bắc Ninh</option>
-                        <option value="Hanoi">Hà Nội</option>
-                        <option value="HCM"> TP.HCM </option>
-                    </select>
-
-                    <select id="district" required>
-                        <option value="" disabled selected> Quận / huyện</option>
-                        <option></option>
-                    </select>
-
-                    <select id="ward" required>
-                        <option value="" disabled selected> Phường / xã</option>
-                    </select>
-                </div>
-
-                <div class="Cart_vouncher">
-                    <div>
-                        <label>Nhập mã giảm giá</label>
-                        <input type="text" id="Cart_vouncher">
-                    </div>
-                    <button class="btn_Cart btn_Cart_vouncher"> Áp dụng </button>
-                </div>
-
-                <div class="Cart_total">
-                    <h3>Total</h3>
-                    <div class="Total_info">
-                        <div class="previous_fee">
-                            <span>Tổng tiền</span>
-                            <span>100.000.000đ</span>
-                        </div>
-
-                        <div class="delivery_fee">
-                            <span>Phí vận chuyển</span>
-                            <span class="delivery_fee_number">Free </span>
-                        </div>
-
-                        <div class="discount_fee">
-                            <span>Giảm giá</span>
-                            <span>-500.000đ </span>
-                        </div>
-
-                        <div class="final_fee">
-                            <span class="final_fee_title">Thanh toán</span>
-                            <span class="final_fee_number">99.500.000đ</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="Offer_btn">
-                    <button class="btn_Cart btn_Cart_offer">Thanh toán</button>
-                </div>
-            </div>
         </div>
-        -->
-        </div>
+
+          
+        
+        
+      
     </main>
-    <div class="footer-clean">
-        <hr>
-        <footer>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Services</h3>
-                        <ul>
-                            <li><a href="#">Di động</a></li>
-                            <li><a href="#">Trả góp</a></li>
-                            <li><a href="#">Tư vấn</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Về chúng tôi</h3>
-                        <ul>
-                            <li><a href="#">Giới thiệu về công ty</a></li>
-                            <li><a href="#">Tuyển dụng</a></li>
-                            <li><a href="#">Góp ý</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-4 col-md-3 item">
-                        <h3>Thông tin liên hệ</h3>
-                        <ul>
-                            <li><a href="#">sales@thoigioididong.con</a></li>
-                            <li><a href="#">1900 8686</a></li>
-                            <li><a href="#">Benefits</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a
-                            href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i
-                                class="icon ion-social-snapchat"></i></a><a href="#"><i
-                                class="icon ion-social-instagram"></i></a>
-                        <p class="copyright">Thới giới di động © 2024</p>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
+        
 
 </body>
+
+<script src="../js/productDetail.js"></script>
+<script src="../js/pagination.js"></script>
+
 <script src="../js/indexAdmin.js"></script>
 <script src="../js/paginationLogin.js"></script>
+
 <script src="../js/sidebar.js"></script>
 <script src="../js/username.js"></script>
 <script src="../js/GioHang.js"></script>
+<script src="../js/indexAdmin.js"> </script>
+
 
 </html>
