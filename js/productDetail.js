@@ -3,7 +3,8 @@ function remind(){
 }
 var json = JSON.stringify(products);
 localStorage.setItem("products", json);
-function showProductDetails(productID) {
+function showProductDetails(productID, event) {
+    if(event)event.preventDefault();
     const product_Info = document.getElementById('product-info');
     const product_Name = document.getElementById("productName");
     const product_Price = document.getElementById("productPrice");
@@ -19,7 +20,7 @@ function showProductDetails(productID) {
         if (productArray[i].id == productID) {
             product_Name.innerHTML = productArray[i].name;
             if (typeof productArray[i].price === 'number') {
-                product_Price.innerHTML = "Giá: " + price.toLocaleString('vi-VN') + "<sup><u>đ</u></sup>";
+                product_Price.innerHTML = "Giá: " + productArray[i].price.toLocaleString('vi-VN') + "<sup><u>đ</u></sup>";
             } else if (!isNaN(Number(productArray[i].price))) {
                 product_Price.innerHTML = "Giá: " + Number(productArray[i].price).toLocaleString('vi-VN') + "<sup><u>đ</u></sup>";
             } else {

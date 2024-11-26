@@ -199,17 +199,18 @@
 }
 
 .quantity_control button{
-	padding: 5px;
+	padding-left: 2px;
+	padding-right: 2px;
 	width: 30%;
-	margin : 3%;
+	margin : 1%;
 	text-align: center;
 }
 
 .quantity_control input{
-	width: 35%;
+	width: 30px;
+	margin: 0;
 	text-align: center;
 }
-
 .quantity_control button:hover{
 	background-color: #ddd;
 }

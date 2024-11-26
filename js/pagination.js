@@ -28,7 +28,7 @@ function renderProduct(page) {
                         <strong>${product.price.toLocaleString('vi-VN')}<sup><u>đ</u></sup></strong>
                     </p>
                     <div class="product-actions">
-                        <button class="btn-cart" onclick="remind()">Thêm Vào Giỏ Hàng</button>
+                        <button type="button" class="btn-cart" onclick="remind()">Thêm Vào Giỏ Hàng</button>
                     </div>
                 </div>
             </div>

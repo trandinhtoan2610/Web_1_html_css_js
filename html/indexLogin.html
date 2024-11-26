@@ -30,7 +30,7 @@
                 </li>
                 <li>
                     <input type="text" id="search-input" placeholder="Nhập tên sản phẩm...">
-					<a onclick="searchProducts()"><i class="fa-solid fa-magnifying-glass"></i></a>
+                    <a onclick="searchProducts()"><i class="fa-solid fa-magnifying-glass"></i></a>
                 </li>
                 <li>
                     <a href="#">Tìm kiếm nâng cao</a>
@@ -70,7 +70,7 @@
                 </li>
                 <li class="hideSearch">
                     <input type="text" id="search-input" placeholder="Nhập tên sản phẩm...">
-					<a onclick="searchProducts()"><i class="fa-solid fa-magnifying-glass"></i></a>
+                    <a onclick="searchProducts()"><i class="fa-solid fa-magnifying-glass"></i></a>
                 </li>
                 <li class="hideonMobile">
                     <a href="#">Tìm kiếm nâng cao</a>
@@ -82,7 +82,7 @@
                     </a>
                 </li>
                 <li class="hideonMobile">
-                    <a  onclick="displayOrderHistory()">
+                    <a onclick="displayOrderHistory()">
                         <i class="fa-solid fa-clock-rotate-left"></i>
                         Lịch sử mua hàng
                     </a>
@@ -139,17 +139,23 @@
                 <button>&gt;</button>
             </div>
         </div>
-
+        <div id="orderDetailsModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <h2>Chi tiết đơn hàng</h2>
+                <div id="orderDetailsContent"></div>
+            </div>
+        </div>
         <div class="Modal" id="Cart_Modal">
             <div class="Modal_overlay"></div>
-            <div class="Modal_body" id = "Cart_Modal_Body">
+            <div class="Modal_body" id="Cart_Modal_Body">
                 <div class="Modal_inner" id="Cart_Modal__inner">
-                    <a href="#" class="Modal_cart_exit" onclick = "Close_Cart_confirm_1()"> X </a>
+                    <a href="#" class="Modal_cart_exit" onclick="Close_Cart_confirm_1()"> X </a>
                     <div class="Cart_Modal__header">
                         <p>Thông tin khách hàng</p>
                         <p class="btn_customer_info" onclick="Customer_Info()"> Dùng thông tin hiện tại </a>
                     </div>
-        
+
                     <!-- Họ và tên -->
                     <div>
                         <label for="customer_name">Họ và tên</label>
@@ -158,7 +164,7 @@
                         <p class="customer_Warning" id="customer_warning_name_2">*Họ và tên phải có ít nhất 4 kí tự</p>
                         <p class="customer_Warning" id="customer_warning_name_3">*Vui lòng nhập đúng định dạng</p>
                     </div>
-        
+
                     <!-- Số điện thoại -->
                     <div>
                         <label for="customer_phone">Số điện thoại</label>
@@ -166,7 +172,7 @@
                         <p class="customer_Warning" id="customer_warning_phone_1">*Số điện thoại không được để trống</p>
                         <p class="customer_Warning" id="customer_warning_phone_2">*Vui lòng nhập SĐT hợp lệ</p>
                     </div>
-        
+
                     <!-- Địa chỉ -->
                     <div>
                         <label for="customer_address">Địa chỉ</label>
@@ -174,44 +180,50 @@
                         <p class="customer_Warning" id="customer_warning_address_1">*Địa chỉ không được để trống</p>
                         <p class="customer_Warning" id="customer_warning_address_2">*Vui lòng nhập địa chỉ phù hợp</p>
                     </div>
-        
+
                     <!-- Thành phố, Quận, Phường -->
                     <div class="location">
                         <div>
                             <label for="customer_district">Quận</label>
                             <input type="text" id="customer_district">
                             <p class="customer_Warning" id="customer_warning_district_1">*Quận không được để trống</p>
-                            <p class="customer_Warning" id="customer_warning_district_2">*Chỉ nhập số hoặc chỉ nhập chữ cái</p>
+                            <p class="customer_Warning" id="customer_warning_district_2">*Chỉ nhập số hoặc chỉ nhập chữ
+                                cái</p>
                         </div>
-                        
+
                         <div>
                             <label for="customer_ward">Phường</label>
                             <input type="text" id="customer_ward">
                             <p class="customer_Warning" id="customer_warning_ward_1">*Phường không được để trống</p>
-                            <p class="customer_Warning" id="customer_warning_ward_2">*Chỉ nhập số hoặc chỉ nhập chữ cái</p>
+                            <p class="customer_Warning" id="customer_warning_ward_2">*Chỉ nhập số hoặc chỉ nhập chữ cái
+                            </p>
                         </div>
                     </div>
-        
+
                     <!-- Phương thức thanh toán -->
                     <div>
                         <p>Phương thức thanh toán:</p>
-                        <p class="customer_Warning" id = "customer_warning_payment"> Vui lòng chọn phương thức thanh toán </p>
+                        <p class="customer_Warning" id="customer_warning_payment"> Vui lòng chọn phương thức thanh toán
+                        </p>
                         <div>
-                            <input type="radio" id="cash_payment" name="payment_method" value="cash" onclick="PrintPaymentForm()">
+                            <input type="radio" id="cash_payment" name="payment_method" value="cash"
+                                onclick="PrintPaymentForm()">
                             <label for="cash_payment">Thanh toán tiền mặt</label>
                         </div>
                         <div>
-                            <input type="radio" id="transfer_payment" name="payment_method" value="transfer" onclick="PrintPaymentForm()">
+                            <input type="radio" id="transfer_payment" name="payment_method" value="transfer"
+                                onclick="PrintPaymentForm()">
                             <label for="transfer_payment">Chuyển khoản</label>
                         </div>
                         <div>
-                            <input type="radio" id="card_payment" name="payment_method" value="card" onclick="PrintPaymentForm()">
+                            <input type="radio" id="card_payment" name="payment_method" value="card"
+                                onclick="PrintPaymentForm()">
                             <label for="card_payment">Thanh toán qua thẻ</label>
                         </div>
                     </div>
 
 
-                    <div  id="payment_gateway" >
+                    <div id="payment_gateway">
                         <h3>Nhập thông tin thẻ :</h3>
                         <form id="card_form">
                             <div>
@@ -224,19 +236,23 @@
                             <div>
                                 <label for="card_name">Tên chủ thẻ:</label>
                                 <input type="text" id="card_name" placeholder="Họ và tên chủ thẻ">
-                                <p class="customer_Warning" id="card_name_warning_1">*Tên chủ thẻ không được để trống</p>
-                                <p class="customer_Warning" id="card_name_warning_2">*Vui lòng nhập tên chủ thẻ hợp lệ</p>
+                                <p class="customer_Warning" id="card_name_warning_1">*Tên chủ thẻ không được để trống
+                                </p>
+                                <p class="customer_Warning" id="card_name_warning_2">*Vui lòng nhập tên chủ thẻ hợp lệ
+                                </p>
                             </div>
                             <div>
                                 <label for="expiry_date">Ngày hết hạn:</label>
                                 <input type="text" id="expiry_date" placeholder="MM/YYYY">
-                                <p class="customer_Warning" id="card_date_warning_1">*Ngày hết hạn không được để trống</p>
+                                <p class="customer_Warning" id="card_date_warning_1">*Ngày hết hạn không được để trống
+                                </p>
                                 <p class="customer_Warning" id="card_date_warning_2">*Vui lòng nhập đúng định dạng</p>
                             </div>
                             <div>
                                 <label for="cvv">CVV:</label>
                                 <input type="text" id="cvv" placeholder="CVV">
-                                <p class="customer_Warning" id="card_cvv_warning_1">*Ngày hết hạn không được để trống</p>
+                                <p class="customer_Warning" id="card_cvv_warning_1">*Ngày hết hạn không được để trống
+                                </p>
                                 <p class="customer_Warning" id="card_cvv_warning_2">*Vui lòng nhập đúng định dạng</p>
                             </div>
                         </form>
@@ -250,7 +266,7 @@
                     <h2>Tóm tắt hóa đơn</h2>
                     <div id="summary_content">
                         <p>Họ và tên : </p>
-                        <p>Địa chỉ :  </p>
+                        <p>Địa chỉ : </p>
                         <p>Phương thức thanh toán : </p>
                         <div>Sản phẩm : </div>
                         <p>Tổng : </p>
@@ -260,17 +276,17 @@
                         <button onclick="thanhtoan()">Xác nhận mua</button>
                     </div>
                 </div>
-                
+
             </div>
 
         </div>
 
-          
-        
-        
-      
+
+
+
+
     </main>
-        
+
 
 </body>
 <script src="../js/indexAdmin.js"></script>
