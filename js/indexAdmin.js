@@ -33,9 +33,12 @@ function filterProducts() {
 }
 
 function displayProducts(products, productList) {
-    // Kiểm tra nếu danh sách sản phẩm trống
+    productList.innerHTML = ""; // Xóa các sản phẩm cũ
+    // Kiểm tra nếu danh sách sản phẩm trống và hiển thị thông báo cho người dùng
     if (products.length === 0) {
-        console.log("Không có sản phẩm nào để hiển thị");
+        const noProductsMessage = document.createElement("p");
+        noProductsMessage.textContent = "Không có sản phẩm nào để hiển thị";
+        productList.appendChild(noProductsMessage);
         return;
     }
 

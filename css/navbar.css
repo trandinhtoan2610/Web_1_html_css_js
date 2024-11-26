@@ -243,5 +243,20 @@
     transition: width 0.2s, height 0.2s;
   }
   
+  @media (max-width: 900px) {
+    #nav-header {
+      position: relative;
+      width: var(--navbar-width-min);
+      left: 16px;
+      width: calc(var(--navbar-width-min) - 16px);
+      min-height: 80px;
+      background: var(--navbar-dark-primary);
+      border-radius: 16px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      transition: width 0.2s;
+    }
+  }
   /* (Tương tự cho các phần tử khác...) */
   

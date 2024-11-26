@@ -182,3 +182,4 @@ function login(e) {
     document.getElementById('passwordError').innerHTML = '<i>*Sai thông tin đăng nhập</i>';
     return false;
 }
+

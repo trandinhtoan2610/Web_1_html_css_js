@@ -671,11 +671,6 @@ function thanhtoan() {
     const user = JSON.parse(localStorage.getItem('userlogin'));
     const cart = JSON.parse(localStorage.getItem('DSGH')) || [];
     const orders = JSON.parse(localStorage.getItem('orders')) || [];
-    if (!user) {
-        alert("Vui lòng đăng nhập để tiếp tục thanh toán!");
-        window.location.href = "/login.html";
-        return;
-    }
 
     if (cart.length === 0) {
         alert("Giỏ hàng của bạn đang trống. Vui lòng thêm sản phẩm!");

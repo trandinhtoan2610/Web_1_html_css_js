@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="../css/QuanLySanPham.css">
     <title>Thế giới di động</title>
 
 </head>
@@ -28,9 +29,8 @@
                     </a>
                 </li>
                 <li>
-                    <input type="text" placeholder="Nhập tên sản phẩm...">
-                    <a href="#"><i class="fa-solid fa-magnifying-glass"
-                            style="font-size: 18px; color: #f1f1f1;"></i></a>
+                    <input type="text" id="search-input" placeholder="Nhập tên sản phẩm...">
+					<a onclick="searchProducts()"><i class="fa-solid fa-magnifying-glass"></i></a>
                 </li>
                 <li>
                     <a href="#">Tìm kiếm nâng cao</a>
@@ -42,7 +42,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a onclick="displayOrderHistory()">
                         <i class="fa-solid fa-clock-rotate-left"></i>
                         Lịch sử mua hàng
                     </a>
@@ -69,8 +69,8 @@
                     </a>
                 </li>
                 <li class="hideSearch">
-                    <input type="text" placeholder="Nhập tên sản phẩm...">
-                    <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+                    <input type="text" id="search-input" placeholder="Nhập tên sản phẩm...">
+					<a onclick="searchProducts()"><i class="fa-solid fa-magnifying-glass"></i></a>
                 </li>
                 <li class="hideonMobile">
                     <a href="#">Tìm kiếm nâng cao</a>
@@ -82,7 +82,7 @@
                     </a>
                 </li>
                 <li class="hideonMobile">
-                    <a>
+                    <a  onclick="displayOrderHistory()">
                         <i class="fa-solid fa-clock-rotate-left"></i>
                         Lịch sử mua hàng
                     </a>
@@ -279,6 +279,6 @@
 <script src="../js/username.js"></script>
 <script src="../js/GioHang.js"></script>
 <script src="../js/indexAdmin.js"> </script>
-
+<script src="../js/history.js"> </script>
 
 </html>

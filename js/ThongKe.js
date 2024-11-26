@@ -170,10 +170,10 @@ function displayTopCustomers(orders) {
 
 function filterOrdersByDateThongKe(){
   const startDate = new Date(document.getElementById('startDateThongKe').value);
-    const endDate = new Date(document.getElementById('endDateThongKe').value);
-    console.log(startDate, endDate);
-    if (!startDate || !endDate) {
-      displayStats();
+  const endDate = new Date(document.getElementById('endDateThongKe').value);
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      alert('Vui lòng chọn ngày bắt đầu và ngày kết thúc');
+      return;
     }
     if (startDate > endDate) {
         alert('Ngày bắt đầu phải nhỏ hơn ngày kết thúc');
