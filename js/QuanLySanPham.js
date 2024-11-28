@@ -30,7 +30,7 @@ function KhoiTaoSanPham(hinh, brand, ten, gia, vitri, id, ram, ssd, card, MoTa){
 function TaoSanPham (){
     var countID = parseInt(localStorage.getItem('countID'), 10);
 
-    var NodeHinhAnh = document.getElementById("hinhAnh")
+    var NodeHinhAnh = document.getElementById("fix_hinhAnh")
     var NodeBrand = document.getElementById('kind')
     var NodeTen = document.getElementById('name')
     var NodeGiaTien = document.getElementById('price')
@@ -159,7 +159,7 @@ function TaoSanPham (){
 
         NodeHinhAnh.value = '';
         alert("Thêm sản phẩm thành công")
-     
+        DivThemSanPham()
      
     });
     
@@ -226,11 +226,13 @@ function SettingProducts_Container(){
 '                    </ul>\n'+
 '                </div>\n'+
 '                <div class="AP_main">\n'+
-'                    <div>\n'+
-'                        <label for="hinhAnh">Hình ảnh</label>\n'+
-'                        <input type="file" id="hinhAnh" accept="image/*" />\n'+
+'                     <div>      '+
+'                        <label for="fix_hinhAnh">Hình ảnh</label>\n'+
+'                        <input type="file" id="fix_hinhAnh" accept="image/*"  onchange="previewImage()" />\n'+
 '                        <p class="AP_Warning" id = "AP_IMG_Warning">*Hình ảnh không được để trống</p>\n'+
-'                    </div>\n'+
+'                       <div class ="AP_img_preview"> <img id = "imagePreview" /> </div>  '+
+'                     </div> '+
+                
 '                    <div>\n'+
 '                        <label for="kind">Hãng máy</label>\n'+
 '                        <select id="kind">\n'+
@@ -517,13 +519,13 @@ function DivSuaSanPham(idSanPham){
 '            <div class="div_img_file">' +
 '                <div>' +
 '                    <label for="fix_hinhAnh">Hình ảnh</label>' +
-'                    <input type="file" id="fix_hinhAnh" accept="image/*" />' +
+'                    <input type="file" id="fix_hinhAnh" accept="image/*" onchange="previewImage()">' +
 '                </div>' +
 '               <div class="img_preview">' +
-'                   <img src="'+ Fix_SanPham.image+'" alt="Preview" />'+
+'                   <img id="imagePreview" alt="Preview" src="'+ Fix_SanPham.image+'" />'+
+'                   <p class="AP_Warning" id="AP_IMG_Warning">*Hình ảnh không được để trống</p>' +
 '               </div>' +
-'                <p class="AP_Warning" id="AP_IMG_Warning">*Hình ảnh không được để trống</p>' +
-'            </div>' +
+'         </div>' +
 '            <div>' +
 '                <label for="fix_kind">Hãng máy</label>' +
 '           <select id="fix_kind">' +
@@ -577,10 +579,7 @@ function DivSuaSanPham(idSanPham){
 '            </div>' +
 '            <div class="AP_Button_Div">' +
 '                <button class="AP_button" onclick="return SuaSanPham('+idSanPham+')">Sửa sản phẩm</button>' +
-'            </div>' +
-'        </div>' +
-'    </div>' +
-'</div>';
+'            </div>'
 }
 
 function SuaSanPham(idSanPham){
@@ -714,3 +713,27 @@ function SuaSanPham(idSanPham){
 function Exit_FixingProduct(){
     NodeModalFix.style.display ='none';
 }
+
+
+function previewImage() {
+    const fileInput = document.getElementById('fix_hinhAnh');
+    const preview = document.getElementById('imagePreview');
+    const warning = document.getElementById('AP_IMG_Warning');
+
+    // Hide any previous warning and image preview
+    preview.style.display = 'none';
+    warning.style.display = 'none';
+
+    const file = fileInput.files[0]; // Get the selected file
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result; // Set the image source to the file data
+            preview.style.display = 'block'; // Show the image preview
+        };
+        reader.readAsDataURL(file); // Read the file as data URL
+    } else {
+        warning.style.display = 'block'; // Show warning if no file is selected
+    }
+}
+

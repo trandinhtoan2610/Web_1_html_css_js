@@ -110,6 +110,10 @@
     width: 100%;
 }
 
+.AP_main{
+    position: relative;
+}
+
 .AP_main div input {
     padding: 15px;
     font-size: 18px;
@@ -172,6 +176,7 @@ input[type="number"] {
 .Products_box img {
     width: 100%;
 }
+
 
 .Products_box div {
     margin: 1%;
@@ -360,7 +365,6 @@ input[type="number"] {
     .HD1{
         width: 4%;
     }
-    
 }
 
 
@@ -429,15 +433,43 @@ input[type="number"] {
 
 .div_img_file{
     display: flex;
+
 }
 
 .img_preview {
-    width: 30%;
+    width: 35%;
     height: 30%;
-    border: 2px dashed black;
+    border: 1px solid #ddd;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute;
+    right: 35%;
+    top: 15%;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px #ddd;
+
+}
+
+/* Label for the file input */
+.div_img_file label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+/* File input styles */
+.div_img_file input[type="file"] {
+    display: block;
+    margin-bottom: 15px;
+    padding: 8px;
+    font-size: 14px;
+ 
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
 }
 
 .img_preview img {
@@ -447,3 +479,126 @@ input[type="number"] {
 }
 
 
+.AP_main div #fix_hinhAnh {
+    border: 0;
+}
+
+
+.AP_img_preview{
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 38%;
+    top : -2%;
+    min-width: 300px;
+    min-height: 200px;
+    max-width: 300px;
+    max-height: 200px;
+    border: 3px solid #fff;
+    box-shadow: 2px 2px 4px #fff;
+    background-color: white;
+    border-radius: 5px;
+    
+    
+
+  
+}
+
+.AP_img_preview img {
+
+    width: 100%;
+    
+  
+
+}
+
+@media only screen and (max-width: 1500px) {
+    .img_preview{
+        right: 15%;
+        top : 14%;
+        width: 40%;
+    }
+}
+
+
+
+
+@media only screen and (max-width: 1100px) {
+    .ChiTietSP {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px; 
+        width: 100%;
+    }
+
+    .ChiTietSP div {
+        margin: 15px 0;
+    }
+        
+    .AP_button {
+        padding: 3%;
+    }
+
+    .ChiTiet{
+        display: none;
+    }
+
+    .FixProduct_img{
+        width: 25%;
+    }
+
+    .FixProduct_name{
+        width: 28%;
+    }
+
+    .FixProduct_brand{
+        width: 20%;
+    }
+
+    .FixProduct_price{
+        display: none;
+    }
+
+    .Hanh-Dong{
+        width: 4%;
+    }
+
+    .HD1{
+        width: 4%;
+    }
+    .Fix_Title{
+        font-size: 22px;
+    }
+
+    .AP_img_preview {
+        right: 15%;
+        max-width: 250px;
+        min-width: 250px;
+        max-height: 18px;
+        min-height: 180px;
+        top : -2%
+    }
+
+    .AP_main div input, .AP_main div label {
+        padding: 10px;
+        font-size: 15px;
+    }
+}
+
+
+@media screen and (max-width : 800px) {
+    .AP_img_preview {
+        right: 1%;
+        max-width: 180px;
+        min-width: 180px;
+        min-height: 120px;
+        max-height: 120px;
+        top : -2%
+    }
+
+    .AP_main div input, .AP_main div label {
+        padding: 4px;
+        font-size: 15px;
+    }
+}
