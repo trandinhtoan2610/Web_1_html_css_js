@@ -203,11 +203,11 @@ input[type="number"] {
 }
 
 .FixProduct_img{
-    width: 10%;
+    width: 11%;
 }
 
 .ChiTiet {
-    width: 4%;
+    width: 4.4%;
     
 }
 
@@ -216,8 +216,19 @@ input[type="number"] {
 }
 
 .HD{
-    width: 4%;
+    width: 2%;
 }
+
+.Hanh-Dong{
+    width: 1.3%;
+
+}
+
+.Hanh-Dong i {
+    width: 20%;
+}
+
+
 
 .HD1 {
     display: none;
@@ -299,15 +310,15 @@ input[type="number"] {
     }
 
     .FixProduct_name{
-        width: 25%;
+        width: 24%;
     }
 
     .FixProduct_price{
-        width: 25%;
+        width: 22%;
     }
 
     .Hanh-Dong{
-        width: 5%;
+        width: 3%;
     }
 
     .HD{
@@ -320,7 +331,7 @@ input[type="number"] {
     }
 
 }
-
+/* 
 
 @media only screen and (max-width: 1100px) {
     .ChiTietSP {
@@ -363,9 +374,9 @@ input[type="number"] {
     }
 
     .HD1{
-        width: 4%;
+        width: 10%;
     }
-}
+} */
 
 
 
@@ -472,6 +483,10 @@ input[type="number"] {
     cursor: pointer;
 }
 
+#fix_hinhAnh{
+    color: transparent;
+}
+
 .img_preview img {
     max-width: 100%;
     max-height: 100%;
@@ -506,18 +521,20 @@ input[type="number"] {
 }
 
 .AP_img_preview img {
-
     width: 100%;
-    
-  
-
 }
+
 
 @media only screen and (max-width: 1500px) {
     .img_preview{
         right: 15%;
-        top : 14%;
+        top : 12%;
         width: 40%;
+        height: 30%;
+    }
+
+    .AP_img_preview{
+        right: 32%;
     }
 }
 
@@ -525,6 +542,8 @@ input[type="number"] {
 
 
 @media only screen and (max-width: 1100px) {
+   
+
     .ChiTietSP {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -565,7 +584,7 @@ input[type="number"] {
     }
 
     .HD1{
-        width: 4%;
+        width: 10%;
     }
     .Fix_Title{
         font-size: 22px;
@@ -584,10 +603,14 @@ input[type="number"] {
         padding: 10px;
         font-size: 15px;
     }
+
+    .Products_box{
+        font-size: 15px;
+    }
 }
 
 
-@media screen and (max-width : 800px) {
+@media screen and (max-width : 825px) {
     .AP_img_preview {
         right: 1%;
         max-width: 180px;
@@ -601,4 +624,96 @@ input[type="number"] {
         padding: 4px;
         font-size: 15px;
     }
+
+    .img_preview{
+        right: 15%;
+        top : 15%;
+        width: 40%;
+        height: 20%;
+    }
+
+    .Products_box_title{
+        font-size: 15px;
+    }
+
+}
+
+
+@media screen and (max-width : 500px) {
+    .img_preview{
+        width: 40%;
+        height: 20%;
+        top : 10%;
+        right: 2%;
+    }
+
+    .Products_box_title{
+        font-size: 12px;
+        font-weight: normal;
+
+    }
+
+    .Products_box {
+        font-size: 11px;
+    }
+
+    .AP_HeaderList li a{
+        font-size: 10px;
+    }
+
+    .AP_HeaderList li {
+        font-size: 14px;
+    }
+
+    .FixProduct_page{
+        font-size: 14px;
+        padding: 4px;
+        margin: 5px;
+    }
+
+    .AP_img_preview {
+        
+        left: 50%;
+        max-width: 140px;
+        min-width: 140px;
+        min-height: 90px;
+        max-height: 90px;
+        top : -1%
+    }
+
+    .AP_main div input[type="file"] {
+        font-size: 10px;
+        margin-bottom: 8px;
+    }
+
+    #kind {
+        font-size: 10px;
+    }
+    
+}
+
+@media screen and (max-width : 365px) {
+    .AP_img_preview {
+        
+        left: 50%;
+        max-width: 100px;
+        min-width: 100px;
+        min-height: 70px;
+        max-height: 70px;
+        top : -1%
+    }
+
+    .Products_box_title{
+        font-size: 10px;
+    }
+
+    .Products_box{
+        font-size: 8px;
+    }
+
+    .Hanh-Dong{
+        width: 4%;
+    }
+
+    
 }
