@@ -293,9 +293,8 @@ function SettingProducts_Container(){
 function FixProducts_Container(){
     return '<div class="FixProducts_Header">\n'+          //Phan nay hien thi truc tiep
 '                <ul class="AP_HeaderList">\n'+
-'                    <li><a href="#" class ="Them_SP" id="Tao_SP"  onclick = "DivThemSanPham()">Thêm sản phẩm</a></li>'+
 '                    <li class = "Fix_Title"> QUẢN LÝ SẢN PHẨM </li>\n'+
-'                    <li><a href="indexAdmin.html" id="Thoat_TaoSP">Trở lại</a></li>\n'+
+'                    <li><a href="#" id="Tao_SP" onclick = "DivThemSanPham()" >Thêm</a></li>\n'+
 '                </ul>\n'+
 '            </div>\n'+
 
@@ -519,6 +518,7 @@ function DivSuaSanPham(idSanPham){
 '                <div>' +
 '                    <label for="fix_hinhAnh">Hình ảnh</label>' +
 '                    <input type="file" id="fix_hinhAnh" accept="image/*" onchange="previewImage()">' +
+
 '                </div>' +
 '               <div class="img_preview">' +
 '                   <img id="imagePreview" alt="Preview" src="'+ Fix_SanPham.image+'" />'+
