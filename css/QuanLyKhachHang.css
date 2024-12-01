@@ -148,7 +148,7 @@
 
 input[type="text"],
 input[type="password"],
-input[type="email"] {
+input[type="email"]{
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -164,4 +164,12 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+.colummselect select{
+    width: 100px;
+    height: 20px;
+    margin-left: 20px;
+}
+.colummselect{
+    display: flex;
 }

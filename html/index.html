@@ -89,14 +89,14 @@
 		<div id="authModal" style="display:none;">
 			<div class="modal-content" id="modalContent">
 				<!-- Form đăng nhập -->
-				<form id="loginForm">
+				<form id="loginForm" >
 					<div id="cssLoginForm">
 						<label for="username">Tên đăng nhập:</label>
-						<input type="text" id="username" name="username" placeholder="Nhập Tên Đăng Nhập"><br>
+						<input type="text" id="username" name="username" placeholder="Nhập Tên Đăng Nhập" oninput="validateUsername()"><br>
 						<div id="usernameError" style="color: red;"><i>*Bạn chưa nhập tên đăng nhập</i>
 						</div>
 						<label for="password">Mật khẩu:</label>
-						<input type="password" id="password" name="password" placeholder="Nhập Mật Khẩu"><br />
+						<input type="password" id="password" name="password" placeholder="Nhập Mật Khẩu" oninput="validatePassword()"><br />
 						<div id="passwordError" style="color: red;"><i>*Bạn chưa nhập mật khẩu</i></div>
 					</div>
 					<button type="submit" id="mySubmit">Đăng nhập</button>
@@ -105,9 +105,9 @@
 				</form>
 
 				<!-- Form đăng ký (ẩn ban đầu) -->
-				<form id="registerForm" style="display:none;">
+				<form id="registerForm" style="display:none;" oninput="signup()">
 					<div id="cssRegisterForm">
-						<div class="columm"> <!--onsubmit="signup()"-->
+						<div class="columm">
 							<label for="newFullName">Họ và Tên:</label>
 							<input type="text" id="newFullName" name="newFullName" placeholder="Nhập Họ Và Tên"><br />
 							<div id="fullNameError" style="color: red;"><i>*Bạn chưa nhập họ tên</i></div>
@@ -152,7 +152,27 @@
 		</div>
 	</header>
 	<main>
-		<div class="container">
+		<!-- <div class="container">
+			<div class="slideshow-container">
+				<div class="mySlides fade">
+					<img src="../img/banner1.jpg" style="width:100%">
+				</div>
+		
+				<div class="mySlides fade">
+					<img src="../img/lap102.png" style="width:100%">
+				</div>
+		
+				<div class="mySlides fade">
+					<img src="../img/Lap104.jpg" style="width:100%">
+				</div>
+			</div>
+			<br>
+			<div style="text-align:center">
+				<span class="dot"></span>
+				<span class="dot"></span>
+				<span class="dot"></span>
+			</div>
+		</div> -->
 			<!--phan loai theo hang san pham-->
 			<div class="brand-list">
 				<a href="index.html?brand=Acer">
@@ -237,8 +257,8 @@
 			</div>
 		</footer>
 	</div>
-	<script src="../js/indexAdmin.js"></script>
 	<script src="../js/product.js"></script>
+	<script src="../js/indexAdmin.js"></script>
 	<script src="../js/sidebar.js"></script>
 	<script src="../js/login.js"></script>
 	<script src="../js/productDetail.js"></script>

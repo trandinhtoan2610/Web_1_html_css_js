@@ -27,6 +27,7 @@ function displayUsers() {
                 <div class="header__item"><a id="phone" class="filter__link" href="#">Số điện thoại</a></div>
                 <div class="header__item"><a id="Address" class="filter__link" href="#">Địa Chỉ</a></div>
                 <div class="header__item"><a id="status" class="filter__link" href="#">Trạng thái</a></div>
+                <div class="header__item"><a id="role" class="filter__link" href="#">Vai Trò</a></div>
                 <div class="header__item"><a id="locked" class="filter__link" href="#">Khóa/Mở Khóa</a></div>
                 <div class="header__item"><a id="repair" class="filter__link" href="#">Sửa/Xóa</a></div>
             </div>
@@ -48,6 +49,7 @@ function displayUsers() {
                 <div class="table-data">${user.phone}</div>
                 <div class="table-data" id="customAddress">${user.address} ,Phường:${user.phuong},Quận:${user.quan}</div>
                 <div class="table-data">${user.status}</div>
+                <div class="table-data">${user.role}</div>
                 <div class="table-data">
                 <button onclick="unlockUser(${user.id})">Mở Khóa</button>
                 <button onclick="lockUser(${user.id})">Khóa</button></div>
@@ -84,6 +86,7 @@ function addUser(event) {
     event.preventDefault(); // Ngăn form reload lại trang
 
     // Lấy dữ liệu từ form
+    const role = document.getElementById('addRole').value;
     const fullname = document.getElementById('addFullname').value;
     const username = document.getElementById('addUsername').value;
     const phone = document.getElementById('addPhone').value;
@@ -93,7 +96,6 @@ function addUser(event) {
     const password = document.getElementById('addPassword').value;
 
     let valid = true;
-
     // Kiểm tra lỗi
     if (!fullname) {
         document.getElementById('fullNameError').style.display = 'block';
@@ -148,9 +150,7 @@ function addUser(event) {
         document.getElementById('newPasswordError').style.display = 'none';
     }
 
-    if (!valid) return; // Ngừng nếu có lỗi
-
-    // Lưu vào localStorage
+    if (!valid) return;
     const userList = JSON.parse(localStorage.getItem('user')) || [];
     const countIDUser = parseInt(localStorage.getItem('countIDUser') || "0") + 1;
 
@@ -170,6 +170,7 @@ function addUser(event) {
         password,
         datesignup: new Date().toLocaleDateString(),
         status: true,
+        role,
     };
 
     userList.push(newUser);
@@ -177,11 +178,11 @@ function addUser(event) {
     localStorage.setItem('countIDUser', countIDUser);
 
     alert("Người dùng được thêm thành công!");
-    document.getElementById('addUserForm').reset(); // Xóa dữ liệu form
-    hideAddUserForm(); // Ẩn form
+    document.getElementById('addUserForm').reset();
+    hideAddUserForm();
+    displayUsers();
 }
 
-// Hàm sửa thông tin người dùng
 function openEditForm(userId) {
     const userList = JSON.parse(localStorage.getItem('user')) || [];
     const user = userList.find(u => u.id === userId);
@@ -192,6 +193,7 @@ function openEditForm(userId) {
     }
 
     // Điền thông tin cũ vào form
+    document.getElementById('editRole').value = user.role;
     document.getElementById('editFullname').value = user.fullname;
     document.getElementById('editUsername').value = user.username; // Khóa không cho sửa
     document.getElementById('editPhone').value = user.phone;
@@ -218,6 +220,7 @@ function saveEdit() {
     }
 
     // Lấy thông tin đã chỉnh sửa từ form
+    const role = document.getElementById('editRole').value;
     const fullname = document.getElementById('editFullname').value;
     const phone = document.getElementById('editPhone').value;
     const address = document.getElementById('editAddress').value;
@@ -286,6 +289,7 @@ function saveEdit() {
         phuong,
         quan,
         password,
+        role,
     };
 
     // Lưu lại vào localStorage
