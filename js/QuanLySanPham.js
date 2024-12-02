@@ -242,19 +242,19 @@ function SettingProducts_Container(){
 '                    </div>\n'+
 '                    <div>\n'+
 '                        <label for="name">Tên sản phẩm</label>\n'+
-'                        <input type="text" id="name">\n'+
+'                        <input type="text" id="name" oninput = "checkInput(1)" >\n'+
 '                        <p class="AP_Warning" id = "AP_NAME_Warning">*Tên sản phẩm không được để trống</p>\n'+
 '                    </div>\n'+
 '                    <div>\n'+
 '                        <label for="price">Giá tiền</label>\n'+
-'                        <input type="number" id="price">\n'+
+'                        <input type="number" id="price" oninput = "checkInput(2)">\n'+
 '                        <p class="AP_Warning" id = "AP_PRICE1_Warning" >*Giá tiền phẩm không được để trống</p>\n'+
 '                        <p class="AP_Warning" id = "AP_PRICE2_Warning">*Giá tiền sản phẩm phải trên 9.000.000đ</p>\n'+
 '                    </div>\n'+
 '                    <div class="ChiTietSP">\n'+
 '                        <div>\n'+
 '                            <label for="location">Vị trí</label>\n'+
-'                            <input type="text" id="location">\n'+
+'                            <input type="text" id="location" oninput = "checkInput(3)">\n'+
 '                            <p class="AP_Warning" id = "AP_LOCATION_Warning">*Vị trí không được để trống</p>\n'+
 '                        </div>\n'+
 '                        <div>\n'+
@@ -263,23 +263,23 @@ function SettingProducts_Container(){
 '                        </div>\n'+
 '                        <div>\n'+
 '                            <label for="ram">Ram</label>\n'+
-'                            <input type="text" id="ram">\n'+
+'                            <input type="text" id="ram" oninput = "checkInput(4)">\n'+
 '                            <p class="AP_Warning" id = "AP_RAM_Warning" >*Ram không được để trống </p>\n'+
 '                        </div>\n'+
 '                        <div>\n'+
 '                            <label for="ssd">SSD</label>\n'+
-'                            <input type="text" id="ssd">\n'+
+'                            <input type="text" id="ssd" oninput = "checkInput(5)">\n'+
 '                            <p class="AP_Warning" id = "AP_SSD_Warning">*SSD không được để trống</p>\n'+
 '                        </div>\n'+
 '                        <div>\n'+
 '                            <label for="card">Card</label>\n'+
-'                            <input type="text" id="card">\n'+
+'                            <input type="text" id="card" oninput = "checkInput(6)">\n'+
 '                            <p class="AP_Warning" id = "AP_CARD_Warning">*card không được để trống</p>\n'+
 '                        </div>\n'+
 '                    </div>\n'+
 '                    <div>\n'+
 '                        <label for="description">Mô tả</label>\n'+
-'                        <input type="text" id="description">\n'+
+'                        <input type="text" id="description" oninput = "checkInput(7)">\n'+
 '                         <p class="AP_Warning" id = "AP_DESCRIPTION_Warning">*Mô tả không được để trống</p>\n'+
 '                    </div>\n'+
 '                    <div class="AP_Button_Div">\n'+
@@ -536,19 +536,19 @@ function DivSuaSanPham(idSanPham){
 '            </div>' +
 '            <div>' +
 '                <label for="fix_name">Tên sản phẩm</label>' +
-'                <input type="text" id="fix_name" value = "'+ Fix_SanPham.name+'">' +
+'                <input type="text" id="fix_name" oninput = "checkInput(1)" value = "'+ Fix_SanPham.name+'">' +
 '                <p class="AP_Warning" id="AP_NAME_Warning">*Tên sản phẩm không được để trống</p>' +
 '            </div>' +
 '            <div>' +
 '                <label for="fix_price">Giá tiền</label>' +
-'                <input type="number" id="fix_price" value = "'+ Fix_SanPham.price+ '"> ' +
+'                <input type="number" id="fix_price" oninput = "checkInput(2)" value = "'+ Fix_SanPham.price+ '"> ' +
 '                <p class="AP_Warning" id="AP_PRICE1_Warning">*Giá tiền phẩm không được để trống</p>' +
 '                <p class="AP_Warning" id="AP_PRICE2_Warning">*Giá tiền sản phẩm phải trên 9.000.000đ</p>' +
 '            </div>' +
 '            <div class="ChiTietSP">' +
 '                <div>' +
 '                    <label for="fix_location">Vị trí</label>' +
-'                    <input type="text" id="fix_location" value = "'+ Fix_SanPham.location+'">' +
+'                    <input type="text" id="fix_location" oninput = "checkInput(3)" value = "'+ Fix_SanPham.location+'">' +
 '                    <p class="AP_Warning" id="AP_LOCATION_Warning">*Vị trí không được để trống</p>' +
 '                </div>' +
 '                <div>' +
@@ -557,23 +557,23 @@ function DivSuaSanPham(idSanPham){
 '                </div>' +
 '                <div>' +
 '                    <label for="fix_ram">Ram</label>' +
-'                    <input type="text" id="fix_ram" value = "'+ Fix_SanPham.ram+'" > ' +
+'                    <input type="text" id="fix_ram" oninput = "checkInput(4)" value = "'+ Fix_SanPham.ram+'" > ' +
 '                    <p class="AP_Warning" id="AP_RAM_Warning">*Ram không được để trống</p>' +
 '                </div>' +
 '                <div>' +
 '                    <label for="fix_ssd">SSD</label>' +
-'                    <input type="text" id="fix_ssd" value = "'+ Fix_SanPham.ssd+'">' +
+'                    <input type="text" id="fix_ssd" oninput = "checkInput(5)" value = "'+ Fix_SanPham.ssd+'">' +
 '                    <p class="AP_Warning" id="AP_SSD_Warning">*SSD không được để trống</p>' +
 '                </div>' +
 '                <div>' +
 '                    <label for="fix_card">Card</label>' +
-'                    <input type="text" id="fix_card" value = "'+ Fix_SanPham.card+'">' +
+'                    <input type="text" id="fix_card" oninput = "checkInput(6)" value = "'+ Fix_SanPham.card+'">' +
 '                    <p class="AP_Warning" id="AP_CARD_Warning">*Card không được để trống</p>' +
 '                </div>' +
 '            </div>' +
 '            <div>' +
 '                <label for="fix_description">Mô tả</label>' +
-'                <input type="text" id="fix_description" value = "'+ Fix_SanPham.description +'">' +
+'                <input type="text" id="fix_description" oninput = "checkInput(7)" value = "'+ Fix_SanPham.description +'">' +
 '                <p class="AP_Warning" id="AP_DESCRIPTION_Warning">*Mô tả không được để trống</p>' +
 '            </div>' +
 '            <div class="AP_Button_Div">' +
@@ -736,3 +736,38 @@ function previewImage() {
     }
 }
 
+
+function checkInput(x){
+    
+    switch (x){
+        case 1 :
+            document.getElementById('AP_NAME_Warning').style.display ='none';
+            break;
+        
+        case 2 :
+            document.getElementById('AP_PRICE1_Warning').style.display ='none';
+            document.getElementById('AP_PRICE2_Warning').style.display ='none';
+            break;
+
+        case 3 :    
+            document.getElementById('AP_LOCATION_Warning').style.display ='none';    
+            break;
+
+        case 4 : 
+            document.getElementById('AP_RAM_Warning').style.display ='none';
+            break;
+
+        case 5 :     
+            document.getElementById('AP_SSD_Warning').style.display ='none';
+            break;
+
+        case 6 :
+            document.getElementById('AP_CARD_Warning').style.display ='none';    
+            break;
+        
+        case 7 :
+            document.getElementById('AP_DESCRIPTION_Warning').style.display ='none';
+            break;    
+    
+    }
+}

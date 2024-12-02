@@ -51,20 +51,39 @@
 
 .Cart_PB_Box div{
 	margin : 1%;
-	width: 18%;
-	padding: 1%
+	width: 17%;
+	padding: 1%;
+	text-align: c;
+}
+
+.Cart_PB_Box div p {
+	max-width: 100%;
+	text-align: left;
+	padding: 0;
+	margin: 0;
 }
 
 .Cart_PB_Box div:last-child{
 	width: 5%;
 }
 
+
 .Cart_product_delete i:hover {
 	color :tomato;
 	cursor: pointer;
 }
-.Cart_PB_Box_Title{
-	font-size: 20px;
+.Cart_PB_Box_Title div{
+	font-size: 16px;
+	width: 17%;
+}
+
+.Cart_PB_Box_Title div p{
+	font-size: 16px;
+	text-align: center;
+}
+
+.Cart_PB_Box div p {
+	text-align: center;
 }
 
 .Cart_product_img img{
@@ -159,7 +178,7 @@
 	padding: 8px;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
 	.Cart_container {
 		display: flex;
 		flex-direction: column;
@@ -240,6 +259,7 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
+	animation: fadeInOverlay 0.3s ease-in-out; 
 }
 
 .Modal_body {
@@ -253,7 +273,46 @@
     width: 100%;
 	max-height: 90%;
 	overflow-y: auto;
+	animation: fadeInModal 0.3s ease-out forwards;
+}
 
+/* Keyframes cho hiệu ứng fadeIn cho overlay */
+@keyframes fadeInOverlay {
+    0% {
+        background-color: rgba(0, 0, 0, 0);
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* Keyframes cho hiệu ứng fadeIn cho modal body */
+@keyframes fadeInModal {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Hiệu ứng fade-out cho modal */
+.Modal.fade-out .Modal_body {
+    animation: fadeOutModal 0.3s ease-in-out forwards;
+}
+
+/* Keyframes cho hiệu ứng fade-out cho modal body */
+@keyframes fadeOutModal {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
 }
 
 
@@ -406,16 +465,42 @@
 	display: flex;
 	flex-direction: column;
 }
+
 #summary_content {
 	display: flex;
 	flex-direction: column;
 }
 
-.summary_products_line p:first-child {
-	width: 40%;
-	margin-right: 10px;
+.summary_products p , .summary_total
+
+{
+	width: 100%;
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
 }
 
+.summary_products_line{
+	width: 100%;
+}
+.summary_products_line p {
+	margin : 15px;
+	text-align: center;
+}
+
+.summary_products_line p:first-child {
+	width: 40%;
+	
+}
+
+.summary_products_line .spl_price{
+	width: 25%;
+}
+
+.TTHD{
+	width: 100%;
+	text-align: center;
+}
 
 .btn_payment {
     text-align: center; 
@@ -447,7 +532,7 @@
 }
 
 
-@media screen and (max-height: 800px) {
+@media screen and (max-height: 950px) {
 	.Modal_body {
 		overflow-y: auto;
 	}
@@ -457,7 +542,7 @@
 	font-size: 12px;
 	position: absolute;
 	left: 1%;
-	bottom: -50%;
+	bottom: -120%;
 	cursor: pointer;
 	text-decoration: underline;
 	color : blue;
@@ -467,3 +552,203 @@
 .btn_customer_info:hover{
 	color: purple;
 }
+
+
+.summary_products_line {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 10px 0;
+	border-bottom: 1px solid #ddd;
+  }
+  
+  .summary_products_line p {
+	margin: 0;
+	padding: 0;
+  }
+  
+  .spl_price {
+	color: #2c3e50;
+	font-size: 16px;
+	text-align: right;
+  }
+  
+  .spl_quantity {
+	text-align: center;
+	font-size: 16px;
+	color: #333;
+  }
+  
+  .spl_price_2 {
+	font-weight: bold;
+	color: #e74c3c;
+	text-align: right;
+  }
+  
+  /* Định dạng cho phần chi tiết hóa đơn */
+  .summary_products {
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 20px;
+	text-align: center;
+  }
+  
+  p {
+	font-size: 16px;
+	color: #333;
+	line-height: 1.6;
+  }
+  
+  p.summary_total {
+	font-size: 20px;
+	font-weight: bold;
+	color: #e74c3c;
+	text-align: right;
+	margin-top: 20px;
+  }
+  
+  /* Định dạng cho các chi tiết hóa đơn */
+  .summary_total {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+	align-items: center;
+  }
+  .summary_total p:first-child{
+	width: 75%;
+	text-align: left;
+
+  }
+
+  .summary_total p:last-child{
+	width: 25%;
+	font-size: 18px;
+	font-weight: bold;
+	color: #e74c3c;
+	padding: 10px;
+	text-align: center;
+  }
+  
+
+ 
+  @media screen and (max-width: 768px) {
+	.summary_products_line {
+	  flex-direction: column;
+	  align-items: center;
+	  
+	}
+  
+	.summary_products_line p {
+	  width: 100%;
+	  text-align: center;
+	  padding: 5px 0;
+	}
+
+
+  
+	.spl_price, .spl_quantity, .spl_price_2 {
+	  font-size: 14px;
+	}
+  
+  
+	.summary_total {
+	  font-size: 16px;
+	  display: block;
+	  flex-direction: column;
+	  justify-content: center;
+	  width: 100%;
+	}
+
+	.summary_total p{
+		width: 100%;
+		text-align: center;
+		margin: 0px;
+	}
+
+	.summary_total p:first-child{
+		text-align: center;
+	}
+
+	.summary_total p:last-child{
+		width: 100%;
+		font-size: 14px;
+		margin: 0px;
+	}
+  
+	.btn_payment button {
+		background-color: #007bff; 
+		color: white; 
+		border: none; 
+		padding: 5px 10px; 
+		margin: 5px; 
+		border-radius: 5px; 
+		cursor: pointer; 
+		font-size: 12px; 
+		font-weight: bold;
+	}
+
+	.Cart_product_img{
+		display: none;
+	}
+
+	.ItemGH_name {
+		width: 15%;
+	}
+
+	.ItemGH_name p {
+		max-width: 100%;
+	}
+
+	.Cart_PB_Box div p, .Cart_PB_Box div i{
+		font-size: 12px;
+	}
+
+	.Cart_PB_Box div input, .Cart_PB_Box div button{
+		font-size: 10px;
+		padding: 0;
+	}
+}
+
+@media screen and (max-width : 600px) {
+	.Cart_PB_Box div p,.Cart_PB_Box div i {
+		font-size: 9px;
+	}
+
+	.quantity_control{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+	}
+	
+
+
+	.Cart_PB_Box div input, .Cart_PB_Box div button{
+		font-size: 6px;
+		padding: 0;
+		width: 20%;
+		margin: 0px;
+	}
+
+	.Cart_PB_Box div {
+		width: 28%;
+	}
+
+	.Cart_PB_Box div:last-child {
+		width: 5%;
+	}
+
+	.ItemGH_Sum {
+		display: none;
+	}
+
+	.Cart_PB_Header a {
+		right: -15px;
+		top : -15px;
+	}
+
+	.Cart_total div span {
+		font-size: 12px;
+	}
+}
+  

@@ -53,6 +53,7 @@ function ThemVaoGioHang(IDsanpham) {
     HienThiDanhSachItemGH()
 }
 
+//Tao doi tuong san pham cho GIO HANG
 function TaoItemGH (id, soluong){
     var itemGH = new Object();
     itemGH.idSP = id;
@@ -93,8 +94,8 @@ function PriceToString (price ){
 
 
 /* Lay DOI TUONG san pham tu id 
-    Input : id cua san pham
-    Ouput : DOI TUONG san pham */
+    Input : id cua san pham trong DANH SACH GIO HANG
+    Ouput : DOI TUONG san pham*/
     function LayItemTheoID (IDsanpham){
         var SanPham = new Object();
         /*Load toan bo danh sach tu danh sach san pham"products" trong LocalStorage len */
@@ -109,6 +110,7 @@ function PriceToString (price ){
     
         console.log(SanPham)
         
+        // Khi lay item tu local, cac method bi mat -> nen khoi tao lai san pham.
         SanPham = KhoiTaoSanPham(SanPham.image, SanPham.kind, SanPham.name, SanPham.price, SanPham.id, SanPham.ram, SanPham.ssd, SanPham.card, SanPham.description)
     
         return SanPham;
@@ -140,9 +142,9 @@ function UpdateQuantity(idSP, change) {
 }
 
 
-/*Chuyen 1 doi tuong item gio hang thanh HTML
+/*Chuyen 1 doi tuong (OBJECT) san pham trong gio hang thanh HTML
     input : doi tuong item gio hang
-    output : doan HTML
+    output : doan HTML cua item
 */
 function ChuyenItemGioHangThanhHTML (itemGH){
     var SanPham = LayItemTheoID(itemGH.idSP)
@@ -150,7 +152,7 @@ function ChuyenItemGioHangThanhHTML (itemGH){
 
         var html = 
 '                    <div class="Cart_PB_Box"> \n'+
-'                        <div>\n'+
+'                        <div class = "ItemGH_name">\n'+
 '                            <p>' + SanPham.name+ '</p>\n'+
 '                        </div>\n'+
 '\n'+
@@ -168,12 +170,12 @@ function ChuyenItemGioHangThanhHTML (itemGH){
 '                                <button onclick="UpdateQuantity('+ itemGH.idSP +', 1)"> + </button>\n'+
 '                            </div>\n'+
 '\n'+
-'                        <div>\n'+
+'                        <div class = "ItemGH_Sum">\n'+
 '                            <p>'+ PriceToString(SanPham.price * itemGH.sl) +'</p>\n'+
 '                        </div>\n'+
 '\n'+
 '                        <div class="Cart_product_delete">\n'+
-'                            <i class="fa-solid fa-trash" onclick="XoaItemGH('+ itemGH.idSP+')"></i>\n'+
+'                            <i class="fa-solid fa-trash" onclick="XoaItemGH('+ itemGH.idSP+')"></i>\n'+    //Xoa san pham khoi gio hang
 '                        </div>\n'+
 '                    </div>    \n';
 
@@ -181,7 +183,7 @@ function ChuyenItemGioHangThanhHTML (itemGH){
 }
 
 
-/*Chuyen 1 danh sach (array) thanh HTML 
+/*Chuyen danh sach gio hang thanh html
     input : 1 danh sach item gio hang 
     output : 1 doan HTML
 */
@@ -193,9 +195,9 @@ function ChuyenDanhSachGioHangThanhHTML (DanhSachItemGH){
     return html_Tong;
 }
 
+// Tra ve list html item trong gio hang :
 
 function HienThiDanhSachItemGH(){
-    /*B1 : Lay danh sach tu local storage */
     var DSGioHang = layDanhSachItemGH();
 
     /*B2 : Chuyen doi danh sach thanh 1 doan HTML */
@@ -208,17 +210,18 @@ function HienThiDanhSachItemGH(){
 
 
 //Xoa item trong gio hang */
-
 function XoaItemGH(ItemID){
-    alert("ID là " + ItemID)
-    var DSGioHang = layDanhSachItemGH();
-    DSGioHang = DSGioHang.filter(function (item) {
-        return String(item.idSP) !== String(ItemID); 
-    });
-    
+   if (confirm("Xác nhận xóa sản phẩm ?"))
+   {
+        var DSGioHang = layDanhSachItemGH();
+        DSGioHang = DSGioHang.filter(function (item) {
+            return String(item.idSP) !== String(ItemID); 
+        });
 
-    LuuDSGHvaoLocalStorage(DSGioHang);
-    DivGioHang();
+        LuuDSGHvaoLocalStorage(DSGioHang);
+        DivGioHang();
+        alert("Xóa sản phẩm thành công !")
+    }
 }
 
 
@@ -238,7 +241,7 @@ function Cart_container(){
 '                               <p>Tên sản phẩm</p>\n'+
 '                           </div>\n'+
 '\n'+
-'                           <div>\n'+
+'                           <div class = "Cart_product_img">\n'+
 '                               <p>Hình ảnh</p>\n'+
 '                           </div>\n'+
 '\n'+
@@ -246,7 +249,7 @@ function Cart_container(){
 '                               <p>Giá tiền</p>\n'+
 '                           </div>\n'+
 '\n'+
-'                           <div>\n'+
+'                           <div class = "ItemGH_Sum">\n'+
 '                               <p>Số lượng</p>\n'+
 '                           </div>\n'+
 '\n'+
@@ -254,7 +257,7 @@ function Cart_container(){
 '                                <p>Tổng</p>\n'+
 '                           </div>\n'+
 '\n'+
-'                           <div>\n'+
+'                           <div class = "Cart_product_delete">\n'+
 '                               <p>Xóa<p>\n'+
 '                           </div>\n'+
 '                       </div>    \n'+
@@ -284,7 +287,7 @@ function Cart_container(){
 '                    \n'+
 '                    <div class="Offer_btn">\n'+
 '                        <button class="btn_Cart btn_Cart_offer" onclick="Cart_confirm_1()">Xác nhận</button>\n'+       //Them button onclick o day
-// '                        <button class="btn_Cart btn_Cart_offer" onclick="thanhtoan()">Thanh toán</button>\n'+       //Them button onclick o day 
+ 
 '                    </div>\n'+
 '                </div>\n'+
 '            </div>';
@@ -438,7 +441,7 @@ function Check_UserDetails() {
 
         var cardNumberRegex = /^[0-9]{16}$/;
         var cardNameRegex = /^[A-Za-z\s-]+$/;
-        var cardDateRegex = /^(0[1-9]|1[0-2])\/\d{4}$/;
+        var cardDateRegex = /^(0[1-9]|1[0-2])\/20[2-9][0-9]$/;
         var cvvRegex = /^[0-9]{3,4}$/;
 
 
@@ -532,13 +535,17 @@ function checkPaymentMethod() {
     const transferPayment = document.getElementById('transfer_payment');
     const cardPayment = document.getElementById('card_payment');
 
-    // Tiền mặt và chuyển khoản
+    //Tien mat
     if (cashPayment.checked ) {
         return 1;
     } 
     
+
+    //Chuyen khoan 
     else if (transferPayment.checked)
         return 2
+
+
     // Thẻ tín dụng
     else if (cardPayment.checked) {
         return 3;
@@ -557,7 +564,7 @@ function PrintPaymentForm() {
     const cardPayment = document.getElementById('card_payment');
     const paymentForm = document.getElementById('payment_gateway');
 
-    // Kiểm tra nếu chọn "Thanh toán qua thẻ"
+    //nếu chọn "Thanh toán qua thẻ" : 
     if (cardPayment.checked) {
         paymentForm.style.display = "block"; 
     } 
@@ -567,8 +574,11 @@ function PrintPaymentForm() {
 }
 
 function Customer_Info(){
-    var CurrentUser = JSON.parse(localStorage.getItem('userlogin'))
+    var CurrentUser = JSON.parse(localStorage.getItem('userlogin')) // Lay khach hang hien tai
+
     // alert(typeof CurrentUser)
+ 
+    //Lay thong tin khach hang gan vao input
     var NodeUserName = document.getElementById('customer_name')
     var NodeUserPhone = document.getElementById('customer_phone')
     var NodeUserAdrress = document.getElementById('customer_address')
@@ -592,10 +602,11 @@ function Cart_confirm_1(){
         alert("Giỏ hàng hiện tại đang trống !")
         return;
     }
+
     Customer_Info()
-    NodeCartModal.style.display ='flex'
-    NodeCartInput.style.display = 'block'
-    NodeCartInvoice.style.display = 'none'
+    NodeCartModal.style.display ='flex' //Modal 
+    NodeCartInput.style.display = 'block'   //Inner thu nhat cua modal (phan nhap thong tin )
+    NodeCartInvoice.style.display = 'none'   //Inner thu hai cua modal (phan tom tat hoa don )
 
 }
 
@@ -629,7 +640,13 @@ function Cart_Confirm_Details(){
 }
 
 function HTML_Summary_Content (){
-    var CurrentUser = JSON.parse(localStorage.getItem('userlogin'))
+    var UserName = document.getElementById('customer_name').value;
+    var UserPhone = document.getElementById('customer_phone').value;
+    var UserAddress = document.getElementById('customer_address').value;
+    var UserDistrict = document.getElementById('customer_district').value;
+    var UserWard = document.getElementById('customer_ward').value;
+
+
     var PaymentMethod;
     if (checkPaymentMethod() == 1 ) 
         PaymentMethod = "Tiền mặt"
@@ -640,20 +657,29 @@ function HTML_Summary_Content (){
         PaymentMethod = "Thẻ tín dụng"
 
     var DSGH = layDanhSachItemGH();
-    var Cart_products_html = "";
-    for (var i = 0 ; i < DSGH.length ; i++ ){
+    var Cart_products_html = '<div class="summary_products_line">' 
+                            + '<p>Tên sản phẩm</p>' + 
+    '    <p class="spl_price">Đơn giá</p>' + 
+    '    <p class="spl_quantity">SL</p>' +
+    '    <p class="spl_price">Tổng</p>' +
+    '</div>';
+    
+    for (var i = 0; i < DSGH.length; i++) {
         var product = LayItemTheoID(DSGH[i].idSP);
-        Cart_products_html += '<div class = "summary_products_line"> ' 
-                            + '<p>Tên sản phẩm : '+ product.name +' </p>' + 
-'                              <p> \t \t Số lượng : '+DSGH[i].sl +' </p> </div>'
+        Cart_products_html += '<div class="summary_products_line">' 
+                            + '<p>' + product.name + '</p>' + 
+    '    <p class="spl_price">' + PriceToString(product.price) + '</p>' + 
+    '    <p class="spl_quantity">' + DSGH[i].sl + '</p>' +
+    '    <p class="spl_price">' + PriceToString(DSGH[i].sl * product.price) + '</p>' +
+    '</div>';
     }
 
 
-    var html =          '<p>Họ và tên : '+ CurrentUser.fullname + '</p>\n'+
-'                        <p>Địa chỉ :  '+ CurrentUser.address+' Phường '+CurrentUser.phuong+' Quận '+CurrentUser.quan+'  </p>\n'+
+    var html =          '<p>Họ và tên : '+ UserName + '</p>\n'+
+'                        <p>Địa chỉ :  '+ UserAddress +' Phường '+ UserWard +' Quận '+ UserDistrict +'  </p>\n'+
 '                        <p>Phương thức thanh toán : '+ PaymentMethod + '</p>\n'+
-'                        <div class = "summary_products"> Sản phẩm : </div>\n'+ Cart_products_html +
-'                        <p>Tổng : '+ PriceToString(TinhTongTien())+' </p>';
+'                        <div class = "summary_products"> <p> Chi tiết hóa đơn </p> </div>\n'+ Cart_products_html +
+'                        <div class = "summary_total"><p>Thanh toán : </p>  <p> '+ PriceToString(TinhTongTien())+'</p> </div>';
 
     return html;
 }
@@ -708,3 +734,58 @@ function thanhtoan() {
 }
 
 
+function check_Input(x){
+    switch(x){
+        case 1 :
+            document.getElementById('customer_warning_name_1').style.display = "none";
+            document.getElementById('customer_warning_name_2').style.display = "none";
+            document.getElementById('customer_warning_name_3').style.display = "none";
+            break;
+
+        case 2 :
+            document.getElementById('customer_warning_phone_1').style.display = "none";
+            document.getElementById('customer_warning_phone_2').style.display = "none";
+            break;
+
+        case 3 :
+            document.getElementById('customer_warning_address_1').style.display = "none";
+            document.getElementById('customer_warning_address_2').style.display = "none";
+            break;
+
+        case 4 :
+            document.getElementById('customer_warning_district_1').style.display = "none";
+            document.getElementById('customer_warning_district_2').style.display = "none";
+            break;
+
+        case 5 :
+            document.getElementById('customer_warning_ward_1').style.display = "none";
+            document.getElementById('customer_warning_ward_2').style.display = "none";
+            break;
+
+        case 6 :
+            document.getElementById('customer_warning_payment').style.display = "none";
+            break;
+
+        case 7 :
+            document.getElementById('card_number_warning_1').style.display ='none';
+            document.getElementById('card_number_warning_2').style.display ='none';
+            break;
+
+        case 8 : 
+            document.getElementById('card_name_warning_1').style.display ='none';
+            document.getElementById('card_name_warning_2').style.display ='none';
+            break;
+
+
+        case 9 :
+            document.getElementById('card_date_warning_1').style.display ='none';
+            document.getElementById('card_date_warning_2').style.display ='none';
+            break;
+
+        case 10 :
+            document.getElementById('card_cvv_warning_1').style.display ='none';
+            document.getElementById('card_cvv_warning_2').style.display ='none';
+            break;
+
+    }
+}
