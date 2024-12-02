@@ -7,6 +7,7 @@ const showOrderManagement = () => {
         <div class="table">
             <div class="table-header">
                 <div class="header__item"><a id="id" class="filter__link" href="#">Mã đơn hàng</a></div>
+                <div class="header__item"><a id="name" class="filter__link" href="#">ID khách hàng</a></div>
                 <div class="header__item"><a id="name" class="filter__link" href="#">Tên khách hàng</a></div>
                 <div class="header__item"><a id="price" class="filter__link filter__link--number" href="#">Tổng tiền</a></div>
                 <div class="header__item"><a id="status" class="filter__link filter__link--number" href="#">Trạng thái</a></div>
@@ -71,8 +72,9 @@ const loadOrders = (filteredOrders) => {
     table.innerHTML = ''; // Xóa dữ liệu cũ
     invoices.forEach((invoice) => {
         const row = `
-            <div class="table-row">		
+            <div class="table-row">	
 				<div class="table-data">${invoice.orderId}</div>
+                <div class="table-data">${invoice.userId}</div>
 				<div class="table-data">${invoice.fullname}</div>
 				<div class="table-data">${invoice.totalAmount}</div>
 				<div class="table-data">${invoice.status}</div>
