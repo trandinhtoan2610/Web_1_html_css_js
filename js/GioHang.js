@@ -598,6 +598,13 @@ var NodeCartInvoice = document.getElementById('Cart_Modal__inner_2')
 
 function Cart_confirm_1(){
     var DSGH = layDanhSachItemGH()
+    var isLogin = localStorage.getItem('userlogin');
+    if (isLogin == null){
+        alert("Bạn cần đăng nhập để mua hàng !")
+        return
+    }
+
+
     if (DSGH == null || DSGH.length == 0 ){
         alert("Giỏ hàng hiện tại đang trống !")
         return;

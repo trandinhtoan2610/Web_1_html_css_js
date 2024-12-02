@@ -11,3 +11,9 @@ function displayUsername() {
     }
 }
 displayUsername();
+
+
+function LogOut(){
+    alert("Đăng xuất")
+    localStorage.removeItem('userlogin')
+}

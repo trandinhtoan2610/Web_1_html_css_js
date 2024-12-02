@@ -35,7 +35,7 @@
 					<a href="#">Tìm kiếm nâng cao</a>
 				</li>
 				<li>
-					<a onclick="remind()">
+					<a onclick="DivGioHang()">
 						<i class="fa-solid fa-cart-shopping"></i>
 						Giỏ hàng
 					</a>
@@ -68,7 +68,7 @@
 					<a href="#">Tìm kiếm nâng cao</a>
 				</li>
 				<li class="hideonMobile">
-					<a onclick="remind()">
+					<a onclick="DivGioHang()">
 						<i class="fa-solid fa-cart-shopping"></i>
 						Giỏ hàng
 					</a>
@@ -154,27 +154,7 @@
 		</div>
 	</header>
 	<main>
-		<!-- <div class="container">
-			<div class="slideshow-container">
-				<div class="mySlides fade">
-					<img src="../img/banner1.jpg" style="width:100%">
-				</div>
-		
-				<div class="mySlides fade">
-					<img src="../img/lap102.png" style="width:100%">
-				</div>
-		
-				<div class="mySlides fade">
-					<img src="../img/Lap104.jpg" style="width:100%">
-				</div>
-			</div>
-			<br>
-			<div style="text-align:center">
-				<span class="dot"></span>
-				<span class="dot"></span>
-				<span class="dot"></span>
-			</div>
-		</div> -->
+		<div class="container" id = "container"> 
 			<!--phan loai theo hang san pham-->
 			<div class="brand-list">
 				<a href="index.html?brand=Acer">
@@ -204,7 +184,7 @@
 							<h4 id="productCard"></h4>
 							<h4 id="productLocation"></h4>
 							<h6 id="productDescription"></h6>
-							<button class="addtoCart" id="color-Cart" onclick="remind()">Thêm Vào Giỏ</button>
+							<button class="addtoCart" id="color-Cart" onclick="ThemVaoGioHang()">Thêm Vào Giỏ</button>
 						</div>
 					</div>
 				</div>
@@ -259,9 +239,12 @@
 			</div>
 		</footer>
 	</div>
+
+
+</body>
+	<script src ="../js/GioHang.js"></script>
 	<script src="../js/product.js"></script>
 	<script src="../js/paginationLogin.js"></script>
 	<script src="../js/sidebar.js"></script>
 	<script src="../js/login.js"></script>
-</body>
 </html>
