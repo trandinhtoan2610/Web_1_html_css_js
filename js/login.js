@@ -1,185 +1,114 @@
-document.getElementById('loginButton').addEventListener('click', function (e) {
-    event.preventDefault();
-    document.getElementById('authModal').style.display = 'flex';
-});
-document.getElementById('loginButton2').addEventListener('click', function (e) {
-    event.preventDefault();
-    document.getElementById('authModal').style.display = 'flex';
-});
-function createAdmin() {
-    if (localStorage.getItem('user') === null) {
-        var countIDUser = 0;
-        localStorage.setItem('countIDUser', countIDUser);
-        var status = false;
-        var userArray = [];
-        var user = { id: countIDUser, username: 'admin', fullname: 'Hoang',address: '270/97 Phan Đình Phùng',phuong: '1',quan: 'Phú Nhuận', password: 'admin', phone: '0329997881', datesignup: '26-09-2005' , status: status};
-        userArray.push(user);
-        localStorage.setItem('user', JSON.stringify(userArray));
+const itemsPerPage = 8;
+let currentPage = 1;
+
+function renderProduct(page) {
+    let html = '';
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const paginatedProducts = products.slice(start, end);
+
+    for (let i = 0; i < paginatedProducts.length; i++) {
+        const product = paginatedProducts[i];
+
+        // Kiểm tra dữ liệu của sản phẩm
+        if (!product.id || !product.name || !product.image || !product.price) {
+            console.error(`Dữ liệu không hợp lệ cho sản phẩm tại index ${i}`, product);
+        }
+        product.price = Number(product.price);
+
+        html += `
+        <div class="product-card">
+                <div class="product-image">
+                    <a href="#" onclick="showProductDetails(${product.id})">
+                        <img src="${product.image}" alt="${product.name}" />
+                    </a>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-price">
+                        <strong>${product.price.toLocaleString('vi-VN')}<sup><u>đ</u></sup></strong>
+                    </p>
+                    <div class="product-actions">
+                        <button type="button" class="btn-cart" onclick="ThemVaoGioHang(${product.id})">Thêm Vào Giỏ Hàng</button>
+                    </div>
+                </div>
+            </div>
+        `;
     }
-}
-createAdmin();
-function showRegisterForm() {
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('registerForm').style.display = 'block';
+    document.getElementById("product-list").innerHTML = html;
 }
 
-function showLoginForm() {
-    document.getElementById('registerForm').style.display = 'none';
-    document.getElementById('loginForm').style.display = 'block';
+function renderPagination() {
+    const totalPages = Math.ceil(products.length / itemsPerPage);
+    let paginationHtml = '';
+
+    // Thêm nút "Trước"
+    paginationHtml += `
+        <button class="page-button" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>&lt;</button>`;
+
+    for (let i = 1; i <= totalPages; i++) {
+        paginationHtml += `
+            <button class="page-button ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+    }
+
+    // Thêm nút "Sau"
+    paginationHtml += `
+        <button class="page-button" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>&gt;</button>`;
+
+    // Cập nhật phần tử phân trang
+    document.getElementById("pagination").innerHTML = paginationHtml;
 }
 
-// Đóng form khi nhấn ra ngoài
-window.onclick = function (event) {
-    if (event.target == document.getElementById('authModal')) {
-        document.getElementById('authModal').style.display = 'none';
-    }
-};
-/* Đăng Kí */
-document.getElementById('registerForm').addEventListener('submit', signup);
-document.getElementById('loginForm').addEventListener('submit', login);
-function signup(e) {
-    e.preventDefault();
-    var fullname = document.getElementById('newFullName');
-    var phone = document.getElementById('newPhoneNumber');
-    var address = document.getElementById('newAddress');
-    var phuong = document.getElementById('newPhuong');
-    var quan = document.getElementById('newQuan');
-    var username = document.getElementById('newUsername');
-    var password = document.getElementById('newPassword');
-    var password2 = document.getElementById('newRepeatPassword');
-    var flag = true;
-    if (!fullname.value) {
-        document.getElementById('fullNameError').style.display = 'block';
-        flag = false;
-    } else {
-        document.getElementById('fullNameError').style.display = 'none';
-    }
-    if (!username.value) {
-        document.getElementById('newUsernameError').style.display = 'block';
-        flag = false;
-    } else {
-        document.getElementById('newUsernameError').style.display = 'none';
-    }
-    if (!address.value) {
-        document.getElementById('addressError').style.display = 'block';
-        flag = false;
-    }else{
-        document.getElementById('addressError').style.display = 'none';
-    }
-    if(!phuong.value){
-        document.getElementById('phuongError').style.display = 'block';
-        flag = false;
-    }else{
-        document.getElementById('phuongError').style.display = 'none';
-    }
-    if(!quan.value){
-        document.getElementById('quanError').style.display = 'block';
-        flag = false;
-    }else{
-        document.getElementById('quanError').style.display = 'none';
-    }
-    if (!phone.value) {
-        document.getElementById('phoneNumberError').style.display = 'block';
-        flag = false;
-    } else {
-        if (isNaN(Number(phone.value))) {
-            document.getElementById('phoneNumberError').style.display = 'block';
-            document.getElementById('phoneNumberError').innerHTML = '<i>*Số điện thoại không đúng định dạng</i>';
-            flag = false;
-        } else {
-            if (Number(phone.value) < 100000000 || Number(phone.value) > 999999999) {
-                document.getElementById('phoneNumberError').style.display = 'block';
-                document.getElementById('phoneNumberError').innerHTML = '<i>*Số điện thoại không đúng định dạng</i>';
-                flag = false;
+// Hàm thay đổi trang
+function changePage(page) {
+    if (page < 1 || page > Math.ceil(products.length / itemsPerPage)) return; // Không thay đổi nếu page không hợp lệ
+    currentPage = page;
+    renderProduct(currentPage);  // Cập nhật sản phẩm cho trang mới
+    renderPagination();  // Cập nhật lại phân trang
+}
+
+// Hàm khởi tạo khi trang được tải
+document.addEventListener("DOMContentLoaded", () => {
+    renderProduct(currentPage);  // Hiển thị sản phẩm cho trang đầu tiên
+    renderPagination();  // Hiển thị phân trang
+});
+const addToCartButton = document.getElementById('color-Cart');
+var json = JSON.stringify(products);
+localStorage.setItem("products", json);
+function showProductDetails(productID, event) {
+    if (event) event.preventDefault();
+    const product_Info = document.getElementById('product-info');
+    const product_Name = document.getElementById("productName");
+    const product_Price = document.getElementById("productPrice");
+    const product_Ram = document.getElementById("productRam");
+    const product_SSD = document.getElementById("productSSD");
+    const product_Card = document.getElementById("productCard");
+    const product_Location = document.getElementById("productLocation");
+    const product_img = document.getElementById("productImg");
+    const product_Description = document.getElementById("productDescription");
+    product_Info.style.display = 'flex';
+    var productArray = JSON.parse(localStorage.getItem("products"));
+    for (var i = 0; i < productArray.length; i++) {
+        if (productArray[i].id == productID) {
+            product_Name.innerHTML = productArray[i].name;
+            if (typeof productArray[i].price === 'number') {
+                product_Price.innerHTML = "Giá: " + productArray[i].price.toLocaleString('vi-VN') + "<sup><u>đ</u></sup>";
+            } else if (!isNaN(Number(productArray[i].price))) {
+                product_Price.innerHTML = "Giá: " + Number(productArray[i].price).toLocaleString('vi-VN') + "<sup><u>đ</u></sup>";
             } else {
-                document.getElementById('phoneNumberError').style.display = 'none';
+                product_Price.innerHTML = "Giá: Không hợp lệ";
             }
+            product_Ram.innerHTML = "Ram: " + productArray[i].ram;
+            product_SSD.innerHTML = "SSD: " + productArray[i].ssd;
+            product_Card.innerHTML = "Card: " + productArray[i].card;
+            product_Location.innerHTML = "Vị Trí: " + productArray[i].location;
+            product_img.src = productArray[i].image;
+            product_Description.innerHTML = "Mô Tả: " + productArray[i].description;
+            const addToCartButton = document.getElementById('color-Cart');
+            addToCartButton.setAttribute('onclick', `ThemVaoGioHang(${productArray[i].id})`);
         }
     }
-    
-    if (!password.value) {
-        document.getElementById('newPasswordError').style.display = 'block';
-        flag = false;
-    } else {
-        if (password.value.length < 8) {
-            document.getElementById('newPasswordError').style.display = 'block';
-            document.getElementById('newPasswordError').innerHTML = '<i>*Mật khẩu phải trên 8 ký tự</i>';
-            flag = false;
-        } else {
-            document.getElementById('newPasswordError').style.display = 'none';
-        }
-    }
-    if (password2.value != password.value) {
-        document.getElementById('repeatPasswordError').style.display = 'block';
-        flag = false;
-    } else {
-        document.getElementById('repeatPasswordError').style.display = 'none';
-    }
-    if (flag == false) {
-        return false;
-    }
-    var d = new Date();
-    var datesignup = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
-    var status = true;
-    var countIDUser = JSON.parse(localStorage.getItem('countIDUser'));countIDUser += 1;
-    localStorage.setItem('countIDUser', countIDUser);
-    var user = { id: countIDUser, username: username.value, fullname: fullname.value,address: address.value,phuong: phuong.value,quan: quan.value, password: password.value, phone: phone.value, datesignup: datesignup, status: status };
-    var userArray = JSON.parse(localStorage.getItem('user'));
-    for (var i = 0; i < userArray.length; i++) {
-        if (user.username == userArray[i].username) {
-            document.getElementById('newUsernameError').style.display = 'block';
-            document.getElementById('newUsernameError').innerHTML = '<i>*Tên đăng nhập đã có người sử dụng</i>';
-            username.focus();
-            return false;
-        }
-    }
-    userArray.push(user);
-    localStorage.setItem('user', JSON.stringify(userArray));
-    alert('Bạn đã đăng ký thành công!');
-    showLoginForm();
 }
-
-// Đăng Nhập
-function login(e) {
-    e.preventDefault();
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-    var flag = true;
-    if (!username) {
-        document.getElementById('usernameError').style.display = 'block';
-        flag = false;
-    } else {
-        document.getElementById('usernameError').style.display = 'none';
-    }
-    if (!password) {
-        document.getElementById('passwordError').style.display = 'block';
-        flag = false;
-    } else {
-        document.getElementById('passwordError').style.display = 'none';
-    }
-    if (flag == false) {
-        return false;
-    }
-    var userArray = JSON.parse(localStorage.getItem('user'));
-    for (var i = 0; i < userArray.length; i++) {
-        if (username == userArray[i].username && password == userArray[i].password) {
-            if(userArray[i].status == false){
-                alert('Tài khoản đã bị khóa!');
-                document.getElementById('authModal').style.display = 'none';
-                return false;
-            }
-        }
-        if (username == userArray[i].username) {
-            if (password == userArray[i].password) {
-                document.getElementById('authModal').style.display = 'none';
-                localStorage.setItem('userlogin', JSON.stringify(userArray[i]));
-                window.location.href = "../html/indexLogin.html";
-                return true;
-            }
-        }
-    }
-    document.getElementById('passwordError').style.display = 'block';
-    document.getElementById('passwordError').innerHTML = '<i>*Sai thông tin đăng nhập</i>';
-    return false;
+function closeProductInfo() {
+    document.getElementById('product-info').style.display = 'none';
 }
-

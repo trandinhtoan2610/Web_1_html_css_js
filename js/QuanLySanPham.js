@@ -29,7 +29,6 @@ function KhoiTaoSanPham(hinh, brand, ten, gia, vitri, id, ram, ssd, card, MoTa){
 //Function them san pham vao local storage.
 function TaoSanPham (){
     var countID = parseInt(localStorage.getItem('countID'), 10);
-
     var NodeHinhAnh = document.getElementById("fix_hinhAnh")
     var NodeBrand = document.getElementById('kind')
     var NodeTen = document.getElementById('name')
