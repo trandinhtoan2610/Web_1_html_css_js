@@ -16,23 +16,25 @@ function renderProduct(page) {
         }
         product.price = Number(product.price);
         html += `
-        <div class="product-card">
-                <div class="product-image">
-                    <a href="#" onclick="showProductDetails(${product.id})">
-                        <img src="${product.image}" alt="${product.name}" />
-                    </a>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">${product.name}</h3>
-                    <p class="product-price">
-                        <strong>${product.price.toLocaleString('vi-VN')}<sup><u>đ</u></sup></strong>
-                    </p>
-                    <div class="product-actions">
-                        <button type="button" class="btn-cart" onclick="remind()">Thêm Vào Giỏ Hàng</button>
+            <div class="product-one-content-item1">
+                <div class="product-card">
+                    <div class="product-image">
+                        <a href="#" onclick="showProductDetails(${product.id})">
+                            <img src="${product.image}" alt="${product.name}" />
+                        </a>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-price">
+                            <strong>${product.price.toLocaleString('vi-VN')}<sup><u>đ</u></sup></strong>
+                        </p>
+                        <div class="product-actions">
+                            <button type="button" class="btn-cart" onclick="remind()">Thêm Vào Giỏ Hàng</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        `;
+            `;
     }
     document.getElementById("product-list").innerHTML = html;
 }

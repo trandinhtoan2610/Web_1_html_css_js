@@ -1,12 +1,12 @@
 const itemsPerPage = 8;
 let currentPage = 1;
-
+var products_json = localStorage.getItem('products')
+var products = JSON.parse(products_json);
 function renderProduct(page) {
     let html = '';
     const start = (page - 1) * itemsPerPage;
     const end = start + itemsPerPage;
     const paginatedProducts = products.slice(start, end);
-
     for (let i = 0; i < paginatedProducts.length; i++) {
         const product = paginatedProducts[i];
 

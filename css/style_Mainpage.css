@@ -62,9 +62,8 @@ body{
 
 /* css từng elements trên navbar */
 nav ul li:nth-child(3) i{
-    color: #FFD400;
+    color: #fff;
     position: relative;
-    bottom: 4px;
 }
 
 .hcm {
@@ -89,12 +88,10 @@ nav ul li:nth-child(2) i {
 }
 
 nav ul li:nth-child(5) a{
-    padding: 10px;
 	border: 1px solid transparent;  
 }
 
 nav ul li:nth-child(4) a{
-    padding: 10px;
 	border: 1px solid transparent;  
 }
 
@@ -124,7 +121,7 @@ nav ul li:nth-child(6) a{
 nav ul li:nth-child(6) i {
     position: relative;
     font-size: 20px;
-    color: #333;
+    color: #fff;
     cursor: pointer;
 }
 /* CSS chung */
@@ -147,7 +144,7 @@ nav ul li:nth-child(6) i {
 	border-radius: 8px;
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
 	width: 90%;
-	max-width: 800px;
+	max-width: 500px;
 	position: relative;
 }
 .columm {
@@ -328,7 +325,7 @@ ul {
 .product-name{
 	font-weight: 600;
 }
-.product-one-content-item1 li:first-child {
+.product-one-content-item1 {
 	color: #fff;
 	font-size: 11px;
 	height: 20px;

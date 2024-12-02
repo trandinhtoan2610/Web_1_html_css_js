@@ -149,9 +149,18 @@
         display: none;
     }
 }
-@media (max-width: 600px){
+@media (max-width:600px){
+    #side-bar li:nth-child(2) input[type="text"]{
+        display: none;
+    }
+    #side-bar a{
+        font-size: 0px;
+    }
+    #side-bar i{
+        font-size:22px;
+    }
     #side-bar{
-        width: 100%;
+        width: 60px;
     }
 }
 @media (max-width: 350px){

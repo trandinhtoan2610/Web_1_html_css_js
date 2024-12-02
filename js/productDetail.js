@@ -1,8 +1,6 @@
 function remind(){
     alert("Bạn phải đăng nhập mới thêm vào được giỏ hàng!!");
 }
-var json = JSON.stringify(products);
-localStorage.setItem("products", json);
 function showProductDetails(productID, event) {
     if(event)event.preventDefault();
     const product_Info = document.getElementById('product-info');
