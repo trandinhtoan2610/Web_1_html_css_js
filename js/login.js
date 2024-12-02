@@ -38,7 +38,7 @@ window.onclick = function (event) {
 document.getElementById('registerForm').addEventListener('submit', signup);
 document.getElementById('loginForm').addEventListener('submit', login);
 function signup(e) {
-    e.preventDefault();
+    event.preventDefault();
     var fullname = document.getElementById('newFullName');
     var phone = document.getElementById('newPhoneNumber');
     var address = document.getElementById('newAddress');
@@ -182,4 +182,57 @@ function login(e) {
     document.getElementById('passwordError').innerHTML = '<i>*Sai thông tin đăng nhập</i>';
     return false;
 }
- 
+function validateFullName() {
+    const fullname = document.getElementById('newFullName').value;
+    if (!fullname) {
+        document.getElementById('fullNameError').style.display = 'block';
+    } else {
+        document.getElementById('fullNameError').style.display = 'none';
+    }
+}
+
+function validateNewUsername() {
+    const username = document.getElementById('newUsername').value;
+    if (!username) {
+        document.getElementById('newUsernameError').style.display = 'block';
+    } else {
+        document.getElementById('newUsernameError').style.display = 'none';
+    }
+}
+
+function validatePhoneNumber() {
+    const phone = document.getElementById('newPhoneNumber').value;
+    if (!phone || isNaN(Number(phone)) || phone.length !== 9) {
+        document.getElementById('phoneNumberError').style.display = 'block';
+        document.getElementById('phoneNumberError').innerHTML = '<i>*Số điện thoại không đúng định dạng</i>';
+    } else {
+        document.getElementById('phoneNumberError').style.display = 'none';
+    }
+}
+
+function validatePasswordMatch() {
+    const password = document.getElementById('newPassword').value;
+    const password2 = document.getElementById('newRepeatPassword').value;
+    if (password !== password2) {
+        document.getElementById('repeatPasswordError').style.display = 'block';
+    } else {
+        document.getElementById('repeatPasswordError').style.display = 'none';
+    }
+}
+function validateUsername() {
+    const username = document.getElementById('username').value;
+    if (!username) {
+        document.getElementById('usernameError').style.display = 'block';
+    } else {
+        document.getElementById('usernameError').style.display = 'none';
+    }
+}
+
+function validatePassword() {
+    const password = document.getElementById('password').value;
+    if (!password) {
+        document.getElementById('passwordError').style.display = 'block';
+    } else {
+        document.getElementById('passwordError').style.display = 'none';
+    }
+}
