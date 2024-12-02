@@ -11,3 +11,7 @@
         font-size: 11px
     }
 }
+dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 0px;
+}

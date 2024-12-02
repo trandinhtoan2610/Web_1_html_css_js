@@ -54,8 +54,7 @@ function displayProducts(products, productList) {
     for (let i = 0; i < products.length; i++) {
         const product = products[i];
         // Thêm HTML của từng sản phẩm vào chuỗi
-        productsHTML += `
-        
+        productsHTML += `     
         <div class="product-card">
                 <div class="product-image">
                     <a href="#" onclick="showProductDetails(${product.id})">

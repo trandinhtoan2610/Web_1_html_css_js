@@ -1,3 +1,6 @@
+function remind(){
+    alert("Bạn phải đăng nhập mới xem được lịch sử mua hàng!!");
+}
 document.getElementById('loginButton').addEventListener('click', function (e) {
     event.preventDefault();
     document.getElementById('authModal').style.display = 'flex';
@@ -182,7 +185,6 @@ function login(e) {
     document.getElementById('passwordError').innerHTML = '<i>*Sai thông tin đăng nhập</i>';
     return false;
 }
-<<<<<<< HEAD
 function validateFullName() {
     const fullname = document.getElementById('newFullName').value;
     if (!fullname) {
@@ -237,6 +239,3 @@ function validatePassword() {
         document.getElementById('passwordError').style.display = 'none';
     }
 }
-=======
- 
->>>>>>> 5cdf30235338249c259f556363e8b071d649bfd1

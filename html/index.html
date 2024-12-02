@@ -33,7 +33,7 @@
 					<a><i class="fa-solid fa-magnifying-glass" onclick="searchByName2()"></i></a>
 				</li>
 				<li>
-					<a href="#">Tìm kiếm nâng cao</a>
+					<a href="#"><i class="fa-solid fa-magnifying-glass"></i>Tìm kiếm nâng cao</a>
 				</li>
 				<li>
 					<a onclick="DivGioHang()">
@@ -49,9 +49,9 @@
 				</li>
 				<li>
 					<a href="#">
-						<button id="loginButton">
+						<div id="loginButton">
 							<i class="fa-solid fa-circle-user"></i>Đăng nhập
-						</button></a>
+						</div></a>
 				</li>
 			</ul>
 			<ul class="navbar-list">
@@ -61,12 +61,12 @@
 						<img src="../img/thegioididong.png">
 					</a>
 				</li>
-				<li>
+				<li class="hideSearch">
 					<input type="text" id="Search_Name" placeholder="Nhập tên sản phẩm...">
 					<a><i class="fa-solid fa-magnifying-glass" onclick="searchByName()"></i></a>
 				</li>
 				<li class="hideonMobile">
-					<a href="#">Tìm kiếm nâng cao</a>
+					<a href="#"><i class="fa-solid fa-magnifying-glass"></i>Tìm kiếm nâng cao</a>
 				</li>
 				<li class="hideonMobile">
 					<a onclick="DivGioHang()">
@@ -82,9 +82,9 @@
 				</li>
 				<li class="hideonMobile">
 					<a href="#">
-						<button id="loginButton2">
+						<div id="loginButton2">
 							<i class="fa-solid fa-circle-user"></i>Đăng nhập
-						</button></a>
+						</div></a>
 				</li>
 				<li class="menu-button" onclick="showSideBar()"><a href="#"><i class="fa-solid fa-bars"></i></a></li>
 			</ul>
@@ -159,12 +159,13 @@
 		</div>
 	</header>
 	<main>
-<<<<<<< HEAD
 		<div class="slideshow-container">
 			<div class="mySlides">
 				<img src="../img/bannercanva.png" style="width:100%">
 			</div>
 		</div>
+		<div class="container" id = "container">
+		
 		<!--phan loai theo hang san pham-->
 		<div class="brand-list">
 			<a href="index.html?brand=Acer">
@@ -195,40 +196,6 @@
 						<h4 id="productLocation"></h4>
 						<h6 id="productDescription"></h6>
 						<button class="addtoCart" id="color-Cart" onclick="remind()">Thêm Vào Giỏ</button>
-=======
-		<div class="container" id = "container"> 
-			<!--phan loai theo hang san pham-->
-			<div class="brand-list">
-				<a href="index.html?brand=Acer">
-					<img src="../img/acer.png" alt="acer">
-				</a>
-				<a href="index.html?brand=Lenovo">
-					<img src="../img/lenovo.png" alt="lenovo">
-				</a>
-				<a href="index.html?brand=MSI"><img src="../img/msi.png" alt="MSI"></a>
-
-			</div>
-			<!--List cac san pham-->
-			<section class="product-one"> <!--section product list-->
-				<h2>Các sản phẩm nổi bật</h2>
-				<div id="product-list" class="product-row"></div> <!-- Sản Phẩm-->
-				<div id="product-info" class="modal" style="display: none;"><!--Chi Tiết Sản Phẩm-->
-					<div id="info">
-						<button type="button" id="close" onclick="closeProductInfo()">x</button>
-						<div class="left">
-							<img id="productImg">
-						</div>
-						<div class="right">
-							<h2 id="productName"></h2>
-							<h4 id="productPrice"></h4>
-							<h4 id="productRam"></h4>
-							<h4 id="productSSD"></h4>
-							<h4 id="productCard"></h4>
-							<h4 id="productLocation"></h4>
-							<h6 id="productDescription"></h6>
-							<button class="addtoCart" id="color-Cart" onclick="ThemVaoGioHang()">Thêm Vào Giỏ</button>
-						</div>
->>>>>>> 5cdf30235338249c259f556363e8b071d649bfd1
 					</div>
 				</div>
 			</div>
@@ -292,9 +259,6 @@
 	<script src="../js/paginationLogin.js"></script>
 	<script src="../js/sidebar.js"></script>
 	<script src="../js/login.js"></script>
-<<<<<<< HEAD
 </body>
 
-=======
->>>>>>> 5cdf30235338249c259f556363e8b071d649bfd1
 </html>
