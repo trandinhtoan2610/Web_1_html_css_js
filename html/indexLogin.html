@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../css/style_giohang.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/sidebar.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="../css/QuanLySanPham.css">
     <link rel="stylesheet" href="../css/banner.css">
@@ -287,13 +287,54 @@
 
         </div>
 
-
-
-
-
+        <div id="orderDetailsModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <h2>Chi tiết đơn hàng</h2>
+                <div id="orderDetailsContent"></div>
+            </div>
+        </div>
+        
+        
+      
     </main>
-
-
+    <hr>
+		<footer>
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-sm-4 col-md-3 item">
+						<h3>Services</h3>
+						<ul>
+							<li><a href="#">Di động</a></li>
+							<li><a href="#">Trả góp</a></li>
+							<li><a href="#">Tư vấn</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-4 col-md-3 item">
+						<h3>Về chúng tôi</h3>
+						<ul>
+							<li><a href="#">Giới thiệu về công ty</a></li>
+							<li><a href="#">Tuyển dụng</a></li>
+							<li><a href="#">Góp ý</a></li>
+						</ul>
+					</div>
+					<div class="col-sm-4 col-md-3 item">
+						<h3>Thông tin liên hệ</h3>
+						<ul>
+							<li><a href="#">sales@thoigioididong.con</a></li>
+							<li><a href="#">1900 8686</a></li>
+							<li><a href="#">Benefits</a></li>
+						</ul>
+					</div>
+					<div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a
+							href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i
+								class="icon ion-social-snapchat"></i></a><a href="#"><i
+								class="icon ion-social-instagram"></i></a>
+						<p class="copyright">Thới giới di động © 2024</p>
+					</div>
+				</div>
+			</div>
+		</footer>
 </body>
 <script src="../js/paginationLogin.js"></script>
 <script src="../js/sidebar.js"></script>

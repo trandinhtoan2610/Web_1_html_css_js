@@ -95,8 +95,9 @@ const loadOrders = (filteredOrders) => {
     table.innerHTML = ''; // Xóa dữ liệu cũ
     invoices.forEach((invoice) => {
         const row = `
-            <div class="table-row">		
+            <div class="table-row">	
 				<div class="table-data">${invoice.orderId}</div>
+                <div class="table-data">${invoice.userId}</div>
 				<div class="table-data">${invoice.fullname}</div>
 				<div class="table-data">${invoice.totalAmount}</div>
 				<div class="table-data">${invoice.status}</div>

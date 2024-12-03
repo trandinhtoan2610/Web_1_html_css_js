@@ -28,7 +28,7 @@ function filterProducts(event) {
     });
 
     // Lấy phần tử product-list và xóa các sản phẩm cũ
-    const productList = document.getElementById("product-list");
+    
     productList.innerHTML = ""; // Xóa các sản phẩm cũ
 
     // Hiển thị kết quả

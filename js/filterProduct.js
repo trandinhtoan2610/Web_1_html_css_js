@@ -23,6 +23,7 @@ function filterProducts(e) {
             filteredProducts.push(productArray[i]);
         }
     }
+    console.log(filteredProducts);
 
     // Hiển thị sản phẩm đã lọc
     const productList = document.getElementById("product-list");
@@ -31,7 +32,7 @@ function filterProducts(e) {
         return;
     }
     // Kiểm tra nếu không có sản phẩm phù hợp
-    if (filteredProducts.length === 0) {
+    if (!filteredProducts.length) {
         console.warn(`Không có sản phẩm nào thuộc thương hiệu: ${brand}`);
         productList.innerHTML = `<p>Không có sản phẩm nào phù hợp.</p>`;
         return;
