@@ -35,12 +35,6 @@ function showLoginForm() {
 function closeModal() {
     document.getElementById('authModal').style.display = 'none';
 }
-// Đóng form khi nhấn ra ngoài
-window.onclick = function (event) {
-    if (event.target == document.getElementById('authModal')) {
-        document.getElementById('authModal').style.display = 'none';
-    }
-};
 /* Đăng Kí */
 document.getElementById('registerForm').addEventListener('submit', signup);
 document.getElementById('loginForm').addEventListener('submit', login);
@@ -65,7 +59,13 @@ function signup(e) {
         document.getElementById('newUsernameError').style.display = 'block';
         flag = false;
     } else {
-        document.getElementById('newUsernameError').style.display = 'none';
+        if(username.value.length < 4){
+            document.getElementById('newUsernameError').style.display = 'block';
+            document.getElementById('newUsernameError').innerHTML = '<i>*Tên tài khoản phải trên 4 ký tự</i>';
+            flag = false;
+        }else{
+            document.getElementById('newUsernameError').style.display = 'none';
+        }
     }
     if (!address.value) {
         document.getElementById('addressError').style.display = 'block';
@@ -200,16 +200,23 @@ function validateFullName() {
 
 function validateNewUsername() {
     const username = document.getElementById('newUsername').value;
+    const errorElement = document.getElementById('newUsernameError');
+    errorElement.style.display = 'none';
+    errorElement.innerHTML = '';
+
     if (!username) {
-        document.getElementById('newUsernameError').style.display = 'block';
-    } else {
-        document.getElementById('newUsernameError').style.display = 'none';
+        errorElement.style.display = 'block';
+        errorElement.innerHTML = '<i>*Tên tài khoản không được để trống</i>';
+    } 
+    else if (username.length < 4) {
+        errorElement.style.display = 'block';
+        errorElement.innerHTML = '<i>*Tên tài khoản phải trên 4 ký tự</i>';
     }
 }
 
 function validatePhoneNumber() {
     const phone = document.getElementById('newPhoneNumber').value;
-    if (!phone || isNaN(Number(phone)) || phone.length !== 9) {
+    if (!phone || isNaN(Number(phone)) || phone.length !== 10) {
         document.getElementById('phoneNumberError').style.display = 'block';
         document.getElementById('phoneNumberError').innerHTML = '<i>*Số điện thoại không đúng định dạng</i>';
     } else {
