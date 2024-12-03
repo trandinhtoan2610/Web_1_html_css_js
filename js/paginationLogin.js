@@ -87,13 +87,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function searchByName(inputId) {
-    const searchInput = document.getElementById(inputId).value.trim();
+    const searchInput = document.getElementById(inputId).value;
     if (!searchInput) {
         alert("Vui lòng nhập từ khóa tìm kiếm!");
         return;
     }
-
-    const currentUrl = new URL(window.location.href);
-    currentUrl.searchParams.set("search", searchInput);
-    window.location.href = currentUrl.toString();  // Cập nhật URL và tải lại trang
+    const products = JSON.parse(localStorage.getItem('products'));
+    const filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchInput.toLowerCase()));
+    renderProduct(1, filteredProducts);
 }
