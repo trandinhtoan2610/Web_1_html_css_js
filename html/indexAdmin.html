@@ -15,10 +15,66 @@
     <title>Thế giới di động</title>
 </head>
 
-<body onload="DivDSSanPham()">
+<body>
+    
 
     <main>
-        <div id="nav-bar">
+        <div id = 'containerAdmin'>
+        <div class="login-form">
+            <h2>Đăng Nhập</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <label for="username">Tên Đăng Nhập:</label>
+                <input type="text" id="username" name="username" placeholder="Nhập Tên Đăng Nhập" required>
+                
+                <label for="password">Mật Khẩu:</label>
+                <input type="password" id="password" name="password" placeholder="Nhập Mật Khẩu" required>
+                
+                <button type="submit">Đăng Nhập</button>
+            </form>
+           
+        </div>
+        </div>  
+        
+    </main>
+
+</body>
+<script src="../js/product.js"></script>
+<script src="../js/QuanLySanPham.js"></script>
+<script src="../js/QuanLyHoaDon.js"></script>
+<script src="../js/indexAdmin.js"></script>
+<script src="../js/QuanLyDanhMuc.js"></script>
+<script src="../js/ThongKe.js"></script>
+<script src="../js/QuanLyKhachHang.js"></script>
+<script>
+    const checkbox = document.getElementById('nav-toggle');
+    const container = document.getElementById('container');
+
+    checkbox.addEventListener('click', function () {
+        if (checkbox.checked) {
+            // Nếu checkbox được check, thay đổi margin của container
+            container.style.marginLeft = 'calc(var(--navbar-width-min) + 30px)';
+        } else {
+            // Nếu checkbox không được check, đặt margin về mặc định
+            container.style.marginLeft = 'calc(var(--navbar-width) + 30px)';
+        }
+    });
+
+    function handleLogin(event) {
+        event.preventDefault(); // Ngăn không cho form reload trang
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Kiểm tra logic đơn giản
+        if (username === "admin" && password === "admin") {
+            loadPage();
+            DivDSSanPham();
+        } else {
+            alert("Sai tên đăng nhập hoặc mật khẩu");
+        }
+    }
+    function loadPage() {
+            document.getElementById('containerAdmin').innerHTML = `<div id="nav-bar">
             <input type="checkbox" id="nav-toggle">
             <div id="nav-header">
                 <a id="nav-title" href="#" target="_blank">
@@ -213,30 +269,8 @@
             </div>
             <button type="button" id="setting--Button" onclick="saveEdit()">Lưu</button>
             <button type="button" onclick="hideEditUserForm()">Hủy</button>
-        </form>
-    </main>
-
-</body>
-<script src="../js/product.js"></script>
-<script src="../js/QuanLySanPham.js"></script>
-<script src="../js/QuanLyHoaDon.js"></script>
-<script src="../js/indexAdmin.js"></script>
-<script src="../js/QuanLyDanhMuc.js"></script>
-<script src="../js/ThongKe.js"></script>
-<script src="../js/QuanLyKhachHang.js"></script>
-<script>
-    const checkbox = document.getElementById('nav-toggle');
-    const container = document.getElementById('container');
-
-    checkbox.addEventListener('click', function () {
-        if (checkbox.checked) {
-            // Nếu checkbox được check, thay đổi margin của container
-            container.style.marginLeft = 'calc(var(--navbar-width-min) + 30px)';
-        } else {
-            // Nếu checkbox không được check, đặt margin về mặc định
-            container.style.marginLeft = 'calc(var(--navbar-width) + 30px)';
-        }
-    });
+        </form>`;
+    }
 </script>
 
 </html>
