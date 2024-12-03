@@ -189,6 +189,30 @@ function login(e) {
     document.getElementById('passwordError').innerHTML = '<i>*Sai thông tin đăng nhập</i>';
     return false;
 }
+function validateSoNha(){
+    const  soNha = document.getElementById('newAddress').value;
+    if (!soNha) {
+        document.getElementById('addressError').style.display = 'block';
+    } else {
+        document.getElementById('addressError').style.display = 'none';
+    }
+}
+function validatePhuong(){
+    const phuong = document.getElementById('newPhuong').value;
+    if (!phuong) {
+        document.getElementById('phuongError').style.display = 'block';
+    } else {
+        document.getElementById('phuongError').style.display = 'none';
+    }
+}
+function validateQuan(){
+    const quan = document.getElementById('newQuan').value;
+    if (!quan) {
+        document.getElementById('quanError').style.display = 'block';
+    } else {
+        document.getElementById('quanError').style.display = 'none';
+    }
+}
 function validateFullName() {
     const fullname = document.getElementById('newFullName').value;
     if (!fullname) {
@@ -231,6 +255,12 @@ function validatePasswordMatch() {
         document.getElementById('repeatPasswordError').style.display = 'block';
     } else {
         document.getElementById('repeatPasswordError').style.display = 'none';
+    }
+    if(password.length < 8){
+        document.getElementById('newPasswordError').style.display = 'block';
+        document.getElementById('newPasswordError').innerHTML = '<i>*Mật khẩu phải trên 8 ký tự</i>';
+    }else{
+        document.getElementById('newPasswordError').style.display = 'none';
     }
 }
 function validateUsername() {
