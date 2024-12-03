@@ -18,6 +18,7 @@ const showOrderManagement = () => {
           <div class="table">
               <div class="table-header">
                   <div class="header__item"><a id="id" class="filter__link" href="#">Mã đơn hàng</a></div>
+                     <div class="header__item"><a id="name" class="filter__link" href="#">ID khách hàng</a></div>
                   <div class="header__item"><a id="name" class="filter__link" href="#">Tên khách hàng</a></div>
                   <div class="header__item"><a id="price" class="filter__link filter__link--number" href="#">Tổng tiền</a></div>
                   <div class="header__item"><a id="status" class="filter__link filter__link--number" href="#">Trạng thái</a></div>
@@ -49,18 +50,16 @@ function updateOrderStatus(orderId) {
         if (order.orderId === orderId) {
             if (order.status === 'Chưa xử lý') {
                 order.status = 'Đã xác nhận';
-                localStorage.setItem('orders', JSON.stringify(updatedOrders));
                 alert('Cập nhật trạng thái thành công!');
             } else if (order.status === 'Đã xác nhận') {
                 order.status = 'Đã giao thành công';
-                localStorage.setItem('orders', JSON.stringify(updatedOrders));
                 alert('Cập nhật trạng thái thành công!');
             }
         }
         return order;
     });
-
-    
+   
+    localStorage.setItem('orders', JSON.stringify(updatedOrders));
     loadOrders();
 }
 
@@ -92,8 +91,12 @@ const loadOrders = (filteredOrders) => {
         invoices = JSON.parse(localStorage.getItem('orders')) || [];
     }
     const table = document.getElementById('table-content');
+    
     table.innerHTML = ''; // Xóa dữ liệu cũ
+    invoices.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     invoices.forEach((invoice) => {
+        const handle = invoice.status === 'Đã hủy' || invoice.status === 'Đã giao thành công' ? '' : `<button class="btn btn-handle" onclick="updateOrderStatus(${invoice.orderId})">${invoice.status === 'Chưa xử lý' ? 'Xác nhận' : invoice.status === 'Đã xác nhận' ? 'Đã giao thành công' : ''}</button> 
+                    <button class="btn btn-handle" onclick="cancelOrder(${invoice.orderId})">${invoice.status === 'Chưa xử lý' ? 'Hủy đơn hàng' : invoice.status === 'Đã xác nhận' ?   "Hủy đơn hàng" : ""    }</button>`;
         const row = `
             <div class="table-row">	
 				<div class="table-data">${invoice.orderId}</div>
@@ -103,8 +106,7 @@ const loadOrders = (filteredOrders) => {
 				<div class="table-data">${invoice.status}</div>
 				<div class="table-data">${formatDate(invoice.createdAt)}</div>
                 <div class="table-data">
-                    <button class="btn btn-handle" onclick="updateOrderStatus(${invoice.orderId})">${invoice.status === 'Chưa xử lý' ? 'Xác nhận' : invoice.status === 'Đã xác nhận' ? 'Đã giao thành công' : ''}</button> 
-                    <button class="btn btn-handle" onclick="cancelOrder(${invoice.orderId})">${invoice.status === 'Chưa xử lý' ? 'Hủy đơn hàng' : invoice.status === 'Chưa xử lý' ?   "Đã xác nhận" : ""    }</button>
+                    ${handle}
                 </div>
                 <div class="table-data">
                     <a href="order-details.html?orderId=${invoice.orderId}" class="btn btn-view">Xem chi tiết</a>
