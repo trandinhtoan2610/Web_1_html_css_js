@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 	<link rel="stylesheet" href="../css/QuanLySanPham.css">
 	<link rel="stylesheet" href="../css/banner.css">
+	<link rel="stylesheet" href ="../css/TimKiemNangCao.css">
 	<title>Thế giới di động</title>
 
 </head>
@@ -33,7 +34,7 @@
 					<a><i class="fa-solid fa-magnifying-glass" onclick="searchByName2()"></i></a>
 				</li>
 				<li>
-					<a href="#"><i class="fa-solid fa-magnifying-glass"></i>Tìm kiếm nâng cao</a>
+					<a href="#" onclick="DivAdvancedFilter()"><i class="fa-solid fa-magnifying-glass"></i>Tìm kiếm nâng cao</a>
 				</li>
 				<li>
 					<a onclick="DivGioHang()">
@@ -66,7 +67,7 @@
 					<a><i class="fa-solid fa-magnifying-glass" onclick="searchByName()"></i></a>
 				</li>
 				<li class="hideonMobile">
-					<a href="#"><i class="fa-solid fa-magnifying-glass"></i>Tìm kiếm nâng cao</a>
+					<a href="#" onclick="return DivAdvancedFilter()"><i class="fa-solid fa-magnifying-glass"></i>Tìm kiếm nâng cao</a>
 				</li>
 				<li class="hideonMobile">
 					<a onclick="DivGioHang()">
@@ -197,7 +198,7 @@
 						<h4 id="productCard"></h4>
 						<h4 id="productLocation"></h4>
 						<h6 id="productDescription"></h6>
-						<button class="addtoCart" id="color-Cart" onclick="remind()">Thêm Vào Giỏ</button>
+						<button class="addtoCart" id="color-Cart" onclick="ThemVaoGioHang()">Thêm Vào Giỏ</button>
 					</div>
 				</div>
 			</div>
@@ -212,6 +213,60 @@
 			<button>&gt;</button>
 		</div>
 		</div>
+		<div class="Modal" id="Search_Modal">
+            <div class="Modal_overlay"> </div>
+            <div class="Modal_body" id="Search_Modal_Body">
+                <div class="Modal_inner" id="Search_Modal__inner">
+                    <div class="Search_inner_header">
+                        <p> Tìm kiếm nâng cao </p>
+                        <a href="#" onclick="close_DivAdvancedFilter()"> Thoát </a>
+                    </div>
+
+                    <div class="div_search_name">
+                        <label for="search_product_name">Tên sản phẩm</label>
+                        <input type="text" id ="search_product_name">
+                    </div>
+                    
+                    <div class="div_search_brand">
+                        <span> Hãng máy </span>
+                        <div class="div_radio_brand">
+                            <input type="checkbox" id ="search_product_acer" value="acer" name="search_brand">
+                            <label for="search_product_acer"><img src = "../img/acer.png"></label>
+                            
+                            <input type="checkbox" id ="search_product_lenovo" value="lenovo" name="search_brand" >
+                            <label for="search_product_lenovo"><img src = "../img/lenovo.png"></label>
+
+                            <input type="checkbox" id ="search_product_msi" value="msi" name="search_brand" >
+                            <label for="search_product_msi"><img src = "../img/msi.png"></label>
+                        </div>
+                    </div>
+
+                    <div class="div_search_price">
+                        <div class="div_search_minPrice">
+                            <label for="search_product_minPrice">Giá thấp nhất </label>
+                            <input type="number" id ="search_product_minPrice" min="0.01" oninput="checkSearchPrice(1)">
+                            <p class="customer_Warning" id = "minPrice_warning">Giá thấp nhất phải từ 0 trở lên </p>
+                        </div>
+                        
+                        <div class="div_search_maxPrice">
+                            <label for="search_product_minPrice">Giá cao nhất </label>
+                            <input type="number" id ="search_product_maxPrice" min="0.01" oninput="checkSearchPrice(2)">
+                            <p class="customer_Warning" id = "maxPrice_warning">Giá cao nhất phải từ 0 trở lên </p>
+                            <p class="customer_Warning" id = "maxPrice_warning_2">Giá cao nhất không được nhỏ hơn giá thấp nhất</p>
+                        </div>
+                    </div>
+
+                    
+                    <div class="div_search_Ram">
+                        <label for="search_product_Ram">RAM </label>
+                        <input type="text" id ="search_product_Ram">
+                    </div>
+                    
+                       
+                    <button class="btn_advance_search" onclick= "return AdvancedFilter()"> Tìm kiếm </button>
+
+                </div>
+        </div>
 	</main>
 	<div class="footer-clean">
 		<hr>
@@ -261,6 +316,7 @@
 	<script src="../js/paginationLogin.js"></script>
 	<script src="../js/sidebar.js"></script>
 	<script src="../js/login.js"></script>
+	<script src="../js/productDetail.js"></script>
 </body>
 
 </html>
