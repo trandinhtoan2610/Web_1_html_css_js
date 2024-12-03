@@ -165,11 +165,6 @@ function TaoSanPham (){
 }
 
 
-//*PHAN CHINH CUA TRANG
-NodeContainer = document.getElementById('container')
-console.log(NodeContainer)
-
-NodeContainer.innerHTML = Products_container()
 
 
 //Các hàm chứa html : //
@@ -361,12 +356,15 @@ function FixProducts_Container(){
 //Các hàm hiển thị : 
 //<---------------------------------------------------------------------    //
 function DivThemSanPham(){
+    var NodeContainer = document.getElementById('container')
+    NodeContainer.innerHTML = FixProducts_Container();
    NodeContainer.innerHTML =  SettingProducts_Container()
 }
 
 var NodeFixMain, NodeFixFooter, NodeBtn_1, NodeBtn_2;
 
 function DivDSSanPham() {
+    var NodeContainer = document.getElementById('container')
     NodeContainer.innerHTML = FixProducts_Container(); // Chèn HTML động vào container
 
     // Lấy lại các phần tử sau khi HTML đã được chèn vào DOM
@@ -499,8 +497,7 @@ function XoaSanPham(idSanPham){
 }
 
 
-var NodeModalFix = document.getElementById('Modal_fix_products')
-var NodeModalInner = document.getElementById('Modal_fix_products__inner')
+
 
 function DivSuaSanPham(idSanPham){
     var Fix_SanPham;
@@ -510,6 +507,8 @@ function DivSuaSanPham(idSanPham){
             break;
         }
     }
+    var NodeModalFix = document.getElementById('Modal_fix_products')
+    var NodeModalInner = document.getElementById('Modal_fix_products__inner')
 
     NodeModalFix.style.display = 'flex';
     NodeModalInner.innerHTML = '            <a href="#" class="Modal_fix_exit" onclick = "Exit_FixingProduct()">X</a>' +
@@ -710,6 +709,7 @@ function SuaSanPham(idSanPham){
 }
 
 function Exit_FixingProduct(){
+    var NodeModalFix = document.getElementById('Modal_fix_products')
     NodeModalFix.style.display ='none';
 }
 
