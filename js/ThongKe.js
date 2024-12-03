@@ -156,7 +156,9 @@ function displayTopCustomers(orders) {
        <div class="table-row">		
 				<div class="table-data">${customer.customerName}</div>
 				<div class="table-data">${formatCurrencyVND(customer.totalRevenue)}</div>
-				<div class="table-data"><button onclick="viewInvoices('${customer.order}')">Xem hóa đơn</button></div>
+				<div class="table-data"><a href="../html/order-details.html?orderId=${
+          customer.customerId + "kh"
+        }" class="btn btn-view" target ="_blank">Xem chi tiết</a> </div>
 		</div>
     `;
   });

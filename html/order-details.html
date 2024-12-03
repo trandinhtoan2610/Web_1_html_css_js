@@ -1,65 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../css/order-details.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../css/order-details.css" />
+  </head>
+  <body>
     <div id="order-details-container" class="order-details-container">
-        <h2>Chi tiết đơn hàng</h2>
-        <div class="order-summary">
-            <p><strong>Mã đơn hàng:</strong> <span id="order-id"></span></p>
-            <p><strong>Người đặt:</strong> <span id="user-name"></span></p>
-            <p><strong>Tình trạng đơn hàng:</strong> <span id="order-status"></span></p>
-            <p><strong>Ngày tạo:</strong> <span id="order-date"></span></p>
-            <p><strong>Tổng tiền:</strong> <span id="total-amount"></span></p>
-        </div>
-    
-        <h3>Chi tiết sản phẩm</h3>
-        <div id="order-details" class="order-details"></div>
+      <h2>Chi tiết đơn hàng</h2>
+      <div class="order-summary">
+        <p><strong>Mã đơn hàng:</strong> <span id="order-id"></span></p>
+        <p><strong>Người đặt:</strong> <span id="user-name"></span></p>
+        <p>
+          <strong>Tình trạng đơn hàng:</strong> <span id="order-status"></span>
+        </p>
+        <p><strong>Ngày tạo:</strong> <span id="order-date"></span></p>
+        <p><strong>Tổng tiền:</strong> <span id="total-amount"></span></p>
+      </div>
+
+      <h3>Chi tiết sản phẩm</h3>
+      <div id="order-details" class="order-details"></div>
     </div>
-    
+
     <script>
-    // Lấy tham số orderId từ URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const orderId = urlParams.get('orderId');
-    
-    // Lấy dữ liệu từ localStorage hoặc từ API theo orderId
-    const orders = JSON.parse(localStorage.getItem('orders')) || [];
-    const order = orders.find(order => order.orderId === parseInt(orderId));
-    
-    // Hiển thị thông tin chi tiết hóa đơn
-    if (order) {
-        document.getElementById('order-id').textContent = order.orderId;
-        document.getElementById('user-name').textContent = order.userName;
-        document.getElementById('order-status').textContent = order.status;
-        document.getElementById('order-date').textContent = formatDate(order.createdAt); // Giả sử bạn đã có hàm formatDate
-        document.getElementById('total-amount').textContent = order.totalAmount.toLocaleString('vi-VN') + "đ";
-    
-        // Hiển thị chi tiết các sản phẩm trong đơn hàng
-        const orderDetailsContainer = document.getElementById('order-details');
-        order.orderDetails.forEach(detail => {
-            const detailElement = document.createElement('div');
-            detailElement.classList.add('order-detail');
+      // Lấy tham số orderId từ URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const orderId = urlParams.get("orderId");
+      console.log(orderId);
+      if (!orderId.includes("kh")) {
+        console.log("sanpham");
+        // Lấy dữ liệu từ localStorage hoặc từ API theo orderId
+        const orders = JSON.parse(localStorage.getItem("orders")) || [];
+        const order = orders.find(
+          (order) => order.orderId === parseInt(orderId)
+        );
+
+        // Hiển thị thông tin chi tiết hóa đơn
+        if (order) {
+          document.getElementById("order-id").textContent = order.orderId;
+          document.getElementById("user-name").textContent = order.userName;
+          document.getElementById("order-status").textContent = order.status;
+          document.getElementById("order-date").textContent = formatDate(
+            order.createdAt
+          ); // Giả sử bạn đã có hàm formatDate
+          document.getElementById("total-amount").textContent =
+            order.totalAmount.toLocaleString("vi-VN") + "đ";
+
+          // Hiển thị chi tiết các sản phẩm trong đơn hàng
+          const orderDetailsContainer =
+            document.getElementById("order-details");
+          order.orderDetails.forEach((detail) => {
+            const detailElement = document.createElement("div");
+            detailElement.classList.add("order-detail");
             detailElement.innerHTML = `
                 <p><strong>${detail.productName}</strong></p>
                 <p>Số lượng: ${detail.quantity}</p>
-                <p>Tổng giá: ${detail.totalPrice.toLocaleString('vi-VN')}đ</p>
+                <p>Tổng giá: ${detail.totalPrice.toLocaleString("vi-VN")}đ</p>
             `;
             orderDetailsContainer.appendChild(detailElement);
+          });
+        } else {
+          alert("Không tìm thấy đơn hàng.");
+        }
+
+        // Hàm formatDate (tùy chỉnh để hiển thị ngày tháng theo định dạng mong muốn)
+        function formatDate(dateString) {
+          const date = new Date(dateString);
+          return `${date.getDate()}/${
+            date.getMonth() + 1
+          }/${date.getFullYear()}`;
+        }
+      } else {
+        console.log("khachhang");
+
+        const userId = orderId.replace(/\D/g, "");
+
+        // Lấy dữ liệu từ localStorage hoặc từ API theo orderId
+        const orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+        const s1 = orders.filter(
+          (o) => o.userId == userId && o.status === "Đã giao thành công"
+        );
+        let html = "";
+        const divv = document.getElementById("order-details-container");
+        s1.forEach((order) => {
+          let date = formatDate(order.createdAt);
+          html += `
+        <div style= "box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); padding : 20px; margin : 10px">
+        <h2>Chi tiết đơn hàng ${order.orderId}</h2>
+        <div class="order-summary" style= " margin: 10px;" >
+          <p><strong>Mã đơn hàng:</strong> <span id="order-id">${order.orderId}</span></p>
+          <p><strong>Người đặt:</strong> <span id="user-name"></span>${order.fullname}</p>
+          <p>
+            <strong>Tình trạng đơn hàng:</strong> <span id="order-status">${order.status}</span>
+          </p>
+          <p><strong>Ngày tạo:</strong> <span id="order-date">${date}</span></p>
+         <p><strong>Tổng tiền:</strong> <span id="total-amount">${order.totalAmount}</span></p>
+      </div>
+      <h3>Chi tiết sản phẩm</h3>
+      <div id="order-details" class="order-details">
+        `;
+
+          order.orderDetails.forEach((item) => {
+            html += `
+            
+              <p><strong>${item.productName}</strong></p>
+              <p>Số lượng: ${item.quantity}</p>
+              <p>Tổng giá: ${item.totalPrice.toLocaleString("vi-VN")}đ</p>
+            
+          `;
+          });
+          html += `</div>`;
+          html += `</div>`;
         });
-    } else {
-        alert('Không tìm thấy đơn hàng.');
-    }
-    
-    // Hàm formatDate (tùy chỉnh để hiển thị ngày tháng theo định dạng mong muốn)
-    function formatDate(dateString) {
+        divv.innerHTML = html;
+      }
+      function formatDate(dateString) {
         const date = new Date(dateString);
         return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    }
-    
+      }
     </script>
-</body>
+  </body>
 </html>
