@@ -597,6 +597,7 @@ ul {
     width: 100%;
     height: 100%;
     object-fit: cover; /* Đảm bảo hình ảnh nằm gọn trong vùng */
+    cursor: pointer;
 }
 /* Thông tin sản phẩm */
 .product-info {

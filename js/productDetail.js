@@ -1,6 +1,3 @@
-function remind(){
-    alert("Bạn phải đăng nhập mới thêm vào được giỏ hàng!!");
-}
 function showProductDetails(productID, event) {
     if(event)event.preventDefault();
     const product_Info = document.getElementById('product-info');

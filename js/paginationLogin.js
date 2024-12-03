@@ -13,7 +13,7 @@ function renderProduct(page, productsToRender) {
         html += `
             <div class="product-card">
                 <div class="product-image">
-                    <a href="#" onclick="showProductDetails(${product.id})">
+                    <a onclick="showProductDetails(${product.id})">
                         <img src="${product.image}" alt="${product.name}" />
                     </a>
                 </div>
