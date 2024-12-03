@@ -228,6 +228,12 @@ button {
 	cursor: pointer;
 }
 
+button[type="reset"] {
+    width: 100%;
+    background-color: rgb(221, 65, 44);
+    color: #fff;
+}
+
 #mySubmit {
 	background-color: #28a745;
 	color: #fff;
