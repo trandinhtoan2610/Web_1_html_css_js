@@ -24,13 +24,17 @@ createAdmin();
 function showRegisterForm() {
     document.getElementById('loginForm').style.display = 'none';
     document.getElementById('registerForm').style.display = 'block';
+    document.getElementById('modalContent').classList.add('wide');
 }
 
 function showLoginForm() {
     document.getElementById('registerForm').style.display = 'none';
     document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('modalContent').classList.remove('wide');
 }
-
+function closeModal() {
+    document.getElementById('authModal').style.display = 'none';
+}
 // Đóng form khi nhấn ra ngoài
 window.onclick = function (event) {
     if (event.target == document.getElementById('authModal')) {

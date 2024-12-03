@@ -1,6 +1,7 @@
 var products_json = localStorage.getItem('products')
 var products = JSON.parse(products_json);
-function filterProducts() {
+function filterProducts(event) {
+    if (event) event.preventDefault();
     const urlParams = new URLSearchParams(window.location.search);
     const brand = urlParams.get('brand'); // Lọc theo thương hiệu
     const searchQuery = urlParams.get('search'); // Lọc theo từ khóa tìm kiếm
@@ -61,7 +62,6 @@ function displayProducts(products, productList) {
         const productImage = document.createElement("div");
         productImage.className = "product-image";
         const productLink = document.createElement("a");
-        productLink.href = "#";
         productLink.onclick = () => showProductDetails(product.id);
         const img = document.createElement("img");
         img.src = product.image;

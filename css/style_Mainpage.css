@@ -144,8 +144,12 @@ nav ul li:nth-child(6) i {
 	border-radius: 8px;
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
 	width: 90%;
-	max-width: 500px;
+	max-width: 400px;
 	position: relative;
+}
+.modal-content.wide {
+    width: 90%;
+    max-width: 700px;
 }
 .columm {
     flex: 1; /* Chia đều chiều rộng giữa hai cột */
@@ -162,15 +166,29 @@ nav ul li:nth-child(6) i {
   align-items: center;
   padding: 20px;
 }
-
-#loginForm {
-  width: 100%; /* Đầy đủ chiều rộng modal */
-  max-width: 350px;
+#loginForm a, #registerForm a{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #333;
+    background-color: #f9f9f9;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    outline: none;
 }
-
+#loginForm {
+  width: 100%;
+  max-width: 100%;
+}
 #registerForm {
-  width: 100%; /* Đầy đủ chiều rộng modal */
-  max-width: 500px;
+  width: 100%;
+  max-width: 100%;
 }
 .columm div{
 	display: none;
