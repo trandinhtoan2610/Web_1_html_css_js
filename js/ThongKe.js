@@ -64,7 +64,7 @@ function displayStats(filteredOrders) {
                 <div class="header__item"><a id="price" class="filter__link filter__link--number" href="#">Tổng số tiền bán</a></div>
                
 		    </div>
-            <div class="table-content" id="table-content" class ="max-height =400px ; overflow: auto;">
+            <div class="table-content" id="table-content" class ="max-height: 400px; overflow : auto;">
         
   `;
 

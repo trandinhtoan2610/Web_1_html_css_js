@@ -633,7 +633,11 @@ input[type="number"] {
     }
 
     .Products_box_title{
-        font-size: 15px;
+        font-size: 10px;
+    }
+
+    .Products_box div p, .Products_box div i{
+        font-size: 8px ;
     }
 
 }
