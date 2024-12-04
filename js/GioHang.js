@@ -223,17 +223,12 @@ function XoaItemGH(ItemID){
         alert("Xóa sản phẩm thành công !")
     }
 }
-
-
-
-
 function Cart_container(){
     var html = '<div class="Cart_container">\n'+
 '                   <div class="Cart_Details_Box Cart_products_details">\n'+
 '\n'+
 '                       <div class="Cart_PB_Header">\n'+
 '                        <h2> Giỏ hàng </h2>\n'+
-'                        <a href = "indexLogin.html"> Thoát </a> </h2>\n'+
 '                       </div>\n'+
 '\n'+
 '                       <div class="Cart_PB_Box Cart_PB_Box_Title"> \n'+
