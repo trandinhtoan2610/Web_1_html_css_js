@@ -16,8 +16,6 @@
 </head>
 
 <body>
-    
-
     <main>
         <div id = 'containerAdmin'>
         <div class="login-form">
@@ -51,10 +49,8 @@
 
     checkbox.addEventListener('click', function () {
         if (checkbox.checked) {
-            // Nếu checkbox được check, thay đổi margin của container
             container.style.marginLeft = 'calc(var(--navbar-width-min) + 30px)';
         } else {
-            // Nếu checkbox không được check, đặt margin về mặc định
             container.style.marginLeft = 'calc(var(--navbar-width) + 30px)';
         }
     });
@@ -193,31 +189,31 @@
             <div id="cssRegisterForm">
                 <div class="columm"> <!--onsubmit="signup()"-->
                     <label for="addFullname">Họ và Tên:</label>
-                    <input type="text" id="addFullname" name="addFullname" placeholder="Nhập Họ Và Tên"><br />
+                    <input type="text" id="addFullname" name="addFullname" placeholder="Nhập Họ Và Tên" oninput="validateFullName()"><br />
                     <div id="fullNameError" style="color: red;"><i>*Bạn chưa nhập họ tên</i></div>
                     <label for="addUsername">Tên đăng nhập:</label>
-                    <input type="text" id="addUsername" name="addUsername" placeholder="Nhập Tài Khoản"><br>
+                    <input type="text" id="addUsername" name="addUsername" placeholder="Nhập Tài Khoản" oninput="validateNewUsername()"><br>
                     <div id="newUsernameError" style="color: red;"><i>*Bạn chưa nhập tên đăng nhập</i>
                     </div>
                     <label for="addPhone">Số Điện Thoại:</label>
-                    <input type="text" id="addPhone" name="addPhone" placeholder="Nhập Số Điện Thoại"><br>
+                    <input type="text" id="addPhone" name="addPhone" placeholder="Nhập Số Điện Thoại" oninput="validatePhoneNumber()"><br>
                     <div id="phoneNumberError" style="color: red;"><i>*Bạn chưa nhập số điện thoại</i>
                     </div>
                     <label for="addAddress">Số Nhà, Đường: </label>
-                    <input type="text" id="addAddress" name="addAddress" placeholder="Nhập Số Nhà, Đường"><br>
+                    <input type="text" id="addAddress" name="addAddress" placeholder="Nhập Số Nhà, Đường" oninput="validateSoNha()"><br>
                     <div id="addressError" style="color: red;"><i>*Bạn chưa nhập số nhà, đường</i></div>
                 </div>
                 <div class="columm">
                     <label for="addPhuong">Phường: </label>
-                    <input type="text" id="addPhuong" name="addPhuong" placeholder="Nhập Phường"><br>
+                    <input type="text" id="addPhuong" name="addPhuong" placeholder="Nhập Phường" oninput="validatePhuong()"><br>
                     <div id="phuongError" style="color: red;"><i>*Bạn chưa nhập phường</i>
                     </div>
                     <label for="addQuan">Quận: </label>
-                    <input type="text" id="addQuan" name="addQuan" placeholder="Nhập Quận"><br>
+                    <input type="text" id="addQuan" name="addQuan" placeholder="Nhập Quận" oninput="validateQuan()"><br>
                     <div id="quanError" style="color: red;"><i>*Bạn chưa nhập quận</i>
                     </div>
                     <label for="addPassword">Mật khẩu:</label>
-                    <input type="password" id="addPassword" name="addPassword" placeholder="Nhập Mật Khẩu"><br />
+                    <input type="password" id="addPassword" name="addPassword" placeholder="Nhập Mật Khẩu" oninput="validatePassword()"><br />
                     <div id="newPasswordError" style="color: red;"><i>*Bạn chưa nhập mật khẩu</i></div>
                 </div>
             </div>
@@ -238,33 +234,33 @@
             <div id="cssRegisterForm">
                 <div class="columm">
                     <label for="editFullname">Họ và Tên:</label>
-                    <input type="text" id="editFullname" placeholder="Họ và Tên">
-                    <div id="editFullNameError" style="color: red;"></div>
+                    <input type="text" id="editFullname" placeholder="Họ và Tên" oninput="validateEditFullName()">
+                    <div id="editFullNameError" style="color: red;"><i>*Bạn chưa nhập họ tên</i></div>
 
                     <label for="editUsername">Tên đăng nhập:</label>
                     <input type="text" id="editUsername" placeholder="Tên đăng nhập" disabled>
-                    <div id="editUsernameError" style="color: red;"></div>
+                    <div id="editUsernameError" style="color: red;"><i>*Bạn chưa nhập tên đăng nhập</i></div>
 
                     <label for="editPhone">Số Điện Thoại:</label>
-                    <input type="text" id="editPhone" placeholder="Số Điện Thoại">
-                    <div id="editPhoneNumberError" style="color: red;"></div>
+                    <input type="text" id="editPhone" placeholder="Số Điện Thoại" oninput="validateEditPhoneNumber()">
+                    <div id="editPhoneNumberError" style="color: red;"><i>*Bạn chưa nhập số điện thoại</i></div>
 
                     <label for="editAddress">Số nhà, Đường:</label>
-                    <input type="text" id="editAddress" placeholder="Số nhà, Đường">
-                    <div id="editAddressError" style="color: red;"></div>
+                    <input type="text" id="editAddress" placeholder="Số nhà, Đường" oninput="validateEditSoNha()">
+                    <div id="editAddressError" style="color: red;"><i>*Bạn chưa nhập số nhà, đường</i></div>
                 </div>
                 <div class="columm">
                     <label for="editPhuong">Phường:</label>
-                    <input type="text" id="editPhuong" placeholder="Phường">
-                    <div id="editPhuongError" style="color: red;"></div>
+                    <input type="text" id="editPhuong" placeholder="Phường" oninput="validateEditPhuong()">
+                    <div id="editPhuongError" style="color: red;"><i>*Bạn chưa nhập phường</i></div>
 
                     <label for="editQuan">Quận:</label>
-                    <input type="text" id="editQuan" placeholder="Quận">
-                    <div id="editQuanError" style="color: red;"></div>
+                    <input type="text" id="editQuan" placeholder="Quận" oninput="validateEditQuan()">
+                    <div id="editQuanError" style="color: red;"><i>*Bạn chưa nhập quận</i></div>
 
                     <label for="editPassword">Mật khẩu:</label>
-                    <input type="password" id="editPassword" placeholder="Mật khẩu">
-                    <div id="editPasswordError" style="color: red;"></div>
+                    <input type="password" id="editPassword" placeholder="Mật khẩu" oninput="validateEditPassword()">
+                    <div id="editPasswordError" style="color: red;"><i>*Bạn chưa nhập mật khẩu</i></div>
                 </div>
             </div>
             <button type="button" id="setting--Button" onclick="saveEdit()">Lưu</button>

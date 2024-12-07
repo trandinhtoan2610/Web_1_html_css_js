@@ -51,8 +51,8 @@ function displayUsers() {
                 <div class="table-data">${user.status}</div>
                 <div class="table-data">${user.role}</div>
                 <div class="table-data">
-                <button onclick="unlockUser(${user.id})"><i class="fa-solid fa-lock"></i></button>
-                <button onclick="lockUser(${user.id})"><i class="fa-solid fa-unlock"></i></button></div>
+                <button onclick="unlockUser(${user.id})"><i class="fa-solid fa-unlock"></i></button>
+                <button onclick="lockUser(${user.id})"><i class="fa-solid fa-lock"></i></button></div>
                 <div class="table-data">
                 <button onclick="openEditForm(${user.id})"><i class="fa-solid fa-wrench"></i></button>
                 <button onclick="deleteUser(${user.id})"><i class="fa-sharp-duotone fa-solid fa-trash"></i></button>                       

@@ -28,7 +28,7 @@ function filterProducts(event) {
     });
 
     // Lấy phần tử product-list và xóa các sản phẩm cũ
-    
+
     productList.innerHTML = ""; // Xóa các sản phẩm cũ
 
     // Hiển thị kết quả
@@ -117,8 +117,8 @@ function searchByName() {
     }
 
     const currentUrl = new URL(window.location.href);
-    currentUrl.searchParams.set("search", searchInput); 
-    window.location.href = currentUrl.toString(); 
+    currentUrl.searchParams.set("search", searchInput);
+    window.location.href = currentUrl.toString();
 }
 function searchByName2() {
     const searchInput = document.getElementById("Search_Name2").value.trim();
@@ -131,7 +131,135 @@ function searchByName2() {
     }
 
     const currentUrl = new URL(window.location.href);
-    currentUrl.searchParams.set("search", searchInput); 
-    window.location.href = currentUrl.toString(); 
+    currentUrl.searchParams.set("search", searchInput);
+    window.location.href = currentUrl.toString();
+}
+//add
+function validateSoNha() {
+    const soNha = document.getElementById('addAddress').value;
+    if (!soNha) {
+        document.getElementById('addressError').style.display = 'block';
+    } else {
+        document.getElementById('addressError').style.display = 'none';
+    }
+}
+function validatePhuong() {
+    const phuong = document.getElementById('addPhuong').value;
+    if (!phuong) {
+        document.getElementById('phuongError').style.display = 'block';
+    } else {
+        document.getElementById('phuongError').style.display = 'none';
+    }
+}
+function validateQuan() {
+    const quan = document.getElementById('addQuan').value;
+    if (!quan) {
+        document.getElementById('quanError').style.display = 'block';
+    } else {
+        document.getElementById('quanError').style.display = 'none';
+    }
+}
+function validateFullName() {
+    const fullname = document.getElementById('addFullname').value;
+    if (!fullname) {
+        document.getElementById('fullNameError').style.display = 'block';
+    } else {
+        document.getElementById('fullNameError').style.display = 'none';
+    }
 }
 
+function validateNewUsername() {
+    const username = document.getElementById('addUsername').value;
+    const errorElement = document.getElementById('newUsernameError');
+    errorElement.style.display = 'none';
+    errorElement.innerHTML = '';
+
+    if (!username) {
+        errorElement.style.display = 'block';
+        errorElement.innerHTML = '<i>*Tên tài khoản không được để trống</i>';
+    }
+    else if (username.length < 4) {
+        errorElement.style.display = 'block';
+        errorElement.innerHTML = '<i>*Tên tài khoản phải trên 4 ký tự</i>';
+    }
+}
+function validatePhoneNumber() {
+    const phone = document.getElementById('addPhone').value;
+    if (!phone || isNaN(Number(phone)) || phone.length !== 10) {
+        document.getElementById('phoneNumberError').style.display = 'block';
+        document.getElementById('phoneNumberError').innerHTML = '<i>*Số điện thoại không đúng định dạng</i>';
+    } else {
+        document.getElementById('phoneNumberError').style.display = 'none';
+    }
+}
+function validatePassword() {
+    const password = document.getElementById('addPassword').value;
+    if (!password) {
+        document.getElementById('newPasswordError').style.display = 'block';
+    } else {
+        if (password.length < 8) {
+            document.getElementById('newPasswordError').style.display = 'block';
+            document.getElementById('newPasswordError').innerHTML = '<i>*Mật khẩu phải trên 8 ký tự</i>';
+        } else {
+            document.getElementById('newPasswordError').style.display = 'none';
+
+        }
+    }
+}
+//edit
+function validateEditSoNha() {
+    const soNha = document.getElementById('editAddress').value;
+    if (!soNha) {
+        document.getElementById('editAddress').style.display = 'block';
+    } else {
+        document.getElementById('editAddress').style.display = 'none';
+    }
+}
+
+function validateEditPhuong() {
+    const phuong = document.getElementById('editPhuong').value;
+    if (!phuong) {
+        document.getElementById('editPhuongError').style.display = 'block';
+    } else {
+        document.getElementById('editPhuongError').style.display = 'none';
+    }
+}
+function validateEditQuan() {
+    const quan = document.getElementById('editQuan').value;
+    if (!quan) {
+        document.getElementById('editQuanError').style.display = 'block';
+    } else {
+        document.getElementById('editQuanError').style.display = 'none';
+    }
+}
+function validateEditFullName() {
+    const fullname = document.getElementById('editFullname').value;
+    if (!fullname) {
+        document.getElementById('editFullNameError').style.display = 'block';
+    } else {
+        document.getElementById('editFullNameError').style.display = 'none';
+    }
+}
+function validateEditPhoneNumber() {
+    const phone = document.getElementById('editPhone').value;
+    if (!phone || isNaN(Number(phone)) || phone.length !== 10) {
+        document.getElementById('editPhoneNumberError').style.display = 'block';
+        document.getElementById('editPhoneNumberError').innerHTML = '<i>*Số điện thoại không đúng định dạng</i>';
+    } else {
+        document.getElementById('editPhoneNumberError').style.display = 'none';
+    }
+}
+function validateEditPassword() {
+    const password = document.getElementById('editPassword').value;
+    if (!password) {
+        document.getElementById('editPasswordError').style.display = 'block';
+    } else {
+        if (password.length < 8) {
+            document.getElementById('editPasswordError').style.display = 'block';
+            document.getElementById('editPasswordError').innerHTML = '<i>*Mật khẩu phải trên 8 ký tự</i>';
+        } else {
+            document.getElementById('editPasswordError').style.display = 'none';
+
+        }
+    }
+}
