@@ -229,7 +229,7 @@ function Cart_container(){
 '\n'+
 '                       <div class="Cart_PB_Header">\n'+
 '                        <h2> Giỏ hàng </h2>\n'+
-'                        <a href = "#"> Thoát </a> </h2>\n'+
+'                        <a href = ""> Thoát </a> </h2>\n'+
 '                       </div>\n'+
 '\n'+
 '                       <div class="Cart_PB_Box Cart_PB_Box_Title"> \n'+

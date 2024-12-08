@@ -7,9 +7,9 @@ if (DSSP == null)
 }
 
 if (!localStorage.getItem('countID')) {
-    localStorage.setItem('countID', 1); 
+    localStorage.setItem('countID', 22); 
 }
-var ProductsPerPage = 10;
+var ProductsPerPage = 15;
 
 function KhoiTaoSanPham(hinh, brand, ten, gia, vitri, id, ram, ssd, card, MoTa){
     SanPham = new Object();
@@ -119,11 +119,11 @@ function TaoSanPham (){
 
     var Brand = NodeBrand.value
     var Ten = NodeTen.value
-    var GiaTien = NodeGiaTien.value
+    var GiaTien = Number(NodeGiaTien.value)
     var ViTri = NodeViTri.value
 
     var NodeID = document.getElementById('id')
-    var ID = NodeID.value
+    var ID = Number(NodeID.value)
     NodeID.value = countID+1;
 
     var Ram = NodeRam.value
@@ -471,7 +471,7 @@ function Fix_Page_2(){
 //Hien thị lựa chọn trang nếu trong danh sách có hơn 10 phần tử. Nếu không thì ẩn.
 
 function TrangSanPham() {
-    if (DSSP.length <= 10) {
+    if (DSSP.length <= ProductsPerPage) {
         NodeFixFooter.style.display = 'none'; // Ẩn footer
         // Hiển thị tất cả sản phẩm trong 1 trang
         NodeFixMain.innerHTML = ChuyenDanhSachThanhHTML(DSSP, 1);
@@ -493,7 +493,15 @@ function XoaSanPham(idSanPham){
         var DSSP_JSON = JSON.stringify(DSSP);
         localStorage.setItem('products',DSSP_JSON);
     }
-    TrangSanPham();
+
+    if (DSSP.length <= ProductsPerPage) 
+    {
+        TrangSanPham();
+        Fix_Page_1();
+    }
+    else {
+        Fix_Page_2();
+    }
 }
 
 

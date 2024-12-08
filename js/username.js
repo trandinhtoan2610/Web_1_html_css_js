@@ -16,4 +16,5 @@ displayUsername();
 function LogOut(){
     alert("Đăng xuất")
     localStorage.removeItem('userlogin')
+    localStorage.removeItem('DSGH')
 }

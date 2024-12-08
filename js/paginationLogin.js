@@ -196,7 +196,7 @@ function AdvancedFilter() {
         const brand = checkSearchBrand(); 
 
         if (brand == 0) {
-            window.location.href = "http://127.0.0.1:5500/html/indexLogin.html";
+            window.location.href = "";
             return true;
         }
 
@@ -209,6 +209,7 @@ function AdvancedFilter() {
 
        
         renderProduct(currentPage, filteredProducts);
+        renderPagination(filteredProducts);
         close_DivAdvancedFilter();
         return;
     }
@@ -230,7 +231,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
-
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter()
             return;
         }
@@ -250,7 +251,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
-
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter()
             return;
         }
@@ -271,7 +272,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
-
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter()
             return;
         }
@@ -288,6 +289,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter()
             return;
         }
@@ -307,6 +309,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         } else {
@@ -322,6 +325,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         }
@@ -343,6 +347,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         } else {
@@ -358,6 +363,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         }
@@ -378,6 +384,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         } else {
@@ -393,6 +400,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         }
@@ -411,6 +419,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         }
@@ -427,6 +436,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         }
@@ -445,6 +455,8 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
+
             close_DivAdvancedFilter();
             return;
         } else {
@@ -458,6 +470,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         }
@@ -475,6 +488,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         } else {
@@ -488,6 +502,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         }
@@ -505,6 +520,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         } else {
@@ -518,6 +534,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         }
@@ -536,6 +553,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);            
             close_DivAdvancedFilter();
             return;
         } else {
@@ -549,6 +567,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         }
@@ -556,7 +575,7 @@ function AdvancedFilter() {
     
 
     //6 : MinPrice va MaxPrice :
-    if (Search_minPrice != "" && Search_maxPrice != "") {
+    if (Search_minPrice != "" && Search_maxPrice != "" && Search_Ram == "") {
         const brand = checkSearchBrand();
         if (brand == 0) {
             const filteredProducts = productArray.filter(product => {
@@ -566,6 +585,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         } else {
@@ -578,6 +598,7 @@ function AdvancedFilter() {
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         }
@@ -595,6 +616,7 @@ function AdvancedFilter() {
             });
 
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter()
             return;
         }
@@ -608,6 +630,7 @@ function AdvancedFilter() {
             });
 
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter()
             return;
         }
@@ -622,6 +645,7 @@ function AdvancedFilter() {
             });
 
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         } else {
@@ -634,6 +658,7 @@ function AdvancedFilter() {
             });
 
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         }
@@ -654,6 +679,7 @@ function AdvancedFilter() {
             });
 
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         } else {
@@ -675,6 +701,7 @@ function AdvancedFilter() {
             });
 
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         }
@@ -692,8 +719,9 @@ function AdvancedFilter() {
                 }
                 return false;
             });
-
+            console.log(filteredProducts)
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         } else {
@@ -713,14 +741,13 @@ function AdvancedFilter() {
             });
 
             renderProduct(currentPage, filteredProducts);
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         }
     }
 
-
-   
-    filterProducts();
+    
     close_DivAdvancedFilter();
 }
 
