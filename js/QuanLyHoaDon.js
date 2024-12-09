@@ -1,9 +1,9 @@
 const showOrderManagement = () => {
-    const container = document.getElementById("container");
-    container.innerHTML = `
+  const container = document.getElementById("container");
+  container.innerHTML = `
           <input type="date" id="startDate" />
           <input type="date" id="endDate" />
-          <button onclick="filterOrdersByDate()">Lọc</button>
+          <button class="menu-button" onclick="filterOrdersByDate()">Lọc</button>
   
           <div class="menu">
       <button class="menu-button"> Lọc theo hàng động</button>
@@ -15,7 +15,7 @@ const showOrderManagement = () => {
           </div>
       </div>
   
-          <div class="table">
+          <div class="table-TK">
               <div class="table-header">
                   <div class="header__item"><a id="id" class="filter__link" href="#">Mã đơn hàng</a></div>
                      <div class="header__item"><a id="name" class="filter__link" href="#">ID khách hàng</a></div>
@@ -29,76 +29,95 @@ const showOrderManagement = () => {
               <div class="table-content" id="table-content"></div>
           </div>
       `;
-    loadOrders(); // Tải danh sách đơn hàng từ Local Storage
-  };
-  function loading(status) {
-    const or = JSON.parse(localStorage.getItem("orders")) || [];
-    const ors = or.filter((order) => order.status === status);
-    loadOrders(ors);
-  }
+  loadOrders(); // Tải danh sách đơn hàng từ Local Storage
+};
+function loading(status) {
+  const or = JSON.parse(localStorage.getItem("orders")) || [];
+  const ors = or.filter((order) => order.status === status);
+  loadOrders(ors);
+}
 
 //hàm format ngày tháng năm
 function formatDate(date) {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    return new Date(date).toLocaleDateString('vi-VN', options);
+  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+  return new Date(date).toLocaleDateString("vi-VN", options);
 }
 
 //hàm update trạng thái đơn hàng
 function updateOrderStatus(orderId) {
-    const orders = JSON.parse(localStorage.getItem('orders')) || [];
-    const updatedOrders = orders.map(order => {
-        if (order.orderId === orderId) {
-            if (order.status === 'Chưa xử lý') {
-                order.status = 'Đã xác nhận';
-                alert('Cập nhật trạng thái thành công!');
-            } else if (order.status === 'Đã xác nhận') {
-                order.status = 'Đã giao thành công';
-                alert('Cập nhật trạng thái thành công!');
-            }
-        }
-        return order;
-    });
-   
-    localStorage.setItem('orders', JSON.stringify(updatedOrders));
-    loadOrders();
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
+  const updatedOrders = orders.map((order) => {
+    if (order.orderId === orderId) {
+      if (order.status === "Chưa xử lý") {
+        order.status = "Đã xác nhận";
+        alert("Cập nhật trạng thái thành công!");
+      } else if (order.status === "Đã xác nhận") {
+        order.status = "Đã giao thành công";
+        alert("Cập nhật trạng thái thành công!");
+      }
+    }
+    return order;
+  });
+
+  localStorage.setItem("orders", JSON.stringify(updatedOrders));
+  loadOrders();
 }
 
 //hàm hủy đơn hàng
 function cancelOrder(orderId) {
-    const orders = JSON.parse(localStorage.getItem('orders')) || [];
-    const orderIndex = orders.findIndex(order => order.orderId === orderId);
-    if (orderIndex === -1) {
-        alert("Không tìm thấy đơn hàng với ID: " + orderId);
-        return;
-    }
-    if(orders[orderIndex].status === "Chưa xử lý" || orders[orderIndex].status === "Đã xác nhận"){
-        orders[orderIndex].status = "Đã hủy";
-        localStorage.setItem('orders', JSON.stringify(orders));
-        alert("Đơn hàng đã được hủy!");
-    }
-    
-    
-    
-    loadOrders();
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
+  const orderIndex = orders.findIndex((order) => order.orderId === orderId);
+  if (orderIndex === -1) {
+    alert("Không tìm thấy đơn hàng với ID: " + orderId);
+    return;
+  }
+  if (
+    orders[orderIndex].status === "Chưa xử lý" ||
+    orders[orderIndex].status === "Đã xác nhận"
+  ) {
+    orders[orderIndex].status = "Đã hủy";
+    localStorage.setItem("orders", JSON.stringify(orders));
+    alert("Đơn hàng đã được hủy!");
+  }
+
+  loadOrders();
 }
 
 // Hàm tải danh sách đơn hàng từ Local Storage
 const loadOrders = (filteredOrders) => {
-   
-    if (filteredOrders) {
-        invoices = filteredOrders;
-    }else{
-        invoices = JSON.parse(localStorage.getItem('orders')) || [];
-    }
-    const table = document.getElementById('table-content');
-    
-    table.innerHTML = ''; // Xóa dữ liệu cũ
-    invoices.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    invoices.forEach((invoice) => {
-        const handle = invoice.status === 'Đã hủy' || invoice.status === 'Đã giao thành công' ? '' : `<button class="btn btn-handle" onclick="updateOrderStatus(${invoice.orderId})">${invoice.status === 'Chưa xử lý' ? 'Xác nhận' : invoice.status === 'Đã xác nhận' ? 'Đã giao thành công' : ''}</button> 
-                    <button class="btn btn-handle" onclick="cancelOrder(${invoice.orderId})">${invoice.status === 'Chưa xử lý' ? 'Hủy đơn hàng' : invoice.status === 'Đã xác nhận' ?   "Hủy đơn hàng" : ""    }</button>`;
-        const row = `
-            <div class="table-row">	
+  if (filteredOrders) {
+    invoices = filteredOrders;
+  } else {
+    invoices = JSON.parse(localStorage.getItem("orders")) || [];
+  }
+  const table = document.getElementById("table-content");
+
+  table.innerHTML = ""; // Xóa dữ liệu cũ
+  invoices.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  invoices.forEach((invoice) => {
+    const handle =
+      invoice.status === "Đã hủy" || invoice.status === "Đã giao thành công"
+        ? ""
+        : `<button class="btn btn-handle" onclick="updateOrderStatus(${
+            invoice.orderId
+          })">${
+            invoice.status === "Chưa xử lý"
+              ? "Xác nhận"
+              : invoice.status === "Đã xác nhận"
+              ? "Đã giao thành công"
+              : ""
+          }</button> 
+                    <button class="btn btn-handle" onclick="cancelOrder(${
+                      invoice.orderId
+                    })">${
+            invoice.status === "Chưa xử lý"
+              ? "Hủy đơn hàng"
+              : invoice.status === "Đã xác nhận"
+              ? "Hủy đơn hàng"
+              : ""
+          }</button>`;
+    const row = `
+            <div class="table-rows">	
 				<div class="table-data">${invoice.orderId}</div>
                 <div class="table-data">${invoice.userId}</div>
 				<div class="table-data">${invoice.fullname}</div>
@@ -109,35 +128,34 @@ const loadOrders = (filteredOrders) => {
                     ${handle}
                 </div>
                 <div class="table-data">
-                    <a href="order-details.html?orderId=${invoice.orderId}" class="btn btn-view">Xem chi tiết</a>
+                    <a href="order-details.html?orderId=${
+                      invoice.orderId
+                    }" class="btn btn-view" target = "_blank">Xem chi tiết</a>
                 </div>
 			</div>
         `;
-        table.innerHTML += row;
-    });
+    table.innerHTML += row;
+  });
 };
 
-
-// lọc theo ngày 
+// lọc theo ngày
 function filterOrdersByDate() {
-    const startDate = new Date(document.getElementById('startDate').value);
-    const endDate = new Date(document.getElementById('endDate').value);
+  const startDate = new Date(document.getElementById("startDate").value);
+  const endDate = new Date(document.getElementById("endDate").value);
 
-    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-        alert('chọn ngày bắt đầu và ngày kết thúc');
-        return;
-    }
-    if (startDate > endDate) {
-        alert('Ngày bắt đầu phải nhỏ hơn ngày kết thúc');
-        return;
-    }
-    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+    alert("chọn ngày bắt đầu và ngày kết thúc");
+    return;
+  }
+  if (startDate > endDate) {
+    alert("Ngày bắt đầu phải nhỏ hơn ngày kết thúc");
+    return;
+  }
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
-    const filteredOrders = orders.filter(order => {
-        const createdAt = new Date(order.createdAt);
-        return createdAt >= startDate && createdAt <= endDate;
-    });
-    loadOrders(filteredOrders);
+  const filteredOrders = orders.filter((order) => {
+    const createdAt = new Date(order.createdAt);
+    return createdAt >= startDate && createdAt <= endDate;
+  });
+  loadOrders(filteredOrders);
 }
-
-

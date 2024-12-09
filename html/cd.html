@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #nav-toggle-burger {
+      display: block;
+      width: 30px;
+      height: 3px;
+      background-color: black;
+      margin: 5px 0;
+    }
+
+    .nav-menu {
+      display: none; /* Ẩn menu ban đầu */
+    }
+
+    #nav-toggle:checked + label + .nav-menu {
+      display: block; /* Hiện menu khi checkbox được chọn */
+    }
+    .vd1 {
+      border: 1px solid black;
+    }
+    .vd2 {
+      border: 1px solid black;
+      width: 90%;
+    }
+    .cha {
+      width: 350px;
+      display: flex;
+      border: 2px solid red;
+    }
+  </style>
+  <body>
+    <div id="cha" class="cha">
+      <div id="vd1" class="vd1">
+        <input type="checkbox" id="nav-toggle" style="display: none" />
+        <label for="nav-toggle">
+          <span id="nav-toggle-burger"></span>
+        </label>
+
+        <nav class="nav-menu">
+          <ul>
+            <li><a href="#home">Trang Chủ</a></li>
+            <li><a href="#about">Giới Thiệu</a></li>
+            <li><a href="#services">Dịch Vụ</a></li>
+            <li><a href="#contact">Liên Hệ</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="vd2">sssss</div>
+    </div>
+  </body>
+</html>
