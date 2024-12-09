@@ -19,55 +19,62 @@ function displayUsers() {
                     <li><a href="indexAdmin.html" id="Thoat_TaoSP">Trở lại</a></li>
                 </ul>
             </div>
-        <div class="table">
-            <div class="table-header">
-                <div class="header__item"><a id="countIDUser" class="filter__link" href="#">ID</a></div>
-                <div class="header__item"><a id="username" class="filter__link" href="#">Tên người dùng</a></div>
-                <div class="header__item"><a id="fullname" class="filter__link" href="#">Họ tên</a></div>
-                <div class="header__item"><a id="phone" class="filter__link" href="#">Số điện thoại</a></div>
-                <div class="header__item"><a id="Address" class="filter__link" href="#">Địa Chỉ</a></div>
-                <div class="header__item"><a id="status" class="filter__link" href="#">Trạng thái</a></div>
-                <div class="header__item"><a id="role" class="filter__link" href="#">Vai Trò</a></div>
-                <div class="header__item"><a id="locked" class="filter__link" href="#">Khóa/Mở Khóa</a></div>
-                <div class="header__item"><a id="repair" class="filter__link" href="#">Sửa/Xóa</a></div>
-            </div>
-            <div class="table-content" id="table-content">
+        <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+            <table class="min-w-full table-auto">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-2 border-b">ID</th>
+                        <th class="px-4 py-2 border-b">Tên người dùng</th>
+                        <th class="px-4 py-2 border-b">Họ tên</th>
+                        <th class="px-4 py-2 border-b">Số điện thoại</th>
+                        <th class="px-4 py-2 border-b">Địa Chỉ</th>
+                        <th class="px-4 py-2 border-b">Trạng thái</th>
+                        <th class="px-4 py-2 border-b">Vai Trò</th>
+                        <th class="px-4 py-2 border-b">Khóa/Mở Khóa</th>
+                        <th class="px-4 py-2 border-b">Sửa/Xóa</th>
+                    </tr>
+                </thead>
+                <tbody id="table-content">
     `;
+
     if (userList.length === 0) {
         userTable += `
-            <div class="table-row">
-                <div class="table-data" colspan="5">Không có người dùng nào</div>
-            </div>
+            <tr>
+                <td colspan="9" class="text-center py-4">Không có người dùng nào</td>
+            </tr>
         `;
     } else {
         userList.forEach(user => {
             userTable += `
-            <div class="table-row">
-                <div class="table-data">${user.id}</div>
-                <div class="table-data">${user.username}</div>
-                <div class="table-data">${user.fullname}</div>
-                <div class="table-data">${user.phone}</div>
-                <div class="table-data" id="customAddress">${user.address} ,Phường:${user.phuong},Quận:${user.quan}</div>
-                <div class="table-data">${user.status}</div>
-                <div class="table-data">${user.role}</div>
-                <div class="table-data">
-                <button onclick="unlockUser(${user.id})"><i class="fa-solid fa-unlock"></i></button>
-                <button onclick="lockUser(${user.id})"><i class="fa-solid fa-lock"></i></button></div>
-                <div class="table-data">
-                <button onclick="openEditForm(${user.id})"><i class="fa-solid fa-wrench"></i></button>
-                <button onclick="deleteUser(${user.id})"><i class="fa-sharp-duotone fa-solid fa-trash"></i></button>                       
-                </div>
-            </div>`;
+            <tr class="border-b">
+                <td class="px-4 py-2">${user.id}</td>
+                <td class="px-4 py-2">${user.username}</td>
+                <td class="px-4 py-2">${user.fullname}</td>
+                <td class="px-4 py-2">${user.phone}</td>
+                <td class="px-4 py-2" id="customAddress">${user.address} ,Phường: ${user.phuong}, Quận: ${user.quan}</td>
+                <td class="px-4 py-2">${user.status}</td>
+                <td class="px-4 py-2">${user.role}</td>
+                <td class="px-4 py-2">
+                    <button onclick="unlockUser(${user.id})" class="px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600"><i class="fa-solid fa-unlock"></i></button>
+                    <button onclick="lockUser(${user.id})" class="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600"><i class="fa-solid fa-lock"></i></button>
+                </td>
+                <td class="px-4 py-2">
+                    <button onclick="openEditForm(${user.id})" class="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"><i class="fa-solid fa-wrench"></i></button>
+                    <button onclick="deleteUser(${user.id})" class="px-3 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"><i class="fa-sharp-duotone fa-solid fa-trash"></i></button>
+                </td>
+            </tr>`;
         });
     }
 
     userTable += `
-            </div>
+                </tbody>
+            </table>
         </div>
     `;
 
     container.innerHTML = userTable;
 }
+
 
 // Hiển thị form thêm người dùng
 function showAddUserForm() {

@@ -697,6 +697,11 @@ function Summary_Content() {
 
 
 function thanhtoan() {
+    const ten = document.getElementById('customer_name').value;
+    const sdt = document.getElementById('customer_phone').value;
+    const diachi = document.getElementById('customer_address').value;
+    const quan = document.getElementById('customer_district').value;
+    const phuong = document.getElementById('customer_ward').value;
     const user = JSON.parse(localStorage.getItem('userlogin'));
     const cart = JSON.parse(localStorage.getItem('DSGH')) || [];
     const orders = JSON.parse(localStorage.getItem('orders')) || [];
@@ -721,7 +726,11 @@ function thanhtoan() {
     const order = {
         orderId: orders.length + 1,
         userId: user.id,
-        fullname: user.fullname,
+        fullname: ten,
+        address: diachi,
+        phone: sdt,
+        quan: quan,
+        phuong: phuong,
         status: "Chưa xử lý", 
         createdAt: new Date().toISOString(),
         orderDetails: orderDetails,

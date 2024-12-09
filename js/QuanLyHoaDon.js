@@ -1,36 +1,91 @@
 const showOrderManagement = () => {
     const container = document.getElementById("container");
     container.innerHTML = `
-          <input type="date" id="startDate" />
-          <input type="date" id="endDate" />
-          <button onclick="filterOrdersByDate()">Lọc</button>
-  
-          <div class="menu">
-      <button class="menu-button"> Lọc theo hàng động</button>
-      <div class="menu-content">
-          <a href="#" onclick ="loading('Chưa xử lý')">Chưa xử lý</a>
-          <a href="#" onclick ="loading('Đã xác nhận')">Đã xác nhận</a>
-          <a href="#" onclick ="loading('Đã giao thành công')">Đã giao thành công</a>
-          <a href="#" onclick ="loading('Đã hủy')">Đã hủy</a>
-          </div>
-      </div>
-  
-          <div class="table">
-              <div class="table-header">
-                  <div class="header__item"><a id="id" class="filter__link" href="#">Mã đơn hàng</a></div>
-                     <div class="header__item"><a id="name" class="filter__link" href="#">ID khách hàng</a></div>
-                  <div class="header__item"><a id="name" class="filter__link" href="#">Tên khách hàng</a></div>
-                  <div class="header__item"><a id="price" class="filter__link filter__link--number" href="#">Tổng tiền</a></div>
-                  <div class="header__item"><a id="status" class="filter__link filter__link--number" href="#">Trạng thái</a></div>
-                  <div class="header__item"><a id="createAt" class="filter__link filter__link--number" href="#">Ngày tạo</a></div>
-                  <div class="header__item"><a id="handle" class="filter__link filter__link--number" href="#">Hành động</a></div>
-                  <div class="header__item"><a id="handle" class="filter__link filter__link--number" href="#">Chi tiết hóa đơn</a></div>
-              </div>
-              <div class="table-content" id="table-content"></div>
-          </div>
-      `;
+        <div class="p-6">
+            <div class="mb-6">
+                <input type="date" id="startDate" class="p-2 border border-gray-300 rounded-md" />
+                <input type="date" id="endDate" class="p-2 border border-gray-300 rounded-md ml-2" />
+                <button onclick="filterOrdersByDate()" class="p-2 bg-blue-500 text-white rounded-md ml-4">Lọc</button>
+            </div>
+
+            <div class="menu mb-6">
+                <button class="menu-button p-2 bg-gray-200 rounded-md">Lọc theo trạng thái</button>
+                <div class="menu-content hidden mt-2 bg-gray-100 rounded-md p-2">
+                    <a href="#" onclick="loading('Chưa xử lý')" class="block p-2 hover:bg-gray-200">Chưa xử lý</a>
+                    <a href="#" onclick="loading('Đã xác nhận')" class="block p-2 hover:bg-gray-200">Đã xác nhận</a>
+                    <a href="#" onclick="loading('Đã giao thành công')" class="block p-2 hover:bg-gray-200">Đã giao thành công</a>
+                    <a href="#" onclick="loading('Đã hủy')" class="block p-2 hover:bg-gray-200">Đã hủy</a>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+                <table class="min-w-full table-auto">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="py-3 px-6 text-left">Mã đơn hàng</th>
+                            <th class="py-3 px-6 text-left">ID khách hàng</th>
+                            <th onclick="sortAddress()" class="py-3 px-6 text-left">Địa chỉ</th>
+                            <th class="py-3 px-6 text-left">Tổng tiền</th>
+                            <th class="py-3 px-6 text-left">Trạng thái</th>
+                            <th class="py-3 px-6 text-left">Ngày tạo</th>
+                            <th class="py-3 px-6 text-left">Hành động</th>
+                            <th class="py-3 px-6 text-left">Chi tiết hóa đơn</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-content">
+                        <!-- Dữ liệu bảng sẽ được thêm ở đây -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
     loadOrders(); // Tải danh sách đơn hàng từ Local Storage
-  };
+};
+
+function loadOrders(filteredOrders) {
+    if (filteredOrders) {
+        invoices = filteredOrders;
+    } else {
+        invoices = JSON.parse(localStorage.getItem('orders')) || [];
+    }
+
+    const table = document.getElementById('table-content');
+    table.innerHTML = ''; // Xóa dữ liệu cũ
+
+    invoices.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    
+    invoices.forEach((invoice) => {
+        const handle = invoice.status === 'Đã hủy' || invoice.status === 'Đã giao thành công' ? '' : `
+        <div class="flex">
+            <button class="btn btn-handle p-2 bg-green-500 text-white rounded-md mr-2" onclick="updateOrderStatus(${invoice.orderId})">
+                ${invoice.status === 'Chưa xử lý' ? 'Xác nhận' : invoice.status === 'Đã xác nhận' ? 'Đã giao thành công' : ''}
+            </button> 
+            <button class="btn btn-handle p-2 bg-red-500 text-white rounded-md" onclick="cancelOrder(${invoice.orderId})">
+                ${invoice.status === 'Chưa xử lý' ? 'Hủy đơn hàng' : invoice.status === 'Đã xác nhận' ? 'Hủy đơn hàng' : ''}
+            </button>
+            <div class="menu mb-6">
+        `;
+
+        const row = `
+            <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                <td class="py-3 px-6">${invoice.orderId}</td>
+                <td class="py-3 px-6">${invoice.userId}</td>
+                <td class="py-3 px-6">${invoice.address + ' phường ' +invoice.phuong + ' quận ' + invoice.quan}</td>
+                <td class="py-3 px-6">${invoice.totalAmount}</td>
+                <td class="py-3 px-6">${invoice.status}</td>
+                <td class="py-3 px-6">${formatDate(invoice.createdAt)}</td>
+                <td class="py-3 px-6">${handle}</td>
+                <td class="py-3 px-6">
+                    <a href="order-details.html?orderId=${invoice.orderId}" class="btn btn-view p-2 bg-blue-500 text-white rounded-md">Xem chi tiết</a>
+                </td>
+            </tr>
+        `;
+
+        table.innerHTML += row;
+    });
+}
+
+
   function loading(status) {
     const or = JSON.parse(localStorage.getItem("orders")) || [];
     const ors = or.filter((order) => order.status === status);
@@ -76,46 +131,11 @@ function cancelOrder(orderId) {
         localStorage.setItem('orders', JSON.stringify(orders));
         alert("Đơn hàng đã được hủy!");
     }
-    
-    
-    
     loadOrders();
 }
 
 // Hàm tải danh sách đơn hàng từ Local Storage
-const loadOrders = (filteredOrders) => {
-   
-    if (filteredOrders) {
-        invoices = filteredOrders;
-    }else{
-        invoices = JSON.parse(localStorage.getItem('orders')) || [];
-    }
-    const table = document.getElementById('table-content');
-    
-    table.innerHTML = ''; // Xóa dữ liệu cũ
-    invoices.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    invoices.forEach((invoice) => {
-        const handle = invoice.status === 'Đã hủy' || invoice.status === 'Đã giao thành công' ? '' : `<button class="btn btn-handle" onclick="updateOrderStatus(${invoice.orderId})">${invoice.status === 'Chưa xử lý' ? 'Xác nhận' : invoice.status === 'Đã xác nhận' ? 'Đã giao thành công' : ''}</button> 
-                    <button class="btn btn-handle" onclick="cancelOrder(${invoice.orderId})">${invoice.status === 'Chưa xử lý' ? 'Hủy đơn hàng' : invoice.status === 'Đã xác nhận' ?   "Hủy đơn hàng" : ""    }</button>`;
-        const row = `
-            <div class="table-row">	
-				<div class="table-data">${invoice.orderId}</div>
-                <div class="table-data">${invoice.userId}</div>
-				<div class="table-data">${invoice.fullname}</div>
-				<div class="table-data">${invoice.totalAmount}</div>
-				<div class="table-data">${invoice.status}</div>
-				<div class="table-data">${formatDate(invoice.createdAt)}</div>
-                <div class="table-data">
-                    ${handle}
-                </div>
-                <div class="table-data">
-                    <a href="order-details.html?orderId=${invoice.orderId}" class="btn btn-view">Xem chi tiết</a>
-                </div>
-			</div>
-        `;
-        table.innerHTML += row;
-    });
-};
+
 
 
 // lọc theo ngày 
@@ -139,5 +159,42 @@ function filterOrdersByDate() {
     });
     loadOrders(filteredOrders);
 }
+
+function sortAddress() {
+    console.log("sort");
+
+    // Lấy danh sách đơn hàng từ localStorage
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+
+    // Hàm so sánh để sắp xếp quận
+    orders.sort((a, b) => {
+        // Kiểm tra xem quận có phải là số hay không
+        const isANumber = !isNaN(a.quan);
+        const isBNumber = !isNaN(b.quan);
+        
+        // Nếu cả hai đều là số, sắp xếp theo giá trị số
+        if (isANumber && isBNumber) {
+            return parseInt(a.quan) - parseInt(b.quan);
+        }
+
+        // Nếu một cái là số và một cái là chữ, thì số sẽ đứng trước chữ
+        if (isANumber) {
+            return -1;
+        }
+        if (isBNumber) {
+            return 1;
+        }
+
+        // Nếu cả hai đều là chữ, sắp xếp theo thứ tự alphabet
+        return a.quan.localeCompare(b.quan);
+    });
+
+    // Tải lại đơn hàng đã được sắp xếp
+    loadOrders(orders);
+
+    console.log("sorted orders", orders);
+}
+
+
 
 

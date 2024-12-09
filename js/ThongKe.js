@@ -79,87 +79,35 @@ function displayStats(filteredOrders) {
         </div>
         <div class="col-sm-3">
           <div class="well">
-            <h4>Bounce</h4>
-            <p>30%</p> 
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-8">
-          <div class="well">
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
+            <h4>Tổng số đơn hàng bán được</h4>
+            <p>${orders.length}</p> 
           </div>
         </div>
       </div>
     </div>
-  </div>
-     <div class="table">
-            <div class="table-header">
-                <div class="header__item"><a id="id" class="filter__link" href="#">Tên sản phẩm</a></div>
-                <div class="header__item"><a id="name" class="filter__link" href="#">Thổng số lượng bán</a></div>
-                <div class="header__item"><a id="price" class="filter__link filter__link--number" href="#">Tổng số tiền bán</a></div>
-               
-		    </div>
-            <div class="table-content" id="table-content" class ="max-height: 400px; overflow : auto;">
-        
-  `;
-
-  for (const productName in productStats) {
-    tableHTML += `
-      
-      <div class="table-row">		
-				<div class="table-data">${productName}</div>
-				<div class="table-data">${productStats[productName].totalQuantity}</div>
-				<div class="table-data">${formatCurrencyVND(productStats[productName].totalRevenue)}</div>
-		</div>
-    `;
-  }
-
-  tableHTML += `
-      </div>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-gray-100">
+        <thead class="bg-yellow-200 text-black">
+          <tr>
+            <th scope="col" class="px-4 py-2 text-left">Tên sản phẩm</th>
+            <th scope="col" class="px-4 py-2 text-left">Tổng số lượng bán</th>
+            <th scope="col" class="px-4 py-2 text-left">Tổng số tiền bán</th>
+          </tr>
+        </thead>
+        <tbody id="table-content">
+          ${Object.keys(productStats).map(productName => `
+            <tr class="border-b">
+              <td class="px-4 py-2 font-semibold">${productName}</td>
+              <td class="px-4 py-2">${productStats[productName].totalQuantity}</td>
+              <td class="px-4 py-2 text-green-600">${formatCurrencyVND(productStats[productName].totalRevenue)}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
     </div>
-  `;
 
-  // Thêm tổng doanh thu tất cả các mặt hàng
-  tableHTML += `
-    <h3>Tổng số tiền bán của tất cả các sản phẩm: ${formatCurrencyVND(totalRevenueAllProducts)}</h3>
   `;
-
-  // Thêm mặt hàng bán chạy nhất và ế nhất
-  tableHTML += `
-    <h3>Sản phẩm bán chạy nhất: ${bestSellingProduct || ""}</h3>
-    <h3>Sản phẩm bán ít nhất: ${leastSellingProduct || ""}</h3>
-  `;
-
-  // Chèn HTML vào thẻ container
+  
   container.innerHTML = tableHTML;
   displayTopCustomers(orders);
 }
@@ -203,34 +151,41 @@ function displayTopCustomers(orders) {
   
   // Hiển thị danh sách khách hàng và doanh thu của họ
   let customersHTML = `
-    <hr/>
-    <h3>Top 5 khách hàng mua nhiều nhất</h3>
-     <div class="table">
-            <div class="table-header">
-                <div class="header__item"><a id="id" class="filter__link" href="#">Tên khách hàng</a></div>
-                <div class="header__item"><a id="name" class="filter__link" href="#">Tổng số tiền mà khách hàng đã mua</a></div>
-                <div class="header__item"><a id="price" class="filter__link filter__link--number" href="#">Xem tất cả hóa đơn</a></div>
-		    </div>
-            <div class="table-content" id="table-content">
-  `;
-  console.log(topCustomers);
-  topCustomers.forEach(customer => {
-    customersHTML += `
-      
-       <div class="table-row">		
-				<div class="table-data">${customer.customerName}</div>
-				<div class="table-data">${formatCurrencyVND(customer.totalRevenue)}</div>
-				<div class="table-data"><a href="../html/order-details.html?orderId=${
-          customer.customerId + "kh"
-        }" class="btn btn-view" target ="_blank">Xem chi tiết</a> </div>
-		</div>
-    `;
-  });
-  
-  customersHTML += `
+    <div class="mt-10">
+      <h3 class="text-center text-gray-900 text-2xl font-semibold">Top 5 Khách Hàng Mua Nhiều Nhất</h3>
+      <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+        <table class="min-w-full table-auto bg-gray-100">
+          <thead class="bg-yellow-200 text-black">
+            <tr>
+              <th scope="col" class="px-4 py-2 text-left">Tên Khách Hàng</th>
+              <th scope="col" class="px-4 py-2 text-left">Tổng Số Tiền</th>
+              <th scope="col" class="px-4 py-2 text-left">Xem Tất Cả Hóa Đơn</th>
+            </tr>
+          </thead>
+          <tbody id="table-content">
+            ${topCustomers
+              .map(
+                (customer) => `
+              <tr class="border-b">
+                <td class="px-4 py-2">${customer.customerName}</td>
+                <td class="px-4 py-2 text-green-600">${formatCurrencyVND(customer.totalRevenue)}</td>
+                <td class="px-4 py-2">
+                  <a onclick="viewInvoices(${customer.customerId})" class="text-white bg-blue-600 hover:bg-blue-700 py-1 px-3 rounded text-sm" target="_blank">
+                    Xem Chi Tiết
+                  </a>
+                </td>
+              </tr>
+            `
+              )
+              .join("")}
+          </tbody>
+        </table>
       </div>
     </div>
-  `;
+
+      `;
+  
+  
   container.innerHTML += customersHTML;
 }
 
@@ -256,29 +211,30 @@ function filterOrdersByDateThongKe(){
 
 
 function viewInvoices(userId) {
+  console.log(userId);
   const orders = JSON.parse(localStorage.getItem('orders')) || [];
   const userOrders = orders.filter(order => order.userId === userId);
 
   let invoiceDetails = '';
   userOrders.forEach(order => {
-      invoiceDetails += `
-          <div class="invoice-details">
-              <h4>Đơn hàng #${order.orderId}</h4>
+      invoiceDetails += ` 
+          <div class="bg-white p-4 rounded-lg shadow-md mb-4">
+              <h4 class="text-xl font-semibold">Đơn hàng #${order.orderId}</h4>
               <p><strong>Tình trạng:</strong> ${order.status}</p>
               <p><strong>Ngày tạo:</strong> ${new Date(order.createdAt).toLocaleString()}</p>
               <p><strong>Tổng tiền:</strong> ${order.totalAmount.toLocaleString()} VND</p>
-              <button onclick="viewOrderDetail(${order.orderId})">Xem chi tiết</button>
+              <button class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600" onclick="viewOrderDetail(${order.orderId})">Xem chi tiết</button>
           </div>
       `;
   });
 
   // Hiển thị modal xem chi tiết hóa đơn
   const modal = document.createElement('div');
-  modal.classList.add('modal');
+  modal.classList.add('modal-xyz', 'fixed', 'inset-0', 'bg-gray-600', 'bg-opacity-50', 'flex', 'justify-center', 'items-center', 'z-50');
   modal.innerHTML = `
-      <div class="modal-content">
-          <span class="close" onclick="closeModal()">&times;</span>
-          <h3>Hóa đơn của khách hàng</h3>
+      <div class="bg-white p-6 rounded-lg max-w-lg w-full relative">
+          <span class="absolute top-0 right-0 p-2 text-gray-500 cursor-pointer text-xl" onclick="closeModal()">&times;</span>
+          <h3 class="text-2xl font-semibold mb-4">Hóa đơn của khách hàng</h3>
           ${invoiceDetails}
       </div>
   `;
@@ -287,8 +243,12 @@ function viewInvoices(userId) {
 
 // Đóng modal
 function closeModal() {
-  const modal = document.querySelector('.modal');
-  modal.remove();
+  const modal = document.querySelector('.modal-xyz'); // Chỉ cần lấy phần tử đầu tiên
+  if (modal) {
+    modal.remove(); // Xóa modal nếu nó tồn tại
+  }
 }
+
+
 
 
