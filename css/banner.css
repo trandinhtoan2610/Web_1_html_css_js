@@ -4,10 +4,6 @@
   margin: auto;
   max-height: 400px;
 }
-.container {
-  width: 90%;
-  border: 1px solid black;
-}
 
 .mySlides img {
   width: 100%;

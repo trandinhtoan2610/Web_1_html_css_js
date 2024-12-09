@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="../css/QuanLySanPham.css">
 	<link rel="stylesheet" href="../css/banner.css">
 	<link rel="stylesheet" href="../css/TimKiemNangCao.css">
+	<script src="https://cdn.tailwindcss.com"></script>
 	<title>The Life Engine</title>
 	<link rel="icon" href="../img/icon.png" type="image/icon type">
 
@@ -22,7 +23,7 @@
 
 <body id="blockLogin" onload="filterProducts()">
 	<header>
-		<nav>
+		<nav >
 			<ul id="side-bar">
 				<!--link hompage-->
 				<li>
@@ -283,45 +284,63 @@
 			</div>
 		</div>
 	</main>
-	<div class="footer-clean">
-		<hr>
-		<footer>
-			<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-sm-4 col-md-3 item">
-						<h3>Services</h3>
-						<ul>
-							<li><a href="#">Di động</a></li>
-							<li><a href="#">Trả góp</a></li>
-							<li><a href="#">Tư vấn</a></li>
-						</ul>
-					</div>
-					<div class="col-sm-4 col-md-3 item">
-						<h3>Về chúng tôi</h3>
-						<ul>
-							<li><a href="#">Giới thiệu về công ty</a></li>
-							<li><a href="#">Tuyển dụng</a></li>
-							<li><a href="#">Góp ý</a></li>
-						</ul>
-					</div>
-					<div class="col-sm-4 col-md-3 item">
-						<h3>Thông tin liên hệ</h3>
-						<ul>
-							<li><a href="#">sales@thoigioididong.con</a></li>
-							<li><a href="#">1900 8686</a></li>
-							<li><a href="#">Benefits</a></li>
-						</ul>
-					</div>
-					<div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a
-							href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i
-								class="icon ion-social-snapchat"></i></a><a href="#"><i
-								class="icon ion-social-instagram"></i></a>
-						<p class="copyright">Thới giới di động © 2024</p>
-					</div>
-				</div>
-			</div>
-		</footer>
-	</div>
+	<div class="footer-clean bg-gray-800 text-white">
+        <footer>
+          <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              <!-- Services Section -->
+              <div class="item">
+                <h3 class="text-xl font-semibold mb-4">Services</h3>
+                <ul>
+                  <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Di động</a></li>
+                  <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Trả góp</a></li>
+                  <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Tư vấn</a></li>
+                </ul>
+              </div>
+              
+              <!-- About Us Section -->
+              <div class="item">
+                <h3 class="text-xl font-semibold mb-4">Về chúng tôi</h3>
+                <ul>
+                  <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Giới thiệu về công ty</a></li>
+                  <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Tuyển dụng</a></li>
+                  <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Góp ý</a></li>
+                </ul>
+              </div>
+              
+              <!-- Contact Information Section -->
+              <div class="item">
+                <h3 class="text-xl font-semibold mb-4">Thông tin liên hệ</h3>
+                <ul>
+                  <li><a href="mailto:sales@thoigioididong.com" class="text-gray-400 hover:text-white transition duration-200">sales@thoigioididong.com</a></li>
+                  <li><a href="tel:19008686" class="text-gray-400 hover:text-white transition duration-200">1900 8686</a></li>
+                  <li><a href="#" class="text-gray-400 hover:text-white transition duration-200">Benefits</a></li>
+                </ul>
+              </div>
+      
+              <!-- Social Media Section -->
+              <div class="item social flex flex-col items-center justify-center">
+                <div class="flex space-x-4 mb-4">
+                  <a href="#" class="text-gray-400 hover:text-white text-2xl transition duration-200">
+                    <i class="icon ion-social-facebook"></i>
+                  </a>
+                  <a href="#" class="text-gray-400 hover:text-white text-2xl transition duration-200">
+                    <i class="icon ion-social-twitter"></i>
+                  </a>
+                  <a href="#" class="text-gray-400 hover:text-white text-2xl transition duration-200">
+                    <i class="icon ion-social-snapchat"></i>
+                  </a>
+                  <a href="#" class="text-gray-400 hover:text-white text-2xl transition duration-200">
+                    <i class="icon ion-social-instagram"></i>
+                  </a>
+                </div>
+                <p class="text-gray-400 text-sm">Thới giới di động © 2024</p>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+	  
 
 
 </body>
