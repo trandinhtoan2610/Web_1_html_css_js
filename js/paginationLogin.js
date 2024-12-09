@@ -37,19 +37,23 @@ function renderProduct(page, productsToRender) {
 function renderPagination(productsToRender) {
     const totalPages = Math.ceil(productsToRender.length / itemsPerPage);
     let paginationHtml = '';
-
-    paginationHtml += `
+    if (totalPages == 1) {
+        document.getElementById("pagination").innerHTML = paginationHtml;
+    } else {
+        paginationHtml += `
         <button class="page-button" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>&lt;</button>`;
 
-    for (let i = 1; i <= totalPages; i++) {
-        paginationHtml += `
+        for (let i = 1; i <= totalPages; i++) {
+            paginationHtml += `
             <button class="page-button ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
-    }
+        }
 
-    paginationHtml += `
+        paginationHtml += `
         <button class="page-button" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>&gt;</button>`;
 
-    document.getElementById("pagination").innerHTML = paginationHtml;
+        document.getElementById("pagination").innerHTML = paginationHtml;
+    }
+
 }
 
 // Hàm thay đổi trang
@@ -92,7 +96,7 @@ function searchByName(inputId) {
         alert("Vui lòng nhập từ khóa tìm kiếm!");
         return;
     }
-    filteredProducts = allProducts.filter(product => 
+    filteredProducts = allProducts.filter(product =>
         product.name.toLowerCase().includes(searchInput.toLowerCase())
     );
     currentPage = 1;
@@ -102,7 +106,7 @@ function searchByName(inputId) {
 
 
 
-function checkSearchPrice(x){
+function checkSearchPrice(x) {
     if (x == 1) {
         document.getElementById("minPrice_warning").style.display = "none";
     }
@@ -113,12 +117,12 @@ function checkSearchPrice(x){
     }
 }
 
-function checkSearchBrand(){
+function checkSearchBrand() {
     var Search_Acer = document.getElementById("search_product_acer")
     var Search_Lenovo = document.getElementById("search_product_lenovo");
     var Search_msi = document.getElementById("search_product_msi");
 
-    if (Search_Acer.checked ){
+    if (Search_Acer.checked) {
         return 1;
     }
 
@@ -135,11 +139,11 @@ function checkSearchBrand(){
 }
 
 
-document.querySelectorAll('input[type="checkbox"][name="search_brand"]').forEach(function(checkbox) {
-    checkbox.addEventListener('change', function() {
+document.querySelectorAll('input[type="checkbox"][name="search_brand"]').forEach(function (checkbox) {
+    checkbox.addEventListener('change', function () {
         if (this.checked) {
-            document.querySelectorAll('input[type="checkbox"][name="search_brand"]').forEach(function(otherCheckbox) {
-            
+            document.querySelectorAll('input[type="checkbox"][name="search_brand"]').forEach(function (otherCheckbox) {
+
                 if (otherCheckbox !== checkbox) {
                     otherCheckbox.checked = false;
                 }
@@ -152,11 +156,11 @@ document.querySelectorAll('input[type="checkbox"][name="search_brand"]').forEach
 
 var SearchModal = document.getElementById("Search_Modal")
 
-function DivAdvancedFilter(){
+function DivAdvancedFilter() {
     SearchModal.style.display = "flex";
-} 
+}
 
-function close_DivAdvancedFilter(){
+function close_DivAdvancedFilter() {
     SearchModal.style.display = "none";
 }
 
@@ -172,7 +176,7 @@ function AdvancedFilter() {
     var maxPrice_warning = document.getElementById("maxPrice_warning");
     var maxPrice_warning_2 = document.getElementById("maxPrice_warning_2");
 
-    
+
     if (Search_minPrice != "") {
         if (!Search_minPrice.match(regNums)) {
             minPrice_warning.style.display = "block";
@@ -192,10 +196,10 @@ function AdvancedFilter() {
         }
     }
     const productArray = JSON.parse(localStorage.getItem("products")) || [];
-    
+
     //Neu user khong nhap gi vao input Filter :
     if (Search_name == "" && Search_Ram == "" && Search_maxPrice == "" && Search_minPrice == "") {
-        const brand = checkSearchBrand(); 
+        const brand = checkSearchBrand();
 
         if (brand == 0) {
             filteredProducts = productArray;
@@ -203,9 +207,9 @@ function AdvancedFilter() {
             return true;
         }
         filteredProducts = productArray.filter(product => {
-            if (brand == 1 && product.kind === "Acer") return true; 
-            if (brand == 2 && product.kind === "Lenovo") return true; 
-            if (brand == 3 && product.kind === "MSI") return true; 
+            if (brand == 1 && product.kind === "Acer") return true;
+            if (brand == 2 && product.kind === "Lenovo") return true;
+            if (brand == 3 && product.kind === "MSI") return true;
             return false;
         });
         currentPage = 1;
@@ -218,16 +222,16 @@ function AdvancedFilter() {
 
 
     //Lọc theo 4 điều kiện : 
-    if (Search_name != "" && Search_Ram != "" && Search_maxPrice != "" && Search_minPrice != ""){
+    if (Search_name != "" && Search_Ram != "" && Search_maxPrice != "" && Search_minPrice != "") {
         const brand = checkSearchBrand();
         if (brand == 0) {
             filteredProducts = productArray.filter(product => {
-                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && product.ram.toLowerCase().includes(Search_Ram.toLowerCase())){
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && product.ram.toLowerCase().includes(Search_Ram.toLowerCase())) {
                     const price = parseFloat(product.price)
                     const minPrice = parseFloat(Search_minPrice)
                     const maxPrice = parseFloat(Search_maxPrice)
                     if (price >= minPrice && price <= maxPrice)
-                        return true;    
+                        return true;
                 }
                 return false;
             });
@@ -236,17 +240,17 @@ function AdvancedFilter() {
             close_DivAdvancedFilter()
             return;
         }
-    
+
         else {
             filteredProducts = productArray.filter(product => {
-                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && product.ram.toLowerCase().includes(Search_Ram.toLowerCase())){
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && product.ram.toLowerCase().includes(Search_Ram.toLowerCase())) {
                     const price = parseFloat(product.price)
                     const minPrice = parseFloat(Search_minPrice)
                     const maxPrice = parseFloat(Search_maxPrice)
-                    if (price >= minPrice && price <= maxPrice){
+                    if (price >= minPrice && price <= maxPrice) {
                         if (brand == 1 && product.kind === "Acer") return true;
-                        if (brand == 2 && product.kind === "Lenovo") return true; 
-                        if (brand == 3 && product.kind === "MSI") return true; 
+                        if (brand == 2 && product.kind === "Lenovo") return true;
+                        if (brand == 3 && product.kind === "MSI") return true;
                     }
                 }
                 return false;
@@ -262,11 +266,11 @@ function AdvancedFilter() {
     //Lọc theo 3 điều kiện : 
 
     //1 : Ten, ram va minPrice : 
-    if (Search_name != "" && Search_Ram != "" && Search_minPrice  != "" && Search_maxPrice == ""){
+    if (Search_name != "" && Search_Ram != "" && Search_minPrice != "" && Search_maxPrice == "") {
         const brand = checkSearchBrand();
-        if (brand == 0 ){
+        if (brand == 0) {
             filteredProducts = productArray.filter(product => {
-                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && product.ram.toLowerCase().includes(Search_Ram.toLowerCase())){
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && product.ram.toLowerCase().includes(Search_Ram.toLowerCase())) {
                     if (product.price >= Search_minPrice)
                         return true;
                 }
@@ -280,12 +284,12 @@ function AdvancedFilter() {
 
         else {
             const filteredProducts = productArray.filter(product => {
-                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && product.ram.toLowerCase().includes(Search_Ram.toLowerCase())){
-                    if (product.price >= Search_minPrice){
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && product.ram.toLowerCase().includes(Search_Ram.toLowerCase())) {
+                    if (product.price >= Search_minPrice) {
                         if (brand == 1 && product.kind === "Acer") return true;
-                        if (brand == 2 && product.kind === "Lenovo") return true; 
+                        if (brand == 2 && product.kind === "Lenovo") return true;
                         if (brand == 3 && product.kind === "MSI") return true;
-                    }   
+                    }
                 }
                 return false;
             });
@@ -301,7 +305,7 @@ function AdvancedFilter() {
         const brand = checkSearchBrand();
         if (brand == 0) {
             filteredProducts = productArray.filter(product => {
-                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && 
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) &&
                     product.ram.toLowerCase().includes(Search_Ram.toLowerCase())) {
                     if (product.price <= Search_maxPrice) {
                         return true;
@@ -315,11 +319,11 @@ function AdvancedFilter() {
             return;
         } else {
             filteredProducts = productArray.filter(product => {
-                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && 
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) &&
                     product.ram.toLowerCase().includes(Search_Ram.toLowerCase())) {
                     if (product.price <= Search_maxPrice) {
                         if (brand == 1 && product.kind === "Acer") return true;
-                        if (brand == 2 && product.kind === "Lenovo") return true; 
+                        if (brand == 2 && product.kind === "Lenovo") return true;
                         if (brand == 3 && product.kind === "MSI") return true;
                     }
                 }
@@ -333,10 +337,10 @@ function AdvancedFilter() {
     }
 
 
-     //3 : Ten, minPrice va maxPrice :
-     if (Search_name != "" && Search_minPrice != "" && Search_maxPrice != "" && Search_Ram == "") {
+    //3 : Ten, minPrice va maxPrice :
+    if (Search_name != "" && Search_minPrice != "" && Search_maxPrice != "" && Search_Ram == "") {
         const brand = checkSearchBrand();
-        
+
         // Nếu không chọn thương hiệu nào
         if (brand == 0) {
             filteredProducts = productArray.filter(product => {
@@ -373,7 +377,7 @@ function AdvancedFilter() {
     //4 : Ram, minPrice va maxPrice :
     if (Search_Ram != "" && Search_minPrice != "" && Search_maxPrice != "") {
         const brand = checkSearchBrand();
-    
+
         // Nếu không chọn thương hiệu nào
         if (brand == 0) {
             filteredProducts = productArray.filter(product => {
@@ -408,13 +412,13 @@ function AdvancedFilter() {
     }
 
     // Lọc theo 2 điều kiện :
-    
+
     //1 : Ten va Ram 
-    if (Search_name != "" && Search_Ram != "" && Search_maxPrice == "" && Search_minPrice == ""){
+    if (Search_name != "" && Search_Ram != "" && Search_maxPrice == "" && Search_minPrice == "") {
         const brand = checkSearchBrand();
-        if (brand == 0){
+        if (brand == 0) {
             filteredProducts = productArray.filter(product => {
-                if(product.name.toLowerCase().includes(Search_name.toLowerCase()) && product.ram.toLowerCase().includes(Search_Ram.toLowerCase()) )
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && product.ram.toLowerCase().includes(Search_Ram.toLowerCase()))
                     return true;
 
                 return false;
@@ -427,8 +431,7 @@ function AdvancedFilter() {
 
         else {
             filteredProducts = productArray.filter(product => {
-                if(Search_name.toLowerCase().includes(product.name.toLowerCase()) && product.ram.toLowerCase().includes(Search_Ram.toLowerCase()) )
-                {
+                if (Search_name.toLowerCase().includes(product.name.toLowerCase()) && product.ram.toLowerCase().includes(Search_Ram.toLowerCase())) {
                     if (brand == 1 && product.kind === "Acer") return true;
                     if (brand == 2 && product.kind === "Lenovo") return true;
                     if (brand == 3 && product.kind === "MSI") return true;
@@ -449,7 +452,7 @@ function AdvancedFilter() {
         const brand = checkSearchBrand();
         if (brand == 0) {
             filteredProducts = productArray.filter(product => {
-                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && 
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) &&
                     product.price >= Search_minPrice) {
                     return true;
                 }
@@ -462,7 +465,7 @@ function AdvancedFilter() {
             return;
         } else {
             filteredProducts = productArray.filter(product => {
-                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && 
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) &&
                     product.price >= Search_minPrice) {
                     if (brand == 1 && product.kind === "Acer") return true;
                     if (brand == 2 && product.kind === "Lenovo") return true;
@@ -482,7 +485,7 @@ function AdvancedFilter() {
         const brand = checkSearchBrand();
         if (brand == 0) {
             filteredProducts = productArray.filter(product => {
-                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && 
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) &&
                     product.price <= Search_maxPrice) {
                     return true;
                 }
@@ -494,7 +497,7 @@ function AdvancedFilter() {
             return;
         } else {
             filteredProducts = productArray.filter(product => {
-                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && 
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) &&
                     product.price <= Search_maxPrice) {
                     if (brand == 1 && product.kind === "Acer") return true;
                     if (brand == 2 && product.kind === "Lenovo") return true;
@@ -514,7 +517,7 @@ function AdvancedFilter() {
         const brand = checkSearchBrand();
         if (brand == 0) {
             filteredProducts = productArray.filter(product => {
-                if (product.ram.toLowerCase().includes(Search_Ram.toLowerCase()) && 
+                if (product.ram.toLowerCase().includes(Search_Ram.toLowerCase()) &&
                     product.price >= Search_minPrice) {
                     return true;
                 }
@@ -526,7 +529,7 @@ function AdvancedFilter() {
             return;
         } else {
             filteredProducts = productArray.filter(product => {
-                if (product.ram.toLowerCase().includes(Search_Ram.toLowerCase()) && 
+                if (product.ram.toLowerCase().includes(Search_Ram.toLowerCase()) &&
                     product.price >= Search_minPrice) {
                     if (brand == 1 && product.kind === "Acer") return true;
                     if (brand == 2 && product.kind === "Lenovo") return true;
@@ -540,26 +543,26 @@ function AdvancedFilter() {
             return;
         }
     }
-    
+
 
     //5 : Ram va MaxPrice :
     if (Search_Ram != "" && Search_maxPrice != "" && Search_minPrice == "") {
         const brand = checkSearchBrand();
         if (brand == 0) {
             filteredProducts = productArray.filter(product => {
-                if (product.ram.toLowerCase().includes(Search_Ram.toLowerCase()) && 
+                if (product.ram.toLowerCase().includes(Search_Ram.toLowerCase()) &&
                     product.price <= Search_maxPrice) {
                     return true;
                 }
                 return false;
             });
             renderProduct(currentPage, filteredProducts);
-            renderPagination(filteredProducts);            
+            renderPagination(filteredProducts);
             close_DivAdvancedFilter();
             return;
         } else {
             filteredProducts = productArray.filter(product => {
-                if (product.ram.toLowerCase().includes(Search_Ram.toLowerCase()) && 
+                if (product.ram.toLowerCase().includes(Search_Ram.toLowerCase()) &&
                     product.price <= Search_maxPrice) {
                     if (brand == 1 && product.kind === "Acer") return true;
                     if (brand == 2 && product.kind === "Lenovo") return true;
@@ -573,7 +576,7 @@ function AdvancedFilter() {
             return;
         }
     }
-    
+
 
     //6 : MinPrice va MaxPrice :
     if (Search_minPrice != "" && Search_maxPrice != "" && Search_Ram == "") {
@@ -604,13 +607,13 @@ function AdvancedFilter() {
             return;
         }
     }
-    
 
-        //Lọc theo 1 điều kiện : 
-        
+
+    //Lọc theo 1 điều kiện : 
+
     //Loc theo ten : 
-    if (Search_name != "" && Search_Ram == "" && Search_maxPrice == "" && Search_minPrice == ""){
-        if (checkSearchBrand() == 0){
+    if (Search_name != "" && Search_Ram == "" && Search_maxPrice == "" && Search_minPrice == "") {
+        if (checkSearchBrand() == 0) {
             filteredProducts = productArray.filter(product => {
                 if (product.name.toLowerCase().includes(Search_name.toLowerCase())) return true;
                 return false;
@@ -622,11 +625,11 @@ function AdvancedFilter() {
             return;
         }
         else {
-            const brand = checkSearchBrand(); 
+            const brand = checkSearchBrand();
             filteredProducts = productArray.filter(product => {
-                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && (brand == 1 && product.kind === "Acer") ) return true;
-                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && (brand == 2 && product.kind === "Lenovo") ) return true;
-                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && (brand == 3 && product.kind === "MSI") ) return true;
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && (brand == 1 && product.kind === "Acer")) return true;
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && (brand == 2 && product.kind === "Lenovo")) return true;
+                if (product.name.toLowerCase().includes(Search_name.toLowerCase()) && (brand == 3 && product.kind === "MSI")) return true;
                 return false;
             });
 
@@ -650,7 +653,7 @@ function AdvancedFilter() {
             close_DivAdvancedFilter();
             return;
         } else {
-            const brand = checkSearchBrand(); 
+            const brand = checkSearchBrand();
             filteredProducts = productArray.filter(product => {
                 if (product.ram.toLowerCase().includes(Search_Ram.toLowerCase()) && (brand == 1 && product.kind === "Acer")) return true;
                 if (product.ram.toLowerCase().includes(Search_Ram.toLowerCase()) && (brand == 2 && product.kind === "Lenovo")) return true;
@@ -666,7 +669,7 @@ function AdvancedFilter() {
     }
 
     // Lọc theo minPrice
-    if (Search_minPrice != "" && Search_maxPrice == ""  && Search_Ram == "" && Search_name == "") {
+    if (Search_minPrice != "" && Search_maxPrice == "" && Search_Ram == "" && Search_name == "") {
         // Lọc theo minPrice
         if (checkSearchBrand() == 0) {
             filteredProducts = productArray.filter(product => {
@@ -692,9 +695,9 @@ function AdvancedFilter() {
                 // Lọc sản phẩm có giá >= minPrice và theo thương hiệu
                 if (
                     price >= minPrice &&
-                    ((brand == 1 && product.kind === "Acer") || 
-                     (brand == 2 && product.kind === "Lenovo") || 
-                     (brand == 3 && product.kind === "MSI"))
+                    ((brand == 1 && product.kind === "Acer") ||
+                        (brand == 2 && product.kind === "Lenovo") ||
+                        (brand == 3 && product.kind === "MSI"))
                 ) {
                     return true;
                 }
@@ -709,12 +712,12 @@ function AdvancedFilter() {
     }
 
     // Lọc theo maxPrice
-    if (Search_minPrice == "" && Search_maxPrice != "" && Search_Ram == "" && Search_name == "" ) {
+    if (Search_minPrice == "" && Search_maxPrice != "" && Search_Ram == "" && Search_name == "") {
         if (checkSearchBrand() == 0) {
             filteredProducts = productArray.filter(product => {
                 const price = parseFloat(product.price);
                 const maxPrice = parseFloat(Search_maxPrice);
-                
+
                 if (price <= maxPrice) {
                     return true;
                 }
@@ -732,9 +735,9 @@ function AdvancedFilter() {
                 const maxPrice = parseFloat(Search_maxPrice);
                 if (
                     price <= maxPrice &&
-                    ((brand == 1 && product.kind === "Acer") || 
-                     (brand == 2 && product.kind === "Lenovo") || 
-                     (brand == 3 && product.kind === "MSI"))
+                    ((brand == 1 && product.kind === "Acer") ||
+                        (brand == 2 && product.kind === "Lenovo") ||
+                        (brand == 3 && product.kind === "MSI"))
                 ) {
                     return true;
                 }
@@ -748,9 +751,9 @@ function AdvancedFilter() {
         }
     }
 
-    
+
     close_DivAdvancedFilter();
 }
 
-    
-    
+
+
