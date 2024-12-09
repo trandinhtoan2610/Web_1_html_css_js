@@ -672,7 +672,7 @@ function SuaSanPham(idSanPham){
 
     var Brand = NodeBrand.value
     var Ten = NodeTen.value
-    var GiaTien = NodeGiaTien.value
+    var GiaTien = Number(NodeGiaTien.value)
     var ViTri = NodeViTri.value
     var Ram = NodeRam.value
     var SSD = NodeSSD.value
