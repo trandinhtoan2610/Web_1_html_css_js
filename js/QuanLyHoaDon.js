@@ -94,28 +94,28 @@ function loadOrders(filteredOrders) {
 
 //hàm format ngày tháng năm
 function formatDate(date) {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    return new Date(date).toLocaleDateString('vi-VN', options);
+  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+  return new Date(date).toLocaleDateString("vi-VN", options);
 }
 
 //hàm update trạng thái đơn hàng
 function updateOrderStatus(orderId) {
-    const orders = JSON.parse(localStorage.getItem('orders')) || [];
-    const updatedOrders = orders.map(order => {
-        if (order.orderId === orderId) {
-            if (order.status === 'Chưa xử lý') {
-                order.status = 'Đã xác nhận';
-                alert('Cập nhật trạng thái thành công!');
-            } else if (order.status === 'Đã xác nhận') {
-                order.status = 'Đã giao thành công';
-                alert('Cập nhật trạng thái thành công!');
-            }
-        }
-        return order;
-    });
-   
-    localStorage.setItem('orders', JSON.stringify(updatedOrders));
-    loadOrders();
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
+  const updatedOrders = orders.map((order) => {
+    if (order.orderId === orderId) {
+      if (order.status === "Chưa xử lý") {
+        order.status = "Đã xác nhận";
+        alert("Cập nhật trạng thái thành công!");
+      } else if (order.status === "Đã xác nhận") {
+        order.status = "Đã giao thành công";
+        alert("Cập nhật trạng thái thành công!");
+      }
+    }
+    return order;
+  });
+
+  localStorage.setItem("orders", JSON.stringify(updatedOrders));
+  loadOrders();
 }
 
 //hàm hủy đơn hàng
@@ -138,26 +138,26 @@ function cancelOrder(orderId) {
 
 
 
-// lọc theo ngày 
+// lọc theo ngày
 function filterOrdersByDate() {
-    const startDate = new Date(document.getElementById('startDate').value);
-    const endDate = new Date(document.getElementById('endDate').value);
+  const startDate = new Date(document.getElementById("startDate").value);
+  const endDate = new Date(document.getElementById("endDate").value);
 
-    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-        alert('chọn ngày bắt đầu và ngày kết thúc');
-        return;
-    }
-    if (startDate > endDate) {
-        alert('Ngày bắt đầu phải nhỏ hơn ngày kết thúc');
-        return;
-    }
-    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+    alert("chọn ngày bắt đầu và ngày kết thúc");
+    return;
+  }
+  if (startDate > endDate) {
+    alert("Ngày bắt đầu phải nhỏ hơn ngày kết thúc");
+    return;
+  }
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
-    const filteredOrders = orders.filter(order => {
-        const createdAt = new Date(order.createdAt);
-        return createdAt >= startDate && createdAt <= endDate;
-    });
-    loadOrders(filteredOrders);
+  const filteredOrders = orders.filter((order) => {
+    const createdAt = new Date(order.createdAt);
+    return createdAt >= startDate && createdAt <= endDate;
+  });
+  loadOrders(filteredOrders);
 }
 
 function sortAddress() {

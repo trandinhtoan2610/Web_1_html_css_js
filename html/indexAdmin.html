@@ -17,28 +17,37 @@
     <link rel="stylesheet" href="../css/QuanLyKhachHang.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>The Life Engine</title>
-    <link rel="icon" href="../img/icon.png" type="image/icon type">
+    <link rel="icon" href="../img/icon.png" type="image/icon type" />
+  </head>
 
-</head>
-
-<body>
+  <body>
     <main>
-        <div id = 'containerAdmin'>
+      <div id="containerAdmin">
         <div class="login-form">
-            <h2>Đăng Nhập</h2>
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <label for="username">Tên Đăng Nhập:</label>
-                <input type="text" id="username" name="username" placeholder="Nhập Tên Đăng Nhập" required>
-                
-                <label for="password">Mật Khẩu:</label>
-                <input type="password" id="password" name="password" placeholder="Nhập Mật Khẩu" required>
-                
-                <button type="submit">Đăng Nhập</button>
-            </form>
-           
+          <h2>Đăng Nhập</h2>
+          <form id="loginForm" onsubmit="handleLogin(event)">
+            <label for="username">Tên Đăng Nhập:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Nhập Tên Đăng Nhập"
+              required
+            />
+
+            <label for="password">Mật Khẩu:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Nhập Mật Khẩu"
+              required
+            />
+
+            <button type="submit">Đăng Nhập</button>
+          </form>
         </div>
-        </div>  
-        
+      </div>
     </main>
 
 </body>
@@ -62,21 +71,21 @@
     }
 
     function handleLogin(event) {
-        event.preventDefault(); // Ngăn không cho form reload trang
+      event.preventDefault(); // Ngăn không cho form reload trang
 
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
 
-        // Kiểm tra logic đơn giản
-        if (username === "admin" && password === "admin") {
-            loadPage();
-            DivDSSanPham();
-        } else {
-            alert("Sai tên đăng nhập hoặc mật khẩu");
-        }
+      // Kiểm tra logic đơn giản
+      if (username === "admin" && password === "admin") {
+        loadPage();
+        DivDSSanPham();
+      } else {
+        alert("Sai tên đăng nhập hoặc mật khẩu");
+      }
     }
     function loadPage() {
-            document.getElementById('containerAdmin').innerHTML = `<div id="nav-bar">
+      document.getElementById("containerAdmin").innerHTML = `<div id="nav-bar">
             <input type="checkbox" id="nav-toggle">
             <div id="nav-header">
                 <a id="nav-title" href="#" target="_blank">
@@ -273,6 +282,5 @@
             <button type="button" onclick="hideEditUserForm()">Hủy</button>
         </form>`;
     }
-</script>
-
+  </script>
 </html>

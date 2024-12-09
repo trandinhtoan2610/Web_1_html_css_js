@@ -1,53 +1,62 @@
-
 function formatCurrencyVND(amount) {
-    return new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND',
-    }).format(amount);
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(amount);
 }
 
-
 function displayStats(filteredOrders) {
-    if(filteredOrders){
-      orders = filteredOrders;
+  if (filteredOrders) {
+    orders = filteredOrders;
+  } else {
+    orders = JSON.parse(localStorage.getItem("orders")) || [];
+  }
+
+  const productStats = {};
+  console.log(orders);
+  // Duyệt qua các đơn hàng và tính toán
+  orders.forEach((order) => {
+    if (order.status === "Đã giao thành công") {
+      order.orderDetails.forEach((item) => {
+        if (!productStats[item.productName]) {
+          productStats[item.productName] = {
+            totalQuantity: 0,
+            totalRevenue: 0,
+          };
+        }
+        productStats[item.productName].totalQuantity += item.quantity;
+        productStats[item.productName].totalRevenue += item.totalPrice;
+      });
     }
-    else{
-      orders = JSON.parse(localStorage.getItem('orders')) || [];
-    } 
-   
-    const productStats = {};
-    console.log(orders);
-    // Duyệt qua các đơn hàng và tính toán
-    orders.forEach(order => {
-      if (order.status === 'Đã giao thành công') {
-        order.orderDetails.forEach(item => {
-          if (!productStats[item.productName]) {
-            productStats[item.productName] = {
-              totalQuantity: 0,
-              totalRevenue: 0
-            };
-          }
-          productStats[item.productName].totalQuantity += item.quantity;
-          productStats[item.productName].totalRevenue += item.totalPrice;
-        });
-      }
-    });
-    
-    // Tính tổng doanh thu tất cả các mặt hàng
-    let totalRevenueAllProducts = 0;
-    for (const productName in productStats) {
-      totalRevenueAllProducts += productStats[productName].totalRevenue;
-    }
-    
-    // Tìm mặt hàng bán chạy nhất và ế nhất
-    const bestSellingProduct = Object.keys(productStats).reduce((best, productName) => {
-      return productStats[productName].totalQuantity > productStats[best].totalQuantity ? productName : best;
-    }, Object.keys(productStats)[0]);
-    
-    const leastSellingProduct = Object.keys(productStats).reduce((least, productName) => {
-      return productStats[productName].totalQuantity < productStats[least].totalQuantity ? productName : least;
-    }, Object.keys(productStats)[0]);
-  const container = document.getElementById('container');
+  });
+
+  // Tính tổng doanh thu tất cả các mặt hàng
+  let totalRevenueAllProducts = 0;
+  for (const productName in productStats) {
+    totalRevenueAllProducts += productStats[productName].totalRevenue;
+  }
+
+  // Tìm mặt hàng bán chạy nhất và ế nhất
+  const bestSellingProduct = Object.keys(productStats).reduce(
+    (best, productName) => {
+      return productStats[productName].totalQuantity >
+        productStats[best].totalQuantity
+        ? productName
+        : best;
+    },
+    Object.keys(productStats)[0]
+  );
+
+  const leastSellingProduct = Object.keys(productStats).reduce(
+    (least, productName) => {
+      return productStats[productName].totalQuantity <
+        productStats[least].totalQuantity
+        ? productName
+        : least;
+    },
+    Object.keys(productStats)[0]
+  );
+  const container = document.getElementById("container");
 
   // Thêm bảng thống kê sản phẩm
   let tableHTML = `
@@ -112,43 +121,39 @@ function displayStats(filteredOrders) {
   displayTopCustomers(orders);
 }
 
-
-
-
-
 // Hàm để hiển thị các khách hàng có doanh thu cao nhất và hóa đơn của họ
 function displayTopCustomers(orders) {
-    const customerStats = {};
+  const customerStats = {};
 
-    // Duyệt qua các đơn hàng và tính toán doanh thu theo khách hàng
-    orders.forEach(order => {
-    if (order.status === 'Đã giao thành công') {
-        const customerId = order.userId; // ID khách hàng
-        if (!customerStats[customerId]) {
-          customerStats[customerId] = {
-              totalRevenue: 0,
-              customerName: order.fullname,
-              customerId: order.userId,
-              orders: []
-          };
-        }
-        
-        let orderRevenue = 0;
-        order.orderDetails.forEach(item => {
+  // Duyệt qua các đơn hàng và tính toán doanh thu theo khách hàng
+  orders.forEach((order) => {
+    if (order.status === "Đã giao thành công") {
+      const customerId = order.userId; // ID khách hàng
+      if (!customerStats[customerId]) {
+        customerStats[customerId] = {
+          totalRevenue: 0,
+          customerName: order.fullname,
+          customerId: order.userId,
+          orders: [],
+        };
+      }
+
+      let orderRevenue = 0;
+      order.orderDetails.forEach((item) => {
         orderRevenue += item.totalPrice; // Cộng tổng tiền cho mỗi mặt hàng
-        });
-        
-        customerStats[customerId].totalRevenue += orderRevenue;
-        customerStats[customerId].orders.push(order); // Lưu lại hóa đơn của khách hàng
-    }
-    });
+      });
 
-    // Lọc và sắp xếp 5 khách hàng có doanh thu cao nhất
-    const topCustomers = Object.values(customerStats)
+      customerStats[customerId].totalRevenue += orderRevenue;
+      customerStats[customerId].orders.push(order); // Lưu lại hóa đơn của khách hàng
+    }
+  });
+
+  // Lọc và sắp xếp 5 khách hàng có doanh thu cao nhất
+  const topCustomers = Object.values(customerStats)
     .sort((a, b) => b.totalRevenue - a.totalRevenue) // Sắp xếp theo doanh thu giảm dần
     .slice(0, 5); // Lấy 5 khách hàng đầu tiên
-  const container = document.getElementById('container');
-  
+  const container = document.getElementById("container");
+
   // Hiển thị danh sách khách hàng và doanh thu của họ
   let customersHTML = `
     <div class="mt-10">
@@ -189,24 +194,24 @@ function displayTopCustomers(orders) {
   container.innerHTML += customersHTML;
 }
 
-function filterOrdersByDateThongKe(){
-  const startDate = new Date(document.getElementById('startDateThongKe').value);
-  const endDate = new Date(document.getElementById('endDateThongKe').value);
-    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-      alert('Vui lòng chọn ngày bắt đầu và ngày kết thúc');
-      return;
-    }
-    if (startDate > endDate) {
-        alert('Ngày bắt đầu phải nhỏ hơn ngày kết thúc');
-        return;
-    }
-    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+function filterOrdersByDateThongKe() {
+  const startDate = new Date(document.getElementById("startDateThongKe").value);
+  const endDate = new Date(document.getElementById("endDateThongKe").value);
+  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+    alert("Vui lòng chọn ngày bắt đầu và ngày kết thúc");
+    return;
+  }
+  if (startDate > endDate) {
+    alert("Ngày bắt đầu phải nhỏ hơn ngày kết thúc");
+    return;
+  }
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
 
-    const filteredOrders = orders.filter(order => {
-        const createdAt = new Date(order.createdAt);
-        return createdAt >= startDate && createdAt <= endDate;
-    });
-    displayStats(filteredOrders);
+  const filteredOrders = orders.filter((order) => {
+    const createdAt = new Date(order.createdAt);
+    return createdAt >= startDate && createdAt <= endDate;
+  });
+  displayStats(filteredOrders);
 }
 
 
