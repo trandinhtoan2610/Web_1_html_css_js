@@ -57,6 +57,70 @@ function displayStats(filteredOrders) {
     <input type="date" id="endDateThongKe">
     <button onclick="filterOrdersByDateThongKe()">Lọc theo thời gian</button>
     <h3>Thống kê sản phẩm</h3>
+    <div class="col-9">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="well">
+            <h4>Tổng tiền bán được</h4>
+            <p>${formatCurrencyVND(totalRevenueAllProducts)}</p> 
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well">
+            <h4>Sản phẩm bán chạy nhất</h4>
+            <p>${bestSellingProduct || ''}</p> 
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well">
+            <h4>Sản phẩm bán ít nhất</h4>
+            <p>${leastSellingProduct || ""}</p> 
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well">
+            <h4>Bounce</h4>
+            <p>30%</p> 
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="well">
+            <p>Text</p> 
+            <p>Text</p> 
+            <p>Text</p> 
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="well">
+            <p>Text</p> 
+            <p>Text</p> 
+            <p>Text</p> 
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="well">
+            <p>Text</p> 
+            <p>Text</p> 
+            <p>Text</p> 
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="well">
+            <p>Text</p> 
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="well">
+            <p>Text</p> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
      <div class="table">
             <div class="table-header">
                 <div class="header__item"><a id="id" class="filter__link" href="#">Tên sản phẩm</a></div>
