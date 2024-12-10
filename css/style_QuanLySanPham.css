@@ -721,3 +721,9 @@ input[type="number"] {
 
     
 }
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Cho WebKit */
+    margin: 0; /* Xóa khoảng cách nếu cần */
+}
