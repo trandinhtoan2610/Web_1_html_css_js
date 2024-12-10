@@ -228,7 +228,7 @@ function viewInvoices(userId) {
               <p><strong>Tình trạng:</strong> ${order.status}</p>
               <p><strong>Ngày tạo:</strong> ${new Date(order.createdAt).toLocaleString()}</p>
               <p><strong>Tổng tiền:</strong> ${order.totalAmount.toLocaleString()} VND</p>
-              <button class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600" onclick="viewOrderDetail(${order.orderId})">Xem chi tiết</button>
+              <a class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600" href="order-details.html?orderId=${order.orderId}" target = "_blank">Xem chi tiết</a>
           </div>
       `;
   });

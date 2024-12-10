@@ -6,16 +6,19 @@ const showOrderManagement = () => {
                 <input type="date" id="startDate" class="p-2 border border-gray-300 rounded-md" />
                 <input type="date" id="endDate" class="p-2 border border-gray-300 rounded-md ml-2" />
                 <button onclick="filterOrdersByDate()" class="p-2 bg-blue-500 text-white rounded-md ml-4">Lọc</button>
+
+                <div class="menu">
+                  <button class="menu-button p-2 bg-blue-500 text-white rounded-md ml-4"> Lọc theo hàng động</button>
+                  <div class="menu-content">
+                    <a href="#" onclick ="loading('Chưa xử lý')">Chưa xử lý</a>
+                    <a href="#" onclick ="loading('Đã xác nhận')">Đã xác nhận</a>
+                    <a href="#" onclick ="loading('Đã giao thành công')">Đã giao thành công</a>
+                    <a href="#" onclick ="loading('Đã hủy')">Đã hủy</a>
+                  </div>
+                
             </div>
 
-            <div class="menu mb-6">
-                <button class="menu-button p-2 bg-gray-200 rounded-md">Lọc theo trạng thái</button>
-                <div class="menu-content hidden mt-2 bg-gray-100 rounded-md p-2">
-                    <a href="#" onclick="loading('Chưa xử lý')" class="block p-2 hover:bg-gray-200">Chưa xử lý</a>
-                    <a href="#" onclick="loading('Đã xác nhận')" class="block p-2 hover:bg-gray-200">Đã xác nhận</a>
-                    <a href="#" onclick="loading('Đã giao thành công')" class="block p-2 hover:bg-gray-200">Đã giao thành công</a>
-                    <a href="#" onclick="loading('Đã hủy')" class="block p-2 hover:bg-gray-200">Đã hủy</a>
-                </div>
+            
             </div>
 
             <div class="overflow-x-auto bg-white shadow-md rounded-lg">

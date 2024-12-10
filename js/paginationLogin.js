@@ -1,4 +1,4 @@
-const itemsPerPage = 8;
+const itemsPerPage = 4;
 let currentPage = 1;
 let filteredProducts = [];
 let allProducts = JSON.parse(localStorage.getItem('products')) || [];
