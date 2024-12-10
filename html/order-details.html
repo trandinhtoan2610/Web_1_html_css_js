@@ -87,7 +87,7 @@
         s1.forEach((order) => {
           let date = formatDate(order.createdAt);
           html += `
-        <div style= "box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); padding : 20px; margin : 10px">
+       
         <h2>Chi tiết đơn hàng ${order.orderId}</h2>
         <div class="order-summary" style= " margin: 10px;" >
           <p><strong>Mã đơn hàng:</strong> <span id="order-id">${order.orderId}</span></p>
@@ -111,7 +111,6 @@
             
           `;
           });
-          html += `</div>`;
           html += `</div>`;
         });
         divv.innerHTML = html;

@@ -386,7 +386,7 @@ function DivDSSanPham() {
 
 
 function PriceToString (price ){
-    console.log(price)
+
     price = parseInt(price);
     const formatter = new Intl.NumberFormat('vi-VN', {
         style: 'currency',

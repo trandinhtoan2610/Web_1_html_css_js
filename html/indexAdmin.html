@@ -6,35 +6,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/1acf2d22a5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/QuanLySanPham.css">
     <link rel="stylesheet" href="../css/style_Mainpage.css">
     <link rel="stylesheet" href="../css/style_QuanLySanPham.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/QuanLyKhachHang.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>The Life Engine</title>
-    <link rel="icon" href="../img/icon.png" type="image/icon type">
+    <link rel="icon" href="../img/icon.png" type="image/icon type" />
+  </head>
 
-</head>
-
-<body>
+  <body>
     <main>
-        <div id = 'containerAdmin'>
+      <div id="containerAdmin">
         <div class="login-form">
-            <h2>Đăng Nhập</h2>
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <label for="username">Tên Đăng Nhập:</label>
-                <input type="text" id="username" name="username" placeholder="Nhập Tên Đăng Nhập" required>
-                
-                <label for="password">Mật Khẩu:</label>
-                <input type="password" id="password" name="password" placeholder="Nhập Mật Khẩu" required>
-                
-                <button type="submit">Đăng Nhập</button>
-            </form>
-           
+          <h2>Đăng Nhập</h2>
+          <form id="loginForm" onsubmit="handleLogin(event)">
+            <label for="username">Tên Đăng Nhập:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Nhập Tên Đăng Nhập"
+              required
+            />
+
+            <label for="password">Mật Khẩu:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Nhập Mật Khẩu"
+              required
+            />
+
+            <button type="submit">Đăng Nhập</button>
+          </form>
         </div>
-        </div>  
-        
+      </div>
     </main>
 
 </body>
@@ -46,39 +59,39 @@
 <script src="../js/ThongKe.js"></script>
 <script src="../js/QuanLyKhachHang.js"></script>
 <script>
-    const checkbox = document.getElementById('nav-toggle');
-    const container = document.getElementById('container');
-
-    checkbox.addEventListener('click', function () {
+    function handleNavbar(){
+        const checkbox = document.getElementById('nav-toggle');
+        const container = document.getElementById('container');
         if (checkbox.checked) {
-            container.style.marginLeft = 'calc(var(--navbar-width-min) + 30px)';
+            container.style.paddingLeft = 'calc(var(--navbar-width) + 30px)';
         } else {
-            container.style.marginLeft = 'calc(var(--navbar-width) + 30px)';
-        }
-    });
-
-    function handleLogin(event) {
-        event.preventDefault(); // Ngăn không cho form reload trang
-
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        // Kiểm tra logic đơn giản
-        if (username === "admin" && password === "admin") {
-            loadPage();
-            DivDSSanPham();
-        } else {
-            alert("Sai tên đăng nhập hoặc mật khẩu");
+            
+            container.style.paddingLeft = 'calc(var(--navbar-width-min) + 30px)';
         }
     }
+
+    function handleLogin(event) {
+      event.preventDefault(); // Ngăn không cho form reload trang
+
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      // Kiểm tra logic đơn giản
+      if (username === "admin" && password === "admin") {
+        loadPage();
+        DivDSSanPham();
+      } else {
+        alert("Sai tên đăng nhập hoặc mật khẩu");
+      }
+    }
     function loadPage() {
-            document.getElementById('containerAdmin').innerHTML = `<div id="nav-bar">
+      document.getElementById("containerAdmin").innerHTML = `<div id="nav-bar">
             <input type="checkbox" id="nav-toggle">
             <div id="nav-header">
                 <a id="nav-title" href="#" target="_blank">
                     <span>Admin</span>
                 </a>
-                <label for="nav-toggle">
+                <label for="nav-toggle" onclick="handleNavbar()">
                     <span id="nav-toggle-burger"></span>
                 </label>
                 <hr>
@@ -269,6 +282,5 @@
             <button type="button" onclick="hideEditUserForm()">Hủy</button>
         </form>`;
     }
-</script>
-
+  </script>
 </html>

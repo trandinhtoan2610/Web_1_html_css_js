@@ -1,9 +1,9 @@
 .container{
     min-height: 100vh;
-    margin-left: calc(var(--navbar-width) + 30px);
-    margin-right: 30px;
+    padding-left: calc(var(--navbar-width) + 30px);
     padding-top: 20px;
     transition: margin  0.0.3s ease;
+    width: 100%;
 }
 
 
