@@ -23,15 +23,15 @@ function displayUsers() {
             <table class="min-w-full table-auto">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="px-4 py-2 border-b">ID</th>
-                        <th class="px-4 py-2 border-b">Tên người dùng</th>
-                        <th class="px-4 py-2 border-b">Họ tên</th>
-                        <th class="px-4 py-2 border-b">Số điện thoại</th>
-                        <th class="px-4 py-2 border-b">Địa Chỉ</th>
-                        <th class="px-4 py-2 border-b">Trạng thái</th>
-                        <th class="px-4 py-2 border-b">Vai Trò</th>
-                        <th class="px-4 py-2 border-b">Khóa/Mở Khóa</th>
-                        <th class="px-4 py-2 border-b">Sửa/Xóa</th>
+                        <th class="px-4 py-2 border-b middle">ID</th>
+                        <th class="px-4 py-2 border-b middle">Tên người dùng</th>
+                        <th class="px-4 py-2 border-b middle">Họ tên</th>
+                        <th class="px-4 py-2 border-b middle">Số điện thoại</th>
+                        <th class="px-4 py-2 border-b middle">Địa Chỉ</th>
+                        <th class="px-4 py-2 border-b middle">Trạng thái</th>
+                        <th class="px-4 py-2 border-b middle">Vai Trò</th>
+                        <th class="px-4 py-2 border-b middle">Khóa/Mở Khóa</th>
+                        <th class="px-4 py-2 border-b middle">Sửa/Xóa</th>
                     </tr>
                 </thead>
                 <tbody id="table-content">
@@ -47,18 +47,22 @@ function displayUsers() {
         userList.forEach(user => {
             userTable += `
             <tr class="border-b">
-                <td class="px-4 py-2">${user.id}</td>
-                <td class="px-4 py-2">${user.username}</td>
-                <td class="px-4 py-2">${user.fullname}</td>
-                <td class="px-4 py-2">${user.phone}</td>
-                <td class="px-4 py-2" id="customAddress">${user.address} ,Phường: ${user.phuong}, Quận: ${user.quan}</td>
-                <td class="px-4 py-2">${user.status}</td>
-                <td class="px-4 py-2">${user.role}</td>
-                <td class="px-4 py-2">
+                <td class="px-4 py-2 middle">${user.id}</td>
+                <td class="px-4 py-2 middle">${user.username}</td>
+                <td class="px-4 py-2 middle">${user.fullname}</td>
+                <td class="px-4 py-2 middle">${user.phone}</td>
+                <td class="px-4 py-2 middle" id="customAddress">${user.address} ,Phường: ${user.phuong}, Quận: ${user.quan}</td>
+                <td
+  class="px-4 py-2 middle ${user.status ? 'text-green-500' : 'text-red-500'}"
+>
+  ${user.status ? 'Active' : 'Inactive'}
+</td>
+                <td class="px-4 py-2 middle">${user.role}</td>
+                <td class="px-4 py-2 middle">
                     <button onclick="unlockUser(${user.id})" class="px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600"><i class="fa-solid fa-unlock"></i></button>
                     <button onclick="lockUser(${user.id})" class="px-3 py-1 bg-red-500 text-white rounded-md hover:bg-red-600"><i class="fa-solid fa-lock"></i></button>
                 </td>
-                <td class="px-4 py-2">
+                <td class="px-4 py-2 middle">
                     <button onclick="openEditForm(${user.id})" class="px-3 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600"><i class="fa-solid fa-wrench"></i></button>
                     <button onclick="deleteUser(${user.id})" class="px-3 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"><i class="fa-sharp-duotone fa-solid fa-trash"></i></button>
                 </td>

@@ -40,7 +40,9 @@
   border-top-left-radius: 20px; /* Góc trên bên trái làm tròn 10px */
   border-top-right-radius: 20px; /* Góc trên bên phải làm tròn 10px */
 }
-
+.table-row{
+  display: flex;
+}
 .table-row {
   display: flex;
   justify-content: space-between;
@@ -53,6 +55,7 @@
 
 .table-row:nth-of-type(odd) {
   background: #eeeeee;
+  display: flex;
 }
 
 .table-data,

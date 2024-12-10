@@ -25,7 +25,17 @@
     max-width: 600px;
     /* Giới hạn chiều rộng */
 }
-
+.middle{
+    text-align: center;
+}
+.text-green-500 {
+    color: green;
+  }
+  
+  .text-red-500 {
+    color: red;
+  }
+  
 #addUserForm label,
 #editUserForm label {
     display: block;
